@@ -1,16 +1,23 @@
 import React, { type JSX } from 'react'
 
-interface Props {
+interface ViewControlProps
+{
     children: React.ReactNode;
     activeView: string;
 }
 
-const ViewControl: React.FC<Props> = ({ children, activeView }: Props): JSX.Element => {
+interface ViewProps 
+{
+    name: string;
+}
+
+const ViewControl: React.FC<ViewControlProps> = ({ children, activeView }: ViewControlProps): JSX.Element =>
+{
     return (
         <>
             {React.Children.map(children, (child) =>
             {
-                if (React.isValidElement<Props>(child) && child.props.activeView === activeView)
+                if (React.isValidElement<ViewProps>(child) && child.props.name === activeView)
                 {
                     return child;
                 }

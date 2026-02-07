@@ -43,7 +43,6 @@ function App()
 
         </View>
       </ViewControl>
-      {activeView}
     </div>
   )
 }
