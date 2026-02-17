@@ -3,48 +3,44 @@ import Header from "./Components/Header"
 import Navbar from "./Components/Navbar"
 import NavbarButton from "./Components/NavbarButton"
 import ViewControl from "./Components/ViewControl";
-import View from "./Components/View";
-import ViewHeader from "./Components/ViewHeader";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Appointments from "./Components/Appointments";
+import Clients from "./Components/Clients";
 
 function App()
 {
 
-  const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(false)
+    const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(false)
 
-  const toggleSidebar = () =>
-  {
-    setIsNavbarOpen(!isNavbarOpen);
-  }
-
-  const [activeView, setActiveView] = useState<string>("Consultas");
-
-  const handleNavBarButtonOnClick = (viewName: string) =>
-  {
-    setActiveView(viewName);
-  }
+ 	const toggleSidebar = () =>
+  	{
+   		setIsNavbarOpen(!isNavbarOpen);
+ 	}
   
-  return (
-    <div className="flex flex-col h-screen
+  	return (
+		<BrowserRouter>
+			<div className="flex flex-col h-screen
                     dark:bg-[#191919]">
-      <Header handleSandwichOnClick={toggleSidebar}/>
-      <Navbar isOpen={isNavbarOpen}>
-        <NavbarButton label="Consultas" handleNavBarButtonOnClick = {handleNavBarButtonOnClick}/>
-        <NavbarButton label="Clientes" handleNavBarButtonOnClick = {handleNavBarButtonOnClick}/>
-        <NavbarButton label="Mascotas" handleNavBarButtonOnClick = {handleNavBarButtonOnClick}/>
-        <NavbarButton label="Inventario" handleNavBarButtonOnClick = {handleNavBarButtonOnClick}/>
-        <NavbarButton label="Calculadora" handleNavBarButtonOnClick = {handleNavBarButtonOnClick}/>
-        <NavbarButton label="Personal" handleNavBarButtonOnClick = {handleNavBarButtonOnClick}/>
-      </Navbar>
-      <ViewControl activeView={activeView}>
-        <View name="Consultas">
-          <ViewHeader label="Consultas"/>
-        </View>
-        <View name="Clientes">
-          <ViewHeader label="Clientes"/>
-        </View>
-      </ViewControl>
-    </div>
-  )
+        		<Header handleSandwichOnClick={toggleSidebar}/>
+      			<Navbar isOpen={isNavbarOpen}>
+        			<NavbarButton label="Consultas" path="/appointments"/>
+        			<NavbarButton label="Clientes" path="/clients"/>
+        			<NavbarButton label="Mascotas" path="/appointments"/>
+        			<NavbarButton label="Inventario" path="/appointments"/>
+        			<NavbarButton label="Calculadora" path="/appointments"/>
+      			</Navbar>
+      			<ViewControl>
+        			<Routes>
+						<Route path="/appointments" element={<Appointments/>}/>
+						<Route path="/clients" element={<Clients/>}/>
+						<Route path="/pets" element={<Appointments/>}/>
+						<Route path="/inventory" element={<Appointments/>}/>
+						<Route path="/calculator" element={<Appointments/>}/>
+					</Routes>
+     	 		</ViewControl>
+  	  		</div>
+		</BrowserRouter>
+	)
 }
 
 export default App
