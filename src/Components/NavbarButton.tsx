@@ -11,7 +11,7 @@ const NavbarButton: React.FC<NavbarButtonProps> = ({label, handleNavBarButtonOnC
 {
     return (
         <button onClick={() => handleNavBarButtonOnClick(label)} className="h-14 flex flex-col items-center justify-center 
-                            dark:hover:bg-[#242424]">
+                            dark:hover:bg-[#242424] dark:active:bg-[#303030]">
             <Placeholder20x20/>
             <span className="dark:text-white text-[10px] mt-1.25">
                 {label}

@@ -4,6 +4,7 @@ import Navbar from "./Components/Navbar"
 import NavbarButton from "./Components/NavbarButton"
 import ViewControl from "./Components/ViewControl";
 import View from "./Components/View";
+import ViewHeader from "./Components/ViewHeader";
 
 function App()
 {
@@ -20,7 +21,6 @@ function App()
   const handleNavBarButtonOnClick = (viewName: string) =>
   {
     setActiveView(viewName);
-    console.log(viewName);
   }
   
   return (
@@ -37,10 +37,10 @@ function App()
       </Navbar>
       <ViewControl activeView={activeView}>
         <View name="Consultas">
-
+          <ViewHeader label="Consultas"/>
         </View>
         <View name="Clientes">
-
+          <ViewHeader label="Clientes"/>
         </View>
       </ViewControl>
     </div>
