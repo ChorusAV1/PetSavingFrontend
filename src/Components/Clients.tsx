@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState, type JSX } from 'react'
 import ViewHeader from './ViewHeader';
+import PlaceholderCircle32x32 from '../assets/PlaceholderCircle32x32';
 
 interface ClientResponse
 {
@@ -35,9 +36,20 @@ const Clients: React.FC = (): JSX.Element =>
             <ul className="dark:text-white">
                 {clients.map((client) =>
                 (
-                    <li key={client.id}>
-                        {/* Render client details */}
-                        {client.firstName}
+                    <li key={client.id}
+                        className="flex m-2.5 border dark:border-black rounded dark:bg-[#202020]">
+
+                        {/* Render appointment details */}
+                        <div className="m-2">
+                            <PlaceholderCircle32x32/>
+                        </div>
+
+                        <div className="flex flex-col text-[12px] justify-center ml-0.5">
+                            <span><strong>{client.firstName + " " + client.lastName}</strong></span>
+                            
+                            <span>{client.email}</span>
+                        </div>
+                        
                     </li>
                 ))}
             </ul>
