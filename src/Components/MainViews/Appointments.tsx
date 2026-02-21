@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState, type JSX } from 'react'
-import ViewHeader from './ViewHeader';
-import PlaceholderCircle32x32 from '../assets/PlaceholderCircle32x32';
+import ViewHeader from '../ViewHeader';
+import PlaceholderCircle32x32 from '../../assets/PlaceholderCircle32x32';
 
 interface Client
 {
@@ -37,13 +37,13 @@ const Appointments: React.FC = (): JSX.Element =>
     }, []);
 
     return (
-        <div>
+        <>
             <ViewHeader label="Appointments" />
             <ul className="dark:text-white">
                 {appointments.map((appointment) =>
                 (
                     <li key={appointment.id}
-                        className="flex m-2.5 border dark:border-black rounded dark:bg-[#202020]">
+                        className="flex m-2.5 border dark:border-black rounded dark:bg-[#202020] dark:active:[#101010]">
 
                         {/* Render appointment details */}
                         <div className="m-2">
@@ -59,7 +59,7 @@ const Appointments: React.FC = (): JSX.Element =>
                     </li>
                 ))}
             </ul>
-        </div>
+        </>
     )
 }
 

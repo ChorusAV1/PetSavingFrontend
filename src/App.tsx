@@ -4,9 +4,14 @@ import Navbar from "./Components/Navbar"
 import NavbarButton from "./Components/NavbarButton"
 import ViewControl from "./Components/ViewControl";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Appointments from "./Components/Appointments";
-import Clients from "./Components/Clients";
-import Calculator from "./Components/Calculator";
+import Appointments from "./Components/MainViews/Appointments";
+import Clients from "./Components/MainViews/Clients";
+import Calculator from "./Components/MainViews/Calculator";
+import DeficitCalculator from "./Components/CalculatorViews/DeficitCalculator";
+import MantenimientoCalculator from "./Components/CalculatorViews/MantenimientoCalculator";
+import GoteoCalculator from "./Components/CalculatorViews/GoteoCalculator";
+import NuevoCliente from "./Components/NuevoCliente";
+import ListClients from "./Components/ListClients";
 
 function App()
 {
@@ -33,10 +38,17 @@ function App()
       			<ViewControl>
         			<Routes>
 						<Route path="/appointments" element={<Appointments/>}/>
-						<Route path="/clients" element={<Clients/>}/>
+						<Route path="/clients" element={<Clients/>}>
+							<Route path="lista" element = {<ListClients/>}/>
+							<Route path="nuevocliente" element = {<NuevoCliente/>}/>
+						</Route>
 						<Route path="/pets" element={<Appointments/>}/>
 						<Route path="/inventory" element={<Appointments/>}/>
-						<Route path="/calculator" element={<Calculator label="Calculadora"/>}/>
+						<Route path="/calculator" element={<Calculator/>}>
+							<Route path="deficit" element={<DeficitCalculator/>}/>
+							<Route path="mantenimiento" element={<MantenimientoCalculator/>}/>
+							<Route path="goteo" element={<GoteoCalculator/>}/>
+						</Route>
 					</Routes>
      	 		</ViewControl>
   	  		</div>

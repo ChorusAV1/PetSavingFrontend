@@ -1,14 +1,23 @@
 import React, { type JSX } from 'react'
 import Placeholder24x24 from '../assets/Placeholder24x24';
 import Placeholder20x20 from '../assets/Placeholder20x20';
+import { useNavigate } from 'react-router-dom';
 
 interface ViewHeaderProps 
 {
     label: string;
 }
 
-const ViewHeader: React.FC<ViewHeaderProps> = ({ label }: ViewHeaderProps): JSX.Element => {
-  return (
+const ViewHeader: React.FC<ViewHeaderProps> = ({ label }: ViewHeaderProps): JSX.Element =>
+{
+    const navigate = useNavigate();
+
+    const handleNuevo = () =>
+    {
+        navigate("../nuevocliente")
+    }
+    
+    return (
     <>
         <header className="flex items-center h-15
                            dark:bg-[#202020] dark:text-white">
@@ -33,7 +42,8 @@ const ViewHeader: React.FC<ViewHeaderProps> = ({ label }: ViewHeaderProps): JSX.
             </button>
 
             <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none
-                                dark:hover:bg-[#303030] dark:active:bg-[#101010]">
+                                dark:hover:bg-[#303030] dark:active:bg-[#101010]"
+                    onClick={handleNuevo}>
 
                 <div className="m-1.25">
                    <Placeholder20x20/>

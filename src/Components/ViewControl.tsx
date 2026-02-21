@@ -8,7 +8,7 @@ interface ViewControlProps
 const ViewControl: React.FC<ViewControlProps> = ({ children }: ViewControlProps): JSX.Element =>
 {
     return (
-        <div>
+        <div className="flex flex-col grow">
             {children}
         </div>
     )

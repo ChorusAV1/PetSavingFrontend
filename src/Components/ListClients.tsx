@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React, { useEffect, useState, type JSX } from 'react'
 import ViewHeader from './ViewHeader';
 import PlaceholderCircle32x32 from '../assets/PlaceholderCircle32x32';
+import axios from 'axios';
 
 interface ClientResponse
 {
@@ -17,7 +17,7 @@ interface ClientResponse
     emergencyContactPhone: number;
 }
 
-const Clients: React.FC = (): JSX.Element =>
+const ListClients: React.FC = (): JSX.Element =>
 {
     const [clients, setClients] = useState<ClientResponse[]>([]);
 
@@ -37,7 +37,7 @@ const Clients: React.FC = (): JSX.Element =>
                 {clients.map((client) =>
                 (
                     <li key={client.id}
-                        className="flex m-2.5 border dark:border-black rounded dark:bg-[#202020]">
+                        className="flex m-2.5 border dark:border-black rounded dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010]">
 
                         {/* Render appointment details */}
                         <div className="m-2">
@@ -57,4 +57,4 @@ const Clients: React.FC = (): JSX.Element =>
     )
 }
 
-export default Clients
+export default ListClients
