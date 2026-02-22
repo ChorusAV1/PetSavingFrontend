@@ -2,16 +2,24 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { usePasswordValidation } from "../Components/usePasswordValidation";
 
 const Register: React.FC = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const {errors, validatePassword} = usePasswordValidation();
+
   const handleRegister = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!validatePassword(password)){
+      return;
+    }
+
     try {
-      axios.post("http://216.238.94.51:5172/comandafacil/account/register", {
+      await axios.post("http://216.238.94.51:5172/comandafacil/account/register", {
         userName,
         password,
       });
@@ -19,6 +27,7 @@ const Register: React.FC = () => {
       navigate("/login"); 
     } catch (err) {
       console.error(err);
+      toast.error("Registro fallido. Por favor inténtelo de nuevo.");
     }
   };
 
@@ -47,6 +56,14 @@ const Register: React.FC = () => {
           </button>
         </p>
         <h2 className="text-2xl text-white font-bold mb-4 text-center">Registrarse</h2>
+          {/* Shows the errors */}
+          {errors.length > 0 && (
+            <ul className="text-red-500 text-sm mb-2">
+              {errors.map((err, i) => (
+                <li key={i}>• {err}</li>
+              ))}
+            </ul>
+          )}
         <input
           type="text"
           placeholder="Usuario"

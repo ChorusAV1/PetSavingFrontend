@@ -25,7 +25,7 @@ const Login: React.FC = () => {
       toast.success("Inicio de sesión exitoso!");
       navigate("/appointments");
     } catch (err: any) {
-    setError("Invalid credentials");
+    setError("Datos inválidos");
   }
 };
 
