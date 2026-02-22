@@ -4,7 +4,7 @@ const DeficitCalculator: React.FC = (): JSX.Element =>
 {
     return (
         <>
-            <section className="flex flex-col dark:bg-black h-25">
+            <section className="flex flex-col dark:bg-black h-25 sticky top-27">
 
                 <span className="text-[16px] dark:text-[#808080] font-light ml-1.25 mt-1.25">Volumen(ml)</span>
 
@@ -65,7 +65,7 @@ const DeficitCalculator: React.FC = (): JSX.Element =>
 
                 <div className="flex-1" />
 
-                <section className="flex items-center justify-around bg-[#202020] h-18 border-t">
+                <section className="flex items-center justify-around bg-[#202020] h-18 border-t sticky bottom-0">
 
                     <button className="dark:bg-[#3B3B3B] dark:hover:bg-[#303030] dark:active:bg-[#404040] text-[24px] text-white w-18.75 h-12.5 rounded-lg">
                         C

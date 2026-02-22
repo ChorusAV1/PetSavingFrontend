@@ -4,7 +4,7 @@ const MantenimientoCalculator: React.FC = (): JSX.Element =>
 {
     return (
         <>
-            <section className="flex flex-col dark:bg-black h-25">
+            <section className="flex flex-col dark:bg-black h-25 sticky top-27">
 
                 <span className="text-[16px] dark:text-[#808080] font-light ml-1.25 mt-1.25">Volumen/día(mL)</span>
 
@@ -20,7 +20,7 @@ const MantenimientoCalculator: React.FC = (): JSX.Element =>
 
             </section>
 
-            <form className="flex flex-col flex-1">
+            <form className="flex flex-col flex-1 overflow-y-auto">
 
                 <div className="flex m-2.5 h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
 
@@ -49,19 +49,19 @@ const MantenimientoCalculator: React.FC = (): JSX.Element =>
 
                 <div className="flex-1" />
 
-                <section className="flex items-center justify-around bg-[#202020] h-18 border-t">
-
-                    <button className="dark:bg-[#3B3B3B] dark:hover:bg-[#303030] dark:active:bg-[#404040] text-[24px] text-white w-18.75 h-12.5 rounded-lg">
-                        C
-                    </button>
-
-                    <button className="bg-[#339FFF] hover:bg-blue-500 active:bg-blue-400 text-[32px] text-white w-18.75 h-12.5 rounded-lg">
-                        =
-                    </button>
-
-                </section>
-
             </form>
+
+            <section className="flex items-center justify-around bg-[#202020] h-18 border-t sticky bottom-0">
+
+                <button className="dark:bg-[#3B3B3B] dark:hover:bg-[#303030] dark:active:bg-[#404040] text-[24px] text-white w-18.75 h-12.5 rounded-lg">
+                    C
+                </button>
+
+                <button className="bg-[#339FFF] hover:bg-blue-500 active:bg-blue-400 text-[32px] text-white w-18.75 h-12.5 rounded-lg">
+                    =
+                </button>
+
+            </section>
         </>
     )
 }

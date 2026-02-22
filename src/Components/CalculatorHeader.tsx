@@ -19,7 +19,7 @@ const CalculatorHeader: React.FC<CalculatorHeaderProps> = ({label}: CalculatorHe
     }
 
     return (
-        <header className="flex items-center h-15
+        <header className="flex items-center h-15 sticky top-12
                            dark:bg-[#202020] dark:text-white">
 
             <div className="m-3.5 h-8 w-8 flex items-center justify-center rounded-md bg-[#AFAFAF]">

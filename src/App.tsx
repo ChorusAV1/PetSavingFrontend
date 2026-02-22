@@ -10,18 +10,25 @@ import Calculator from "./Components/MainViews/Calculator";
 import DeficitCalculator from "./Components/CalculatorViews/DeficitCalculator";
 import MantenimientoCalculator from "./Components/CalculatorViews/MantenimientoCalculator";
 import GoteoCalculator from "./Components/CalculatorViews/GoteoCalculator";
-import NuevoCliente from "./Components/NuevoCliente";
-import ListClients from "./Components/ListClients";
+import NuevoCliente from "./Components/ClientViews/NuevoCliente";
+import ListClients from "./Components/ClientViews/ListClients";
+import DetailClients from "./Components/ClientViews/DetailClients";
 
 function App()
 {
-
     const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(false)
+
+	const [clientToShow, setClientToShow] = useState<string>("")
 
  	const toggleSidebar = () =>
   	{
    		setIsNavbarOpen(!isNavbarOpen);
  	}
+
+	const goToClient = (id: string) =>
+	{
+		setClientToShow(id);
+	}
   
   	return (
 		<BrowserRouter>
@@ -39,8 +46,9 @@ function App()
         			<Routes>
 						<Route path="/appointments" element={<Appointments/>}/>
 						<Route path="/clients" element={<Clients/>}>
-							<Route path="lista" element = {<ListClients/>}/>
+							<Route path="lista" element = {<ListClients handleClientClick={goToClient}/>}/>
 							<Route path="nuevocliente" element = {<NuevoCliente/>}/>
+							<Route path="detallecliente" element = {<DetailClients id={clientToShow}/>}/>
 						</Route>
 						<Route path="/pets" element={<Appointments/>}/>
 						<Route path="/inventory" element={<Appointments/>}/>

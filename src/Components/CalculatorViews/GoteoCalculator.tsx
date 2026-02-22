@@ -4,7 +4,7 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
 {
     return (
         <>
-            <section className="flex flex-col dark:bg-black h-25">
+            <section className="flex flex-col dark:bg-black h-25 sticky top-27">
 
                 <span className="text-[16px] dark:text-[#808080] font-light ml-1.25 mt-1.25">Volumen(ml)</span>
 
@@ -20,9 +20,9 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
 
             </section>
 
-            <form className="flex flex-col flex-1 overflow-y-visible">
+            <form className="flex flex-col flex-1">
 
-                <div className="flex m-2.5 h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
+                <div className="flex mx-2.5 mt-2.5 h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
 
                     <span className="m-3.25 text-[16px]">Peso</span>
 
@@ -38,7 +38,7 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
 
                 </div>
 
-                <div className="flex m-2.5 h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
+                <div className="flex mx-2.5 mt-2.5 h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
 
                     <span className="m-3.25 text-[16px]">% Deshidratación</span>
 
@@ -54,7 +54,7 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
 
                 </div>
 
-                <div className="flex m-2.5 h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
+                <div className="flex mx-2.5 mt-2.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
 
                     <span className="m-3.25 text-[16px]">Pérdidas</span>
 
@@ -70,9 +70,9 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
 
                 </div>
 
-                <div className="flex m-2.5 h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
+                <div className="flex m-2.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
 
-                    <span className="m-3.25 text-[16px]">Factor goteo del equipo</span>
+                    <span className="m-3.25 text-[14px]">Factor goteo del equipo</span>
 
                     <div className="grow" />
 
@@ -97,7 +97,7 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
 
                 <div className="flex-1" />
 
-                <section className="flex items-center justify-around bg-[#202020] h-18 border-t">
+                <section className="flex items-center justify-around bg-[#202020] h-18 border-t sticky bottom-0">
 
                     <button className="dark:bg-[#3B3B3B] dark:hover:bg-[#303030] dark:active:bg-[#404040] text-[24px] text-white w-18.75 h-12.5 rounded-lg">
                         C

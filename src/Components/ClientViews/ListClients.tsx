@@ -1,11 +1,17 @@
 import React, { useEffect, useState, type JSX } from 'react'
-import ViewHeader from './ViewHeader';
-import PlaceholderCircle32x32 from '../assets/PlaceholderCircle32x32';
+import ViewHeader from '../ViewHeader';
+import PlaceholderCircle32x32 from '../../assets/PlaceholderCircle32x32';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+interface ListClientsProps
+{
+    handleClientClick: (id: string) => void;
+}
 
 interface ClientResponse
 {
-    id: 1,
+    id: string,
     firstName: string;
     lastName: string;
     email: string;
@@ -17,8 +23,17 @@ interface ClientResponse
     emergencyContactPhone: number;
 }
 
-const ListClients: React.FC = (): JSX.Element =>
+const ListClients: React.FC<ListClientsProps> = ({handleClientClick}: ListClientsProps): JSX.Element =>
 {
+    const navigate = useNavigate();
+
+    const handleClick = (id: string) =>
+    {
+        handleClientClick(id)
+
+        navigate("../detallecliente")
+    }
+
     const [clients, setClients] = useState<ClientResponse[]>([]);
 
     useEffect(() =>
@@ -32,12 +47,15 @@ const ListClients: React.FC = (): JSX.Element =>
 
     return (
         <div>
-            <ViewHeader label="Clients" />
+            <ViewHeader label="Clients"/>
+
             <ul className="dark:text-white">
                 {clients.map((client) =>
                 (
-                    <li key={client.id}
-                        className="flex m-2.5 border dark:border-black rounded dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010]">
+                    <li
+                        key={client.id}
+                        className="flex m-2.5 border dark:border-black rounded dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010]"
+                        onClick={() => handleClick(client.id)}>
 
                         {/* Render appointment details */}
                         <div className="m-2">

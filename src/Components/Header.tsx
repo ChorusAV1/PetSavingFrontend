@@ -9,10 +9,10 @@ interface HeaderProps
 const Header: React.FC<HeaderProps> = ({handleSandwichOnClick}: HeaderProps): JSX.Element =>
 {
     return (
-        <header className="flex h-12
+        <header className="flex h-12 sticky top-0
                         dark:bg-black dark:border-b dark:border-[#242424]">
             <div className="w-17 flex items-center justify-center">
-                <button onClick={handleSandwichOnClick} className="w-8 h-8 flex items-center justify-center">
+                <button onClick={handleSandwichOnClick} className="flex items-center justify-center">
                     <Placeholder20x20 />
                 </button>
             </div>
