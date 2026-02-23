@@ -6,15 +6,16 @@ import { useNavigate } from 'react-router-dom';
 interface ViewHeaderProps 
 {
     label: string;
+    createNavigate: string
 }
 
-const ViewHeader: React.FC<ViewHeaderProps> = ({ label }: ViewHeaderProps): JSX.Element =>
+const ViewHeader: React.FC<ViewHeaderProps> = ({ label, createNavigate }: ViewHeaderProps): JSX.Element =>
 {
     const navigate = useNavigate();
 
     const handleNuevo = () =>
     {
-        navigate("../nuevocliente")
+        navigate("../" + createNavigate)
     }
     
     return (

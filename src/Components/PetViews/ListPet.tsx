@@ -4,58 +4,64 @@ import PlaceholderCircle32x32 from '../../assets/PlaceholderCircle32x32';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-interface ListClientsProps
+interface ListPetProps
 {
-    handleClientClick: (id: string) => void;
+    handlePetClick: (id: string) => void;
 }
 
-interface ClientResponse
+interface GETPetRequestDTO
 {
-    id: string,
+    id: string;
+    pet: petSummaryDTO;
+    name: string;
+    species: string;
+    breed: string;
+    gender: string;
+    birthDate: string;
+    weight: number;
+    adoptedDate: string;
+    rating: number;
+}
+
+interface petSummaryDTO
+{
     firstName: string;
     lastName: string;
-    email: string;
-    phoneNumber: number;
-    address: string;
-    birthDate: string;
-    registrationDate: string;
-    emergencyContactName: string;
-    emergencyContactPhone: number;
 }
 
-const ListClients: React.FC<ListClientsProps> = ({handleClientClick}: ListClientsProps): JSX.Element =>
+const ListPet: React.FC<ListPetProps> = ({handlePetClick}: ListPetProps): JSX.Element =>
 {
     const navigate = useNavigate();
 
     const handleClick = (id: string) =>
     {
-        handleClientClick(id)
+        handlePetClick(id)
 
-        navigate("../detallecliente")
+        navigate("../detallemascota")
     }
 
-    const [clients, setClients] = useState<ClientResponse[]>([]);
+    const [Pet, setPet] = useState<GETPetRequestDTO[]>([]);
 
     useEffect(() =>
     {
-        axios.get<ClientResponse[]>("http://localhost:5126/api/client").then((res) =>
+        axios.get<GETPetRequestDTO[]>("http://localhost:5126/api/pet").then((res) =>
         {
-            setClients(res.data);
+            setPet(res.data);
         })
-        .catch((e) => console.error("Error de consulta de api en Clients:", e));
+        .catch((e) => console.error("Error de consulta de api en Pet:", e));
     }, []);
 
     return (
         <div>
-            <ViewHeader label="Clientes" createNavigate="nuevocliente"/>
+            <ViewHeader label="Mascotas" createNavigate="nuevamascota"/>
 
             <ul className="dark:text-white">
-                {clients.map((client) =>
+                {Pet.map((pet) =>
                 (
                     <li
-                        key={client.id}
+                        key={pet.id}
                         className="flex m-2.5 border dark:border-black rounded dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010]"
-                        onClick={() => handleClick(client.id)}>
+                        onClick={() => handleClick(pet.id)}>
 
                         {/* Render appointment details */}
                         <div className="m-2">
@@ -63,9 +69,9 @@ const ListClients: React.FC<ListClientsProps> = ({handleClientClick}: ListClient
                         </div>
 
                         <div className="flex flex-col text-[12px] justify-center ml-0.5">
-                            <span><strong>{client.firstName + " " + client.lastName}</strong></span>
+                            <span><strong>{pet.name}</strong></span>
                             
-                            <span>{client.email}</span>
+                            <span>{pet.species}</span>
                         </div>
                         
                     </li>
@@ -75,4 +81,4 @@ const ListClients: React.FC<ListClientsProps> = ({handleClientClick}: ListClient
     )
 }
 
-export default ListClients
+export default ListPet

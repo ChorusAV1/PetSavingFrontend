@@ -4,6 +4,8 @@ import Placeholder20x20 from '../../assets/Placeholder20x20';
 import Placeholder24x24 from '../../assets/Placeholder24x24';
 import axios from 'axios';
 import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
+import GenericModal from '../GenericModal';
+import DeleteModal from '../DeleteModal';
 
 interface DetailClientsProps
 {
@@ -33,6 +35,11 @@ const DetailClients: React.FC<DetailClientsProps> = ({id}: DetailClientsProps): 
         navigate("../lista")
     }
 
+    const handleEdit = () =>
+    {
+        navigate("../editarcliente")
+    }
+
     const [getClient, setClient] = useState<ClientResponse>();
 
     useEffect(() =>
@@ -43,6 +50,23 @@ const DetailClients: React.FC<DetailClientsProps> = ({id}: DetailClientsProps): 
         })
         .catch((e) => console.error("Error de consulta de api en Clients:", e));
     }, []);
+
+    const handleDelete = () =>
+    {
+        try
+        {
+            axios.delete(`http://localhost:5126/api/client/${id}`);
+
+            handleBack();
+        }
+        catch (e)
+        {
+            console.error("Ocurrió un error al tratar de borrar el cliente: ", e)
+        }
+        
+    }
+
+    const [open, setOpen] = useState<boolean>(false);
 
     return (
         <>
@@ -57,15 +81,34 @@ const DetailClients: React.FC<DetailClientsProps> = ({id}: DetailClientsProps): 
                     <Placeholder24x24/>
                 </div>
 
-                <span className="text-[12px] select-none"><strong>Nuevo Cliente</strong></span>
+                <span className="text-[12px] select-none"><strong>Clientes</strong></span>
 
-                 <div className="grow"/>
+                <div className="grow"/>
 
-                <button
-                    className="m-3.5 h-8 w-8 flex items-center justify-center rounded-md bg-green-400 hover:bg-green-500 active:bg-green-600"
-                >
-                    <Placeholder24x24/>
+                <button 
+                    onClick={handleEdit}
+                    className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none
+                                dark:hover:bg-[#303030] dark:active:bg-[#101010]">
+
+                    <div className="m-1.25">
+                        <Placeholder20x20/>
+                    </div>
+
+                    <span className="text-[10px]">Editar</span>
+
                 </button>
+
+                <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none
+                                dark:hover:bg-[#303030] dark:active:bg-[#101010]"
+                        onClick={() => setOpen(true)}>
+
+                    <div className="m-1.25">
+                        <Placeholder20x20/>
+                    </div>
+
+                <span className="text-[10px]">Eliminar</span>
+
+            </button>
 
             </header>
 
@@ -116,6 +159,12 @@ const DetailClients: React.FC<DetailClientsProps> = ({id}: DetailClientsProps): 
                     <label className="ml-2.5">{getClient?.emergencyContactPhone}</label>
                 </span>
             </div>
+
+            <GenericModal open={open} onClose={() => setOpen(false)}>
+
+                <DeleteModal onClickDelete={handleDelete} onClickClose={() => setOpen(false)}/>
+
+            </GenericModal>
         </>
     )
 }
