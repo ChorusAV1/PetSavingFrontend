@@ -1,11 +1,16 @@
 import React, { useEffect, useState, type JSX } from 'react'
 import { useNavigate } from 'react-router-dom';
-import Placeholder20x20 from '../../assets/Placeholder20x20';
-import Placeholder24x24 from '../../assets/Placeholder24x24';
 import axios from 'axios';
 import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
 import GenericModal from '../GenericModal';
 import DeleteModal from '../DeleteModal';
+import ViewHeader from '../ViewHeader';
+import ApptsSVG from '../../assets/ApptsSVG';
+import MailSVG from '../../assets/MailSVG';
+import PhoneSVG from '../../assets/PhoneSVG';
+import AddressSVG from '../../assets/AddressSVG';
+import CalendarSVG from '../../assets/CalendarSVG';
+import ProfileSVG from '../../assets/ProfileSVG';
 
 interface DetailClientsProps
 {
@@ -70,47 +75,13 @@ const DetailClients: React.FC<DetailClientsProps> = ({id}: DetailClientsProps): 
 
     return (
         <>
-            <header className="flex items-center h-15
-                           dark:bg-[#202020] dark:text-white">
-
-                <button className="pl-3.5" onClick={handleBack}>
-                    <Placeholder20x20/>
-                </button>
-
-                <div className="m-3.5 h-8 w-8 flex items-center justify-center rounded-md bg-[#AFAFAF]">
-                    <Placeholder24x24/>
-                </div>
-
-                <span className="text-[12px] select-none"><strong>Clientes</strong></span>
-
-                <div className="grow"/>
-
-                <button 
-                    onClick={handleEdit}
-                    className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none
-                                dark:hover:bg-[#303030] dark:active:bg-[#101010]">
-
-                    <div className="m-1.25">
-                        <Placeholder20x20/>
-                    </div>
-
-                    <span className="text-[10px]">Editar</span>
-
-                </button>
-
-                <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none
-                                dark:hover:bg-[#303030] dark:active:bg-[#101010]"
-                        onClick={() => setOpen(true)}>
-
-                    <div className="m-1.25">
-                        <Placeholder20x20/>
-                    </div>
-
-                <span className="text-[10px]">Eliminar</span>
-
-            </button>
-
-            </header>
+            <ViewHeader
+                label="Cliente"
+                icon={<ApptsSVG/>}
+                onBackClick={handleBack}
+                onEditClick={handleEdit}
+                onDeleteClick={() => setOpen(true)}
+            />
 
             <div className="bg-black h-px"/>
 
@@ -125,23 +96,23 @@ const DetailClients: React.FC<DetailClientsProps> = ({id}: DetailClientsProps): 
 
                 <div className="text-[14px]">
                     <span className="flex items-center mt-2.5">
-                        <Placeholder20x20/>
+                        <MailSVG/>
                         <label className="ml-2.5">{getClient?.email}</label>
                     </span>
                     <span className="flex items-center mt-2.5">
-                        <Placeholder20x20/>
+                        <PhoneSVG/>
                         <label className="ml-2.5">{getClient?.phoneNumber}</label>
                     </span>
                     <span className="flex items-center mt-2.5">
-                        <Placeholder20x20/>
+                        <AddressSVG/>
                         <label className="ml-2.5">{getClient?.address}</label>
                     </span>
                     <span className="flex items-center mt-2.5">
-                        <Placeholder20x20/>
+                        <CalendarSVG/>
                         <label className="ml-2.5">{getClient?.birthDate}</label>
                     </span>
                     <span className="flex items-center mt-2.5">
-                        <Placeholder20x20/>
+                        <CalendarSVG/>
                         <label className="ml-2.5">{getClient?.registrationDate}</label>
                     </span>
                 </div>
@@ -151,18 +122,18 @@ const DetailClients: React.FC<DetailClientsProps> = ({id}: DetailClientsProps): 
             <div className="flex flex-col justify-center dark:bg-[#202020] border dark:border-black mx-2.5 p-2.5 dark:text-white text-[12px] rounded">
                 <label className="font-light text-[12px]">Contacto de emergencia</label>
                 <span className="flex items-center mt-1">
-                    <Placeholder20x20/>
+                    <ProfileSVG/>
                     <label className="ml-2.5">{getClient?.emergencyContactName}</label>
                 </span>
                 <span className="flex items-center mt-2.5">
-                    <Placeholder20x20/>
+                    <PhoneSVG/>
                     <label className="ml-2.5">{getClient?.emergencyContactPhone}</label>
                 </span>
             </div>
 
             <GenericModal open={open} onClose={() => setOpen(false)}>
 
-                <DeleteModal onClickDelete={handleDelete} onClickClose={() => setOpen(false)}/>
+                <DeleteModal message="¿Estás seguro de que deseas eliminar este cliente?" onClickDelete={handleDelete} onClickClose={() => setOpen(false)}/>
 
             </GenericModal>
         </>

@@ -1,9 +1,11 @@
 import React, { useState, type JSX } from 'react'
-import Placeholder20x20 from '../../assets/Placeholder20x20'
-import Placeholder24x24 from '../../assets/Placeholder24x24'
 import { useNavigate } from 'react-router-dom';
 import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
 import axios from 'axios';
+import ViewHeader from '../ViewHeader';
+import ApptsSVG from '../../assets/ApptsSVG';
+import AddImgSVG from '../../assets/AddImgSVG';
+import GenericButton from '../GenericButton';
 
 interface CreateUserRequest
 {
@@ -45,10 +47,8 @@ const NuevoCliente: React.FC = (): JSX.Element =>
         setFormData((prev) => ({...prev, [name]: value, }));
     };
 
-    const handleSubmit = async (e: React.FormEvent) =>
+    const handleSubmit = async () =>
     {
-        e.preventDefault();
-
         try
         {
             const payload: CreateUserRequest =
@@ -71,29 +71,12 @@ const NuevoCliente: React.FC = (): JSX.Element =>
 
     return (
         <>
-            <header className="flex items-center h-15
-                           dark:bg-[#202020] dark:text-white">
-
-                <button className="pl-3.5" onClick={handleBack}>
-                    <Placeholder20x20/>
-                </button>
-
-                <div className="m-3.5 h-8 w-8 flex items-center justify-center rounded-md bg-[#AFAFAF]">
-                    <Placeholder24x24/>
-                </div>
-
-                <span className="text-[12px] select-none"><strong>Nuevo Cliente</strong></span>
-
-                 <div className="grow"/>
-
-                <button
-                    className="m-3.5 h-8 w-8 flex items-center justify-center rounded-md bg-green-400 hover:bg-green-500 active:bg-green-600"
-                    onClick={handleSubmit}
-                >
-                    <Placeholder24x24/>
-                </button>
-
-            </header>
+            <ViewHeader
+                label="Nuevo cliente"
+                icon={<ApptsSVG/>}
+                onBackClick={handleBack}
+                submitCreateButton={handleSubmit}
+            />
 
             <div className="bg-black h-px"/>
 
@@ -101,9 +84,10 @@ const NuevoCliente: React.FC = (): JSX.Element =>
 
                 <div className="flex items-center mb-3 mt-0.5 ml-0.5">
                     <PlaceholderCircle64x64/>
-                    <button className="bg-blue-500 p-1 rounded-md ml-6">
-                        <Placeholder24x24/>
-                    </button>
+                    <GenericButton
+                        color="blue"
+                        icon={<AddImgSVG/>}
+                        customClasses="ml-5"/>
                 </div>
 
                 

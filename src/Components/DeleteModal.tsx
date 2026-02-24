@@ -2,11 +2,12 @@ import React, { type JSX } from 'react'
 
 interface DeleteModalProps
 {
+    message: string;
     onClickDelete: () => void;
     onClickClose: (p: boolean) => void
 }
 
-const DeleteModal: React.FC<DeleteModalProps> = ({ onClickDelete, onClickClose }: DeleteModalProps): JSX.Element =>
+const DeleteModal: React.FC<DeleteModalProps> = ({ message, onClickDelete, onClickClose }: DeleteModalProps): JSX.Element =>
 {
     return (
         <div className="flex flex-col items-center justify-center p-4 w-60">
@@ -16,7 +17,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ onClickDelete, onClickClose }
                 <h3 className="text-lg text-gray-800 dark:text-white"><strong>Eliminar</strong></h3>
 
                 <p className="text-sm text-gray-500 dark:text-white m-2">
-                    ¿Estás seguro de que deseas eliminar este cliente?
+                    {message}
                 </p>
 
             </div>

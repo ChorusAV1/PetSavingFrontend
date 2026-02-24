@@ -18,6 +18,15 @@ import Pet from "./Components/MainViews/Pet";
 import ListPet from "./Components/PetViews/ListPet";
 import PostPet from "./Components/PetViews/PostPet";
 import DetailPet from "./Components/PetViews/DetailPet";
+import PatchPet from "./Components/PetViews/PatchPet";
+import GetAllAppointments from "./Components/AppointmentViews/GetAllAppointments";
+import PostAppointment from "./Components/AppointmentViews/PostAppointment";
+import ApptsSVG from "./assets/ApptsSVG";
+import CustSVG from "./assets/CustSVG";
+import PetsSVG from "./assets/PetsSVG";
+import Placeholder20x20 from "./assets/Placeholder20x20";
+import CalcSVG from "./assets/CalcSVG";
+import StaffSVG from "./assets/StaffSVG";
 
 function App()
 {
@@ -27,6 +36,13 @@ function App()
   	{
    		setIsNavbarOpen(!isNavbarOpen);
  	}
+
+	const [appointmentToShow, setAppointmentToShow] = useState<string>("");
+
+	const goToAppointment = (id: string) =>
+	{
+		setAppointmentToShow(id);
+	}
 
 	const [clientToShow, setClientToShow] = useState<string>("")
 
@@ -48,15 +64,19 @@ function App()
                     dark:bg-[#191919]">
         		<Header handleSandwichOnClick={toggleSidebar}/>
       			<Navbar isOpen={isNavbarOpen}>
-        			<NavbarButton label="Consultas" path="/appointments"/>
-        			<NavbarButton label="Clientes" path="/clients"/>
-        			<NavbarButton label="Mascotas" path="/pets"/>
-        			<NavbarButton label="Inventario" path="/appointments"/>
-        			<NavbarButton label="Calculadora" path="/calculator"/>
+        			<NavbarButton label="Consultas" path="/appointments" icon={<ApptsSVG/>}/>
+        			<NavbarButton label="Clientes" path="/clients" icon={<CustSVG/>}/>
+        			<NavbarButton label="Mascotas" path="/pets" icon={<PetsSVG/>}/>
+        			<NavbarButton label="Inventario" path="/appointments" icon={<Placeholder20x20/>}/>
+        			<NavbarButton label="Calculadora" path="/calculator" icon={<CalcSVG/>}/>
+					<NavbarButton label="Personal" path="/staff" icon={<StaffSVG/>}/>
       			</Navbar>
       			<ViewControl>
         			<Routes>
-						<Route path="/appointments" element = {<Appointments/>}/>
+						<Route path="/appointments" element = {<Appointments/>}>
+							<Route path="list" element = {<GetAllAppointments handleAppointmentClick={goToAppointment}/>}/>
+							<Route path="nuevaconsulta" element = {<PostAppointment/>}/>
+						</Route>
 						<Route path="/clients" element = {<Clients/>}>
 							<Route path="lista" element = {<ListClients handleClientClick={goToClient}/>}/>
 							<Route path="nuevocliente" element = {<NuevoCliente/>}/>
@@ -67,6 +87,7 @@ function App()
 							<Route path="list" element = {<ListPet handlePetClick={goToPet}/>}/>
 							<Route path="nuevamascota" element = {<PostPet/>}/>
 							<Route path="detallemascota" element = {<DetailPet id={petToShow}/>}/>
+							<Route path="editarmascota" element = {<PatchPet id={petToShow}/>}/>
 						</Route>
 						<Route path="/inventory" element={<Appointments/>}/>
 						<Route path="/calculator" element={<Calculator/>}>

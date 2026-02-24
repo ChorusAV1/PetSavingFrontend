@@ -1,71 +1,83 @@
-import React, { useState, type JSX } from 'react'
+import React, { useEffect, useState, type JSX } from 'react'
+import ViewHeader from '../ViewHeader';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import GenericContainer from '../GenericContainer';
 import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
-import Placeholder24x24 from '../../assets/Placeholder24x24';
+import type { GETPetRequestDTO } from '../../types/PetTypes';
 import GenericModal from '../GenericModal';
 import SearchClientModal from '../SearchClientModal';
-import type { POSTPetRequestDTO } from '../../types/PetTypes';
-import ViewHeader from '../ViewHeader';
-import PetsSVG from '../../assets/PetsSVG';
+import axios from 'axios';
+import GenericButton from '../GenericButton';
+import AddImgSVG from '../../assets/AddImgSVG';
+import ApptsSVG from '../../assets/ApptsSVG';
+import SearchSVG from '../../assets/SearchSVG';
 
-const NuevoCliente: React.FC = (): JSX.Element =>
+interface PatchPetProps
+{
+    id: string;
+}
+
+const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =>
 {
     const navigate = useNavigate();
 
     const handleBack = () =>
     {
-        navigate("../list")
+        navigate("../detallemascota")
     }
 
-    {/* GenericModal isOpen*/}
     const [open, setOpen] = useState<boolean>(false);
-    
-    const [formData, setFormData] = useState<POSTPetRequestDTO>(
+
+    const [formData, setFormData] = useState<GETPetRequestDTO>(
     {
-        clientId: "16636e02-e226-4cb5-bea8-dccbf99582a8",
+        id: "",
+        client: {
+            firstName: "",
+            lastName: ""
+        },
         name: "",
         species: "",
         breed: "",
-        gender: "Macho",
+        gender: "",
         birthDate: "",
         weight: 0,
         adoptedDate: "",
         rating: 0,
     });
 
-    const [ownerName, setOwnerName] = useState<string>("Sin cliente")
-
+    const [ownerName, setOwnerName] = useState<string>("Sin cliente");
+    
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     {
         const { name, value } = e.target;
-
+    
         setFormData((prev) => ({...prev, [name]: name === "weight" ? Number(value): value, }));
     };
-    
-    const handleSubmit = async () =>
+
+    const GETPet = () =>
     {
         try
         {
-            const payload: POSTPetRequestDTO =
+            axios.get<GETPetRequestDTO>(`http://localhost:5126/api/pet/${id}`).then((res) =>
             {
-                ...formData,
-                birthDate: new Date(formData.birthDate).toISOString(),
-                adoptedDate: new Date(formData.adoptedDate).toISOString(),
-            };
-    
-            const response = await axios.post("http://localhost:5126/api/pet", payload);
-
-            console.log("Pet created:", response.data);
-
-            navigate("../list");
+                setFormData(res.data);
+            });
         }
-        catch (error)
+        catch (e)
         {
-            console.error("Error creating user:", error);
+            console.error("Ocurrió un error al traer la información del cliente: ", e);
         }
     };
+    
+    useEffect(() =>
+    {
+        GETPet();
+    }, [])
+    
+    const handleSubmit = () =>
+    {
+        console.log("Submit is being clicked!")
+    }
 
     const clientModalSubmit = (fullName: string, id: string): void =>
     {
@@ -77,22 +89,26 @@ const NuevoCliente: React.FC = (): JSX.Element =>
     return (
         <>
             <ViewHeader
-                label="Nueva Mascota"
-                icon={<PetsSVG/>}
+                label="Mascotas"
+                icon={<ApptsSVG/>}
                 onBackClick={handleBack}
                 submitCreateButton={handleSubmit}
             />
 
-            <div className="bg-black h-px mb-2.5"/>
-
+            <div className="h-2.5"/>
+            
             <GenericContainer textSize={16}>
 
                 <div className="flex items-center p-3">
+
                     <PlaceholderCircle64x64/>
 
-                    <button className="ml-5 bg-blue-500 p-1 rounded-md">
-                        <Placeholder24x24/>
-                    </button>
+                    <GenericButton
+                        color="blue"
+                        icon={<AddImgSVG/>}
+                        customClasses="ml-5"
+                    />
+
                 </div>
 
                 <div className="flex items-center justify-between my-1.25">
@@ -190,22 +206,26 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                 </label>
 
                 <div className="flex items-center my-1.25">
+
                     <label className="font-light">Nombre</label>
 
                     <div className="grow"/>
 
-                    <input type="text"
-                           name="clientId"
-                           value={ownerName}
-                           onChange={handleChange}
-                           className="dark:bg-[#101010] h-8 p-2 rounded-md"
-                           disabled
+                    <input
+                        type="text"
+                        name="clientId"
+                        value={ownerName}
+                        onChange={handleChange}
+                        className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                        disabled
                     />
-                    
-                    <button className="bg-blue-500 p-1 ml-2.5 rounded-md"
-                            onClick={() => setOpen(true)}>
-                        <Placeholder24x24/>
-                    </button>
+
+                    <GenericButton
+                        color="blue"
+                        icon={<SearchSVG/>}
+                        customClasses="ml-2.5"
+                    />
+
                 </div>
 
             </GenericContainer>
@@ -217,4 +237,4 @@ const NuevoCliente: React.FC = (): JSX.Element =>
     )
 }
 
-export default NuevoCliente
+export default PatchPet

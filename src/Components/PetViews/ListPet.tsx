@@ -3,30 +3,12 @@ import ViewHeader from '../ViewHeader';
 import PlaceholderCircle32x32 from '../../assets/PlaceholderCircle32x32';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import type { GETPetRequestDTO } from '../../types/PetTypes';
+import PetsSVG from '../../assets/PetsSVG';
 
 interface ListPetProps
 {
     handlePetClick: (id: string) => void;
-}
-
-interface GETPetRequestDTO
-{
-    id: string;
-    pet: petSummaryDTO;
-    name: string;
-    species: string;
-    breed: string;
-    gender: string;
-    birthDate: string;
-    weight: number;
-    adoptedDate: string;
-    rating: number;
-}
-
-interface petSummaryDTO
-{
-    firstName: string;
-    lastName: string;
 }
 
 const ListPet: React.FC<ListPetProps> = ({handlePetClick}: ListPetProps): JSX.Element =>
@@ -53,7 +35,11 @@ const ListPet: React.FC<ListPetProps> = ({handlePetClick}: ListPetProps): JSX.El
 
     return (
         <div>
-            <ViewHeader label="Mascotas" createNavigate="nuevamascota"/>
+            <ViewHeader
+                label="Mascotas"
+                icon={<PetsSVG/>}
+                createNavigate="nuevamascota"
+            />
 
             <ul className="dark:text-white">
                 {Pet.map((pet) =>

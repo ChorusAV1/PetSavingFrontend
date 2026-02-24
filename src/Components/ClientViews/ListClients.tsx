@@ -3,6 +3,7 @@ import ViewHeader from '../ViewHeader';
 import PlaceholderCircle32x32 from '../../assets/PlaceholderCircle32x32';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import ApptsSVG from '../../assets/ApptsSVG';
 
 interface ListClientsProps
 {
@@ -47,7 +48,11 @@ const ListClients: React.FC<ListClientsProps> = ({handleClientClick}: ListClient
 
     return (
         <div>
-            <ViewHeader label="Clientes" createNavigate="nuevocliente"/>
+            <ViewHeader
+                label="Clientes"
+                icon={<ApptsSVG/>}
+                createNavigate="nuevocliente"
+            />
 
             <ul className="dark:text-white">
                 {clients.map((client) =>
