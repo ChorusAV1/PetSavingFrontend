@@ -17,7 +17,7 @@ const GenericModal: React.FC<GenericModalProps> = ({open, onClose, children}: Ge
             {/* Modal */}
             <div 
                 onClick={(e) => e.stopPropagation()}
-                className={`dark:bg-[#202020] rounded-xl shadow-[0_0px_24px_rgba(0,0,0,0.2)] dark:shadow-[0_0px_24px_rgba(255,255,255,0.2)] transition-all ${open ? "scale-100 opacity-100" : "scale-125 opacity-0"}`}>
+                className={`bg-[#f0f0f0] dark:bg-[#202020] rounded-xl shadow-[0_0px_24px_rgba(0,0,0,0.2)] dark:shadow-[0_0px_24px_rgba(255,255,255,0.2)] transition-all ${open ? "scale-100 opacity-100" : "scale-125 opacity-0"}`}>
 
                 {children}
 

@@ -78,9 +78,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                 submitCreateButton={handleSubmit}
             />
 
-            <div className="bg-black h-px"/>
-
-            <div className="flex flex-col justify-center dark:bg-[#202020] border dark:border-black m-2.5 p-2.5 dark:text-white text-[12px] rounded">
+            <div className="flex flex-col justify-center dark:bg-[#202020] border border-[#DADCDB] dark:border-black m-2.5 p-2.5 dark:text-white text-[12px] rounded shadow dark:shadow-none">
 
                 <div className="flex items-center mb-3 mt-0.5 ml-0.5">
                     <PlaceholderCircle64x64/>
@@ -162,7 +160,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
 
             </div>
 
-            <div className="flex flex-col dark:bg-[#202020] border dark:border-black mx-2.5 mb-2.5 p-2.5 dark:text-white text-[12px] rounded">
+            <div className="flex flex-col dark:bg-[#202020] border border-[#DADCDB] dark:border-black mx-2.5 mb-2.5 p-2.5 dark:text-white text-[12px] rounded shadow dark:shadow-none">
 
                 <label className="font-light mt-1.5 mb-1">Nombre de contacto de emergencia</label>
                 <input

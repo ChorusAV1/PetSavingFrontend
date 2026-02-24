@@ -26,13 +26,15 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ message, onClickDelete, onCli
 
                 <button
                     className="bg-red-500 hover:bg-red-600 active:bg-red-700 transition duration-100 p-2 rounded-lg shadow-[0_0px_12px_rgba(251,44,54,0.9)] hover:shadow-[0_0px_12px_rgba(231,0,1,0.9)] active:shadow-[0_0px_12px_rgba(193,0,7,0.9)] text-white"
-                    onClick={onClickDelete}>
+                    onClick={onClickDelete}
+                >
                     Eliminar
                 </button>
 
                 <button
-                    className="dark:bg-[#303030] dark:hover:bg-[#2B2B2B] dark:active:bg-[#181818] p-2 rounded-lg text-white"
-                    onClick={() => onClickClose(false)}>
+                    className="bg-[#FFFFFF] hover:bg-[#F9F9F9] active:bg-[#d6d6d6] dark:bg-[#303030] dark:hover:bg-[#2B2B2B] dark:active:bg-[#181818] p-2 rounded-lg dark:text-white shadow"
+                    onClick={() => onClickClose(false)}
+                >
                     Cancelar
                 </button>
 

@@ -135,12 +135,7 @@ const PostAppointment: React.FC = (): JSX.Element =>
                 </div>
                 
             </GenericContainer>
-
-            <GenericModal>
-
-                <p>a</p>
-
-            </GenericModal>
+            
         </>
     )
 }

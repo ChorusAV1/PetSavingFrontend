@@ -9,6 +9,9 @@ import SearchClientModal from '../SearchClientModal';
 import type { POSTPetRequestDTO } from '../../types/PetTypes';
 import ViewHeader from '../ViewHeader';
 import PetsSVG from '../../assets/PetsSVG';
+import GenericButton from '../GenericButton';
+import AddImgSVG from '../../assets/AddImgSVG';
+import SearchSVG from '../../assets/SearchSVG';
 
 const NuevoCliente: React.FC = (): JSX.Element =>
 {
@@ -83,16 +86,20 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                 submitCreateButton={handleSubmit}
             />
 
-            <div className="bg-black h-px mb-2.5"/>
+            <div className="mb-2.5"/>
 
             <GenericContainer textSize={16}>
 
                 <div className="flex items-center p-3">
+                    
                     <PlaceholderCircle64x64/>
 
-                    <button className="ml-5 bg-blue-500 p-1 rounded-md">
-                        <Placeholder24x24/>
-                    </button>
+                    <GenericButton
+                        color="blue"
+                        icon={<AddImgSVG/>}
+                        customClasses="ml-5"
+                    />
+                    
                 </div>
 
                 <div className="flex items-center justify-between my-1.25">
@@ -201,11 +208,14 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                            className="dark:bg-[#101010] h-8 p-2 rounded-md"
                            disabled
                     />
-                    
-                    <button className="bg-blue-500 p-1 ml-2.5 rounded-md"
-                            onClick={() => setOpen(true)}>
-                        <Placeholder24x24/>
-                    </button>
+
+                    <GenericButton
+                        color="blue"
+                        icon={<SearchSVG/>}
+                        customClasses="ml-2.5"
+                        submitGenericButton={() => setOpen(true)}
+                    />
+
                 </div>
 
             </GenericContainer>

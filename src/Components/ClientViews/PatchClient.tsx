@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ViewHeader from '../ViewHeader';
 import ApptsSVG from '../../assets/ApptsSVG';
+import GenericButton from '../GenericButton';
+import AddImgSVG from '../../assets/AddImgSVG';
 
 interface CreateUserRequest
 {
@@ -113,15 +115,18 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
                 submitCreateButton={handleSubmit}
             />
 
-            <div className="bg-black h-px"/>
-
-            <div className="flex flex-col justify-center dark:bg-[#202020] border dark:border-black m-2.5 p-2.5 dark:text-white text-[12px] rounded">
+            <div className="flex flex-col justify-center dark:bg-[#202020] border border-[#DADCDB] dark:border-black m-2.5 p-2.5 dark:text-white text-[12px] rounded shadow dark:shadow-none">
 
                 <div className="flex items-center mb-3 mt-0.5 ml-0.5">
+
                     <PlaceholderCircle64x64/>
-                    <button className="bg-blue-500 p-1 rounded-md ml-6">
-                        <Placeholder24x24/>
-                    </button>
+
+                    <GenericButton
+                        color="blue"
+                        icon={<AddImgSVG/>}
+                        customClasses="ml-6"
+                    />
+                    
                 </div>
 
                 
@@ -196,7 +201,7 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
 
             </div>
 
-            <div className="flex flex-col dark:bg-[#202020] border dark:border-black mx-2.5 mb-2.5 p-2.5 dark:text-white text-[12px] rounded">
+            <div className="flex flex-col dark:bg-[#202020] border border-[#DADCDB] dark:border-black mx-2.5 mb-2.5 p-2.5 dark:text-white text-[12px] rounded shadow dark:shadow-none">
 
                 <label className="font-light mt-1.5 mb-1">Nombre de contacto de emergencia</label>
                 <input

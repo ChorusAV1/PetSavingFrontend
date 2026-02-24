@@ -59,7 +59,7 @@ const ListClients: React.FC<ListClientsProps> = ({handleClientClick}: ListClient
                 (
                     <li
                         key={client.id}
-                        className="flex m-2.5 border dark:border-black rounded dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010]"
+                        className="flex m-2.5 border border-[#DADCDB] shadow dark:shadow-none dark:border-black rounded dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010]"
                         onClick={() => handleClick(client.id)}>
 
                         {/* Render appointment details */}

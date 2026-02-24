@@ -46,7 +46,7 @@ const ListPet: React.FC<ListPetProps> = ({handlePetClick}: ListPetProps): JSX.El
                 (
                     <li
                         key={pet.id}
-                        className="flex m-2.5 border dark:border-black rounded dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010]"
+                        className="flex m-2.5 border border-[#DADCDB] dark:border-black rounded dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010] shadow dark:shadow-none"
                         onClick={() => handleClick(pet.id)}>
 
                         {/* Render appointment details */}

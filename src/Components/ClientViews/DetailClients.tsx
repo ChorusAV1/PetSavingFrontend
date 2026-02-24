@@ -83,9 +83,7 @@ const DetailClients: React.FC<DetailClientsProps> = ({id}: DetailClientsProps): 
                 onDeleteClick={() => setOpen(true)}
             />
 
-            <div className="bg-black h-px"/>
-
-            <div className="flex flex-col justify-center dark:bg-[#202020] border dark:border-black m-2.5 p-2.25 dark:text-white text-[12px] rounded">
+            <div className="flex flex-col justify-center dark:bg-[#202020] border border-[#DADCDB] dark:border-black m-2.5 p-2.25 dark:text-white text-[12px] rounded shadow dark:shadow-none">
                 <div className="flex items-center">
                     <PlaceholderCircle64x64/>
                     <div className="flex flex-col m-2.5 text-[16px]">
@@ -119,7 +117,7 @@ const DetailClients: React.FC<DetailClientsProps> = ({id}: DetailClientsProps): 
                 
             </div>
 
-            <div className="flex flex-col justify-center dark:bg-[#202020] border dark:border-black mx-2.5 p-2.5 dark:text-white text-[12px] rounded">
+            <div className="flex flex-col justify-center dark:bg-[#202020] border border-[#DADCDB] dark:border-black mx-2.5 p-2.5 dark:text-white text-[12px] rounded shadow dark:shadow-none">
                 <label className="font-light text-[12px]">Contacto de emergencia</label>
                 <span className="flex items-center mt-1">
                     <ProfileSVG/>

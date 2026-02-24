@@ -11,7 +11,7 @@ const GenericContainer: React.FC<GenericContainerProps> = ({ children, textSize}
     const textSizeClass = textSize ? `text-[${textSize}px]` : "";
 
     return (
-        <div className={`flex flex-col justify-center dark:bg-[#202020] border dark:border-black mx-2.5 p-2.5 dark:text-white ${textSizeClass} rounded`}>
+        <div className={`flex flex-col justify-center dark:bg-[#202020] border border-[#DADCDB] dark:border-black mx-2.5 p-2.5 dark:text-white ${textSizeClass} rounded shadow dark:shadow-none`}>
             {children}
         </div>
     )
