@@ -32,13 +32,13 @@ const GetAllAppointments: React.FC<GetAllAppointmentsProps> = ({ handleAppointme
         {
             setLoading(true);
 
-            const res = await axios.get<GETAppointmentRequestDTO[]>("http://localhost:5126/api/appointmet");
+            const res = await axios.get<GETAppointmentRequestDTO[]>("http://localhost:5126/api/appointment");
             
             setAppointments(res.data);
         }
         catch(e)
         {
-            console.error("Error de consulta de api en Pet:", e)
+            console.error("Error de consulta de api en Appointment:", e)
         }
         finally
         {

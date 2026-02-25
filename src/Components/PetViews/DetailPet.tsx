@@ -2,7 +2,7 @@ import React, { useEffect, useState, type JSX } from 'react'
 import ViewHeader from '../ViewHeader';
 import { useNavigate } from 'react-router-dom';
 import GenericModal from '../GenericModal';
-import DeleteModal from '../DeleteModal';
+import DeleteModal from '../Modals/DeleteModal';
 import type { GETPetRequestDTO } from '../../types/PetTypes';
 import axios from 'axios';
 import GenericContainer from '../GenericContainer';

@@ -3,7 +3,6 @@ export interface POSTAppointmentRequestDTO
     petId: string;
     clientId: string;
     vetId: string;
-    appointmentDate: string;
     diagnosis: string;
     treatment: string;
     notes: string;

@@ -30,7 +30,7 @@ const ViewHeader: React.FC<ViewHeaderProps> = ({ label, icon, createNavigate, on
     
     return (
     <>
-        <header className="flex items-center h-15 bg-[#F5F6F7]
+        <header className="flex items-center h-15 bg-[#F5F6F7] sticky top-12
                            dark:bg-[#202020] dark:text-white">
 
             {onBackClick && (
@@ -113,7 +113,7 @@ const ViewHeader: React.FC<ViewHeaderProps> = ({ label, icon, createNavigate, on
 
         </header>
 
-        <div className="bg-[#DADCDB] dark:bg-black h-px"/>
+        <div className="bg-[#DADCDB] dark:bg-black h-px sticky top-27"/>
     </>
   )
 }

@@ -5,7 +5,7 @@ import GenericContainer from '../GenericContainer';
 import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
 import type { GETPetRequestDTO } from '../../types/PetTypes';
 import GenericModal from '../GenericModal';
-import SearchClientModal from '../SearchClientModal';
+import SearchClientModal from '../Modals/SearchClientModal';
 import axios from 'axios';
 import GenericButton from '../GenericButton';
 import AddImgSVG from '../../assets/AddImgSVG';

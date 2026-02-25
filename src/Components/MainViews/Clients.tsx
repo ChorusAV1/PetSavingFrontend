@@ -11,11 +11,7 @@ const Clients: React.FC = (): JSX.Element =>
     }, []);
 
     return (
-        <div className="flex flex-col grow">
-
-            <Outlet/>
-
-        </div>
+        <Outlet/>
     )
 }
 

@@ -6,7 +6,35 @@ import GenericButton from '../GenericButton';
 import GenericModal from '../GenericModal';
 import ApptsSVG from '../../assets/ApptsSVG';
 import SearchSVG from '../../assets/SearchSVG';
+import type { POSTAppointmentRequestDTO } from '../../types/AppointmentTypes';
+import axios from 'axios';
+import type { GETClientRequestDTO } from '../../types/ClientTypes';
+import type { GETPetRequestDTO } from '../../types/PetTypes';
+import SearchClientModal from '../Modals/SearchClientModal';
+import SearchPetModal from '../Modals/SearchPetModal';
 
+interface CreateAppointmentForm
+{
+    clientName: string;
+    petName: string;
+    diagnosis: string;
+    treatment: string;
+    notes: string;
+    followUpDate: string;
+}
+
+interface POSTJustInTimeClient
+{
+    firstName: string;
+}
+
+interface POSTJustInTimePet
+{
+    clientId: string;
+    name: string;
+}
+
+// TODO: Clean try catch hell
 const PostAppointment: React.FC = (): JSX.Element =>
 {
     const navigate = useNavigate();
@@ -16,14 +44,123 @@ const PostAppointment: React.FC = (): JSX.Element =>
         navigate("../list")
     }
 
-    const [petNameInput, setPetNameInput] = useState<string>("Sin mascota");
-
-    const [clientNameInput, setClientNameInput] = useState<string>("Sin cliente");
-
-    const handleSubmit = () =>
+    const [payloadData, setPayloadData] = useState<POSTAppointmentRequestDTO>(
     {
-        console.log("Submit appointment has been clicked!");
+        petId: "",
+        clientId: "",
+        vetId: "e743a598-adf0-406b-9439-23691cbe67f5", // TODO: IMPLEMENTAR AUTENTICACIÓN URGENTE
+        diagnosis: "",
+        treatment: "",
+        notes: "",
+        followUpDate: "",
+    });
+
+    const [formData, setFormData] = useState<CreateAppointmentForm>(
+    {
+        clientName: "",
+        petName: "",
+        diagnosis: "",
+        treatment: "",
+        notes: "",
+        followUpDate: "",
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    {
+        const { name, value } = e.target;
+    
+        setFormData((prev) => ({...prev, [name]: value, }));
+    };
+
+    const handleSubmit = async () =>
+    {
+        try
+        {
+            let newClientId = payloadData.clientId
+
+            if (payloadData.clientId == "")
+            {
+                try
+                {
+                    const clientPayload: POSTJustInTimeClient =
+                    {
+                        firstName: formData.clientName
+                    }
+
+                    const clientResponse = await axios.post<GETClientRequestDTO>("http://localhost:5126/api/client", clientPayload);
+
+                    newClientId = clientResponse.data.id;
+                }
+                catch (e)
+                {
+                    console.log("Error while creating a just in time client.", e)
+                }
+            }
+
+            let newPetId = payloadData.petId;
+
+            if (payloadData.petId == "")
+            {
+                try
+                {
+                    const petPayload: POSTJustInTimePet =
+                    {
+                        clientId: newClientId,
+                        name: formData.petName
+                    }
+            
+                    const petResponse = await axios.post<GETPetRequestDTO>("http://localhost:5126/api/pet", petPayload);
+
+                    newPetId = petResponse.data.id;
+                }
+                catch (e)
+                {
+                    console.error("Error while creating a just in time pet.", e)
+                }
+            }
+
+            const postPayloadData: POSTAppointmentRequestDTO =
+            {
+                ...payloadData,
+                clientId: newClientId,
+                petId: newPetId,
+                diagnosis: formData.diagnosis,
+                treatment: formData.treatment,
+                notes: formData.notes,
+                followUpDate: formData.followUpDate
+            };
+    
+            const response = await axios.post("http://localhost:5126/api/appointment", postPayloadData);
+
+            console.log("Pet created:", response.data);
+
+            navigate("../list");
+        }
+        catch (error)
+        {
+            console.error("Error creating user:", error);
+        }
+
     }
+
+    const clientModalSubmit = (fullName: string, id: string): void =>
+    {
+        setFormData((prev) => ({ ...prev, clientName: fullName }));
+
+        setPayloadData((prev) => ({ ...prev, clientId: id }));
+    }
+
+    const petModalSubmit = (name: string, id: string): void =>
+    {
+        setFormData((prev) => ({ ...prev, petName: name }));
+
+        setPayloadData((prev) => ({ ...prev, petId: id }));
+    }
+
+    {/* GenericModal isOpen*/}
+    const [openClientModal, setOpenClientModal] = useState<boolean>(false);
+    const [openPetModal, setOpenPetModal] = useState<boolean>(false);
+
     return (
         <>
             <ViewHeader
@@ -39,21 +176,23 @@ const PostAppointment: React.FC = (): JSX.Element =>
 
                 <div className="flex items-center">
 
-                    <label className="ml-2">Mascota</label>
+                    <label className="ml-2">Cliente</label>
 
                     <div className="grow"/>
 
                     <input
                         className="dark:bg-[#101010] h-8 p-2 rounded-md w-50"
-                        name="pet"
+                        name="clientName"
                         type="text"
-                        disabled
+                        onChange={handleChange}
+                        value={formData.clientName}
                     />
 
                     <GenericButton
                         color="blue"
                         icon={<SearchSVG/>}
                         customClasses="ml-2.5"
+                        submitGenericButton={() => setOpenClientModal(true)}
                     />
 
                 </div>
@@ -62,21 +201,23 @@ const PostAppointment: React.FC = (): JSX.Element =>
 
                 <div className="flex items-center">
 
-                    <label className="ml-2">Cliente</label>
+                    <label className="ml-2">Mascota</label>
 
                     <div className="grow"/>
 
                     <input
                         className="dark:bg-[#101010] h-8 p-2 rounded-md w-50"
-                        name="client"
+                        name="petName"
                         type="text"
-                        disabled
+                        onChange={handleChange}
+                        value={formData.petName}
                     />
 
                     <GenericButton
                         color="blue"
                         icon={<SearchSVG/>}
                         customClasses="ml-2.5"
+                        submitGenericButton={() => setOpenPetModal(true)}
                     />
 
                 </div>
@@ -92,7 +233,10 @@ const PostAppointment: React.FC = (): JSX.Element =>
                 <textarea
                     className="dark:bg-[#101010] p-2 rounded-md"
                     name="diagnosis"
+                    onChange={handleChange}
+                    value={formData.diagnosis}
                 />
+
             </GenericContainer>
 
             <div className="h-2.5"/>
@@ -104,7 +248,10 @@ const PostAppointment: React.FC = (): JSX.Element =>
                 <textarea
                     className="dark:bg-[#101010] p-2 rounded-md"
                     name="treatment"
+                    onChange={handleChange}
+                    value={formData.treatment}
                 />
+
             </GenericContainer>
 
             <div className="h-2.5"/>
@@ -115,8 +262,11 @@ const PostAppointment: React.FC = (): JSX.Element =>
 
                 <textarea
                     className="dark:bg-[#101010] p-2 rounded-md"
-                    name="treatment"
+                    name="notes"
+                    onChange={handleChange}
+                    value={formData.notes}
                 />
+
             </GenericContainer>
 
             <div className="h-2.5"/>
@@ -127,14 +277,28 @@ const PostAppointment: React.FC = (): JSX.Element =>
 
                     <label>Fecha de seguimiento</label>
 
-                    <input name="birthDate"
+                    <input name="followUpDate"
                         className="dark:bg-[#101010] h-8 p-2 rounded-md"
                         type="date"
+                        onChange={handleChange}
+                        value={formData.followUpDate}
                     />
 
                 </div>
                 
             </GenericContainer>
+
+            <GenericModal open={openClientModal} onClose={() => setOpenClientModal(false)}>
+
+                <SearchClientModal onClose={() => setOpenClientModal(false)} selectClient={(fullName, id) => clientModalSubmit(fullName, id)}/>
+                    
+            </GenericModal>
+
+            <GenericModal open={openPetModal} onClose={() => setOpenPetModal(false)}>
+
+                <SearchPetModal onClose={() => setOpenPetModal(false)} selectPet={(name, id) => petModalSubmit(name, id)}/>
+
+            </GenericModal>
             
         </>
     )

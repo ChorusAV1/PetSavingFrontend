@@ -1,54 +1,41 @@
 import axios from 'axios';
 import React, { useEffect, useState, type JSX } from 'react'
-import PlaceholderCircle32x32 from '../assets/PlaceholderCircle32x32';
-import Placeholder20x20 from '../assets/Placeholder20x20';
+import PlaceholderCircle32x32 from '../../assets/PlaceholderCircle32x32';
+import Placeholder20x20 from '../../assets/Placeholder20x20';
+import type { GETPetRequestDTO } from '../../types/PetTypes';
 
-interface SearchClientModalProps
+interface SearchPetModalProps
 {
     onClose: () => void;
-    selectClient: (fullName: string, id: string) => void;
+    selectPet: (name: string, id: string) => void;
 }
 
-interface GETClientRequestDTO
+const SearchPetModal: React.FC<SearchPetModalProps> = ({ onClose, selectPet}: SearchPetModalProps): JSX.Element =>
 {
-    id: string,
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: number;
-    address: string;
-    birthDate: string;
-    registrationDate: string;
-    emergencyContactName: string;
-    emergencyContactPhone: number;
-}
-
-const SearchClientModal: React.FC<SearchClientModalProps> = ({ onClose, selectClient}: SearchClientModalProps): JSX.Element =>
-{
-    const sendInfo = (fullName: string, id: string) =>
+    const sendInfo = (name: string, id: string) =>
     {
-        selectClient(fullName, id)
+        selectPet(name, id)
 
         onClose();
     }
 
-    const [clients, setClients] = useState<GETClientRequestDTO[]>([]);
+    const [pets, setPets] = useState<GETPetRequestDTO[]>([]);
 
     const [loading, setLoading] = useState(false);
 
-    const getClients = async () =>
+    const getPets = async () =>
     {
         try
         {
             setLoading(true);
 
-            const res = await axios.get<GETClientRequestDTO[]>("http://localhost:5126/api/client");
+            const res = await axios.get<GETPetRequestDTO[]>("http://localhost:5126/api/pet");
 
-            setClients(res.data);
+            setPets(res.data);
         }
         catch(e)
         {
-            console.error("Error al cargar los clientes de SearchClientModal: ", e);
+            console.error("Error al cargar las mascotas de SearchPetModal: ", e);
 
             return[];
         }
@@ -60,7 +47,7 @@ const SearchClientModal: React.FC<SearchClientModalProps> = ({ onClose, selectCl
 
     useEffect(() =>
     {
-        getClients();
+        getPets();
     },[])
 
     if (loading)
@@ -73,7 +60,7 @@ const SearchClientModal: React.FC<SearchClientModalProps> = ({ onClose, selectCl
     return (
         <>
             <header className="flex items-center py-2 px-3 dark:text-white border-b dark:border-black">
-                <label className="">Seleccionar cliente</label>
+                <label className="">Seleccionar Mascota</label>
 
                 <div className="grow"/>
 
@@ -86,18 +73,18 @@ const SearchClientModal: React.FC<SearchClientModalProps> = ({ onClose, selectCl
 
             <ul className="space-y-2.5">
 
-                {clients.map((client) => (
+                {pets.map((Pet) => (
 
                 <div className={`flex flex-col justify-center dark:bg-[#202020] border dark:border-black hover:dark:bg-[#303030] active:dark:bg-[#101010] mx-2.5 p-2.5 dark:text-white rounded`}
-                     onClick={() => sendInfo(client.firstName + " " + client.lastName, client.id)}>
+                     onClick={() => sendInfo(Pet.name, Pet.id)}>
 
                     <div className="flex items-center w-70">
                         <PlaceholderCircle32x32/>
 
-                        <li key={client.id}
+                        <li key={Pet.id}
                             className="ml-2.5">
-                            <h2>{client.firstName} {client.lastName}</h2>
-                            <p className="font-light">{client.email}</p>
+                            <h2>{Pet.name}</h2>
+                            <p className="font-light">{Pet.species}</p>
                         </li>
                     </div>
                     
@@ -112,4 +99,4 @@ const SearchClientModal: React.FC<SearchClientModalProps> = ({ onClose, selectCl
     )
 }
 
-export default SearchClientModal
+export default SearchPetModal

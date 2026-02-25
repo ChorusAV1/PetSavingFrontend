@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
 import GenericModal from '../GenericModal';
-import DeleteModal from '../DeleteModal';
+import DeleteModal from '../Modals/DeleteModal';
 import ViewHeader from '../ViewHeader';
 import ApptsSVG from '../../assets/ApptsSVG';
 import MailSVG from '../../assets/MailSVG';
