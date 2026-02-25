@@ -48,7 +48,7 @@ const PostAppointment: React.FC = (): JSX.Element =>
     {
         petId: "",
         clientId: "",
-        vetId: "e743a598-adf0-406b-9439-23691cbe67f5", // TODO: IMPLEMENTAR AUTENTICACIÓN URGENTE
+        vetId: "33232e81-bc9c-4302-908e-d59f303fbf2c", // TODO: IMPLEMENTAR AUTENTICACIÓN URGENTE
         diagnosis: "",
         treatment: "",
         notes: "",

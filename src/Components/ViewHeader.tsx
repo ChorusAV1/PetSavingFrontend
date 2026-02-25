@@ -6,6 +6,7 @@ import DeleteSVG from '../assets/DeleteSVG';
 import EditSVG from '../assets/EditSVG';
 import SaveSVG from '../assets/SaveSVG';
 import AddSVG from '../assets/AddSVG';
+import ArrowSVG from '../assets/ArrowSVG';
 
 interface ViewHeaderProps 
 {
@@ -35,7 +36,7 @@ const ViewHeader: React.FC<ViewHeaderProps> = ({ label, icon, createNavigate, on
 
             {onBackClick && (
                 <button className="pl-3.5" onClick={onBackClick}>
-                    <Placeholder20x20/>
+                    <ArrowSVG/>
                 </button>
             )}
 

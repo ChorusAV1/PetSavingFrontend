@@ -27,6 +27,12 @@ import PetsSVG from "./assets/PetsSVG";
 import Placeholder20x20 from "./assets/Placeholder20x20";
 import CalcSVG from "./assets/CalcSVG";
 import StaffSVG from "./assets/StaffSVG";
+import GetOneAppointment from "./Components/AppointmentViews/GetOneAppointment";
+import StockSVG from "./assets/StockSVG";
+import Stock from "./Components/MainViews/Stock";
+import GetAllStocks from "./Components/StockViews/GetAllStocks";
+import Staff from "./Components/MainViews/Staff";
+import GetAllStaff from "./Components/StaffViews/GetAllStaff";
 
 function App()
 {
@@ -67,7 +73,7 @@ function App()
         			<NavbarButton label="Consultas" path="/appointments" icon={<ApptsSVG/>}/>
         			<NavbarButton label="Clientes" path="/clients" icon={<CustSVG/>}/>
         			<NavbarButton label="Mascotas" path="/pets" icon={<PetsSVG/>}/>
-        			<NavbarButton label="Inventario" path="/appointments" icon={<Placeholder20x20/>}/>
+        			<NavbarButton label="Inventario" path="/inventory" icon={<StockSVG/>}/>
         			<NavbarButton label="Calculadora" path="/calculator" icon={<CalcSVG/>}/>
 					<NavbarButton label="Personal" path="/staff" icon={<StaffSVG/>}/>
       			</Navbar>
@@ -76,6 +82,7 @@ function App()
 						<Route path="/appointments" element = {<Appointments/>}>
 							<Route path="list" element = {<GetAllAppointments handleAppointmentClick={goToAppointment}/>}/>
 							<Route path="nuevaconsulta" element = {<PostAppointment/>}/>
+							<Route path="detalleconsulta" element = {<GetOneAppointment id={appointmentToShow}/>}/>
 						</Route>
 						<Route path="/clients" element = {<Clients/>}>
 							<Route path="lista" element = {<ListClients handleClientClick={goToClient}/>}/>
@@ -89,11 +96,16 @@ function App()
 							<Route path="detallemascota" element = {<DetailPet id={petToShow}/>}/>
 							<Route path="editarmascota" element = {<PatchPet id={petToShow}/>}/>
 						</Route>
-						<Route path="/inventory" element={<Appointments/>}/>
+						<Route path="/inventory" element = {<Stock/>}>
+							<Route path="list" element = {<GetAllStocks/>}/>
+						</Route>
 						<Route path="/calculator" element={<Calculator/>}>
 							<Route path="deficit" element={<DeficitCalculator/>}/>
 							<Route path="mantenimiento" element={<MantenimientoCalculator/>}/>
 							<Route path="goteo" element={<GoteoCalculator/>}/>
+						</Route>
+						<Route path="staff" element={<Staff/>}>
+							<Route path="list" element={<GetAllStaff/>}/>
 						</Route>
 					</Routes>
      	 		</ViewControl>

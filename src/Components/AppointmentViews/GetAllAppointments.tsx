@@ -19,7 +19,7 @@ const GetAllAppointments: React.FC<GetAllAppointmentsProps> = ({ handleAppointme
     {
         handleAppointmentClick(id)
 
-        navigate("../detallemascota")
+        navigate("../detalleconsulta")
     }
 
     const [appointments, setAppointments] = useState<GETAppointmentRequestDTO[]>([]);

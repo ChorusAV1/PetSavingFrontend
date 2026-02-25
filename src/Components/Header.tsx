@@ -1,5 +1,6 @@
 import type { JSX } from 'react'
 import Placeholder20x20 from '../assets/Placeholder20x20'
+import MenuSVG from '../assets/MenuSVG';
 
 interface HeaderProps
 {
@@ -13,7 +14,7 @@ const Header: React.FC<HeaderProps> = ({handleSandwichOnClick}: HeaderProps): JS
                         dark:bg-black dark:border-[#242424]">
             <div className="w-17 flex items-center justify-center dark:text-white">
                 <button onClick={handleSandwichOnClick} className="flex h-12 items-center justify-center">
-                    <Placeholder20x20 />
+                    <MenuSVG/>
                 </button>
             </div>
         </header>
