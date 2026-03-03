@@ -1,7 +1,39 @@
-import React, { type JSX } from 'react'
+import React, { useState, type JSX } from 'react'
+import CalculatorFooter from '../CalculatorFooter';
+
+interface MaintenanceForm
+{
+    weight: number;
+}
 
 const MantenimientoCalculator: React.FC = (): JSX.Element =>
 {
+    const [result, setResult] = useState<number>(0);
+
+    const [formData, setFormData] = useState<MaintenanceForm>(
+    {
+        weight: 0
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
+    {
+        const { name, value } = e.target;
+        
+        setFormData((prev) => ({...prev, [name]: value, }));
+    };
+
+    const handleReset = (): void =>
+    {
+        setResult(0);
+
+        setFormData((prev) => ({...prev, weight: 0, }));
+    }
+
+    const handleSubmit = (): void =>
+    {
+        setResult(formData.weight);
+    }
+    
     return (
         <>
             <section className="flex flex-col dark:bg-black h-25 sticky top-27">
@@ -12,7 +44,7 @@ const MantenimientoCalculator: React.FC = (): JSX.Element =>
 
                     <div className="grow" />
 
-                    <span className="text-[40px] dark:text-white">0</span>
+                    <span className="text-[40px] dark:text-white">{result}</span>
 
                     <span className="text-[24px] font-light dark:text-white">ml</span>
 
@@ -30,7 +62,13 @@ const MantenimientoCalculator: React.FC = (): JSX.Element =>
 
                     <div className="bg-[#101010] m-2 p-1.25 rounded-md">
 
-                        <input placeholder="0" type="number" className="w-32" />
+                        <input
+                            name="weight"
+                            type="number" 
+                            className="w-32" 
+                            onChange={handleChange}
+                            value={formData.weight}
+                        />
 
                         <span className="font-light italic">kgs</span>
 
@@ -51,17 +89,7 @@ const MantenimientoCalculator: React.FC = (): JSX.Element =>
 
             </form>
 
-            <section className="flex items-center justify-around bg-[#202020] h-18 border-t sticky bottom-0">
-
-                <button className="dark:bg-[#3B3B3B] dark:hover:bg-[#303030] dark:active:bg-[#404040] text-[24px] text-white w-18.75 h-12.5 rounded-lg">
-                    C
-                </button>
-
-                <button className="bg-[#339FFF] hover:bg-blue-500 active:bg-blue-400 text-[32px] text-white w-18.75 h-12.5 rounded-lg">
-                    =
-                </button>
-
-            </section>
+            <CalculatorFooter onReset={handleReset} onSubmit={handleSubmit}/>
         </>
     )
 }

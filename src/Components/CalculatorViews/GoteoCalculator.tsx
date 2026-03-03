@@ -1,7 +1,58 @@
-import React, { type JSX } from 'react'
+import React, { useState, type JSX } from 'react'
+import CalculatorFooter from '../CalculatorFooter';
+
+interface DropForm
+{
+    weight: number;
+    dehydration: number;
+    loses: number;
+    equipment: string;
+}
 
 const GoteoCalculator: React.FC = (): JSX.Element =>
 {
+    const [result, setResult] = useState<number>(0);
+
+    const [formData, setFormData] = useState<DropForm>(
+    {
+        weight: 0,
+        dehydration: 0,
+        loses: 0,
+        equipment: "Normogotero"
+    })
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>): void =>
+    {
+        const { name, value } = e.target;
+
+        setFormData((prev) => ({
+        ...prev,
+        [name]:
+            name === "equipment"
+                ? value
+                : (e.target as HTMLInputElement).valueAsNumber,
+        }));
+    };
+
+    const handleReset = (): void =>
+    {
+        setResult(0);
+
+        setFormData((prev) => ({ ...prev, weight: 0, dehydration: 0, loses: 0 }));
+    }
+
+    const handleSubmit = (): void =>
+    {
+        if (formData.equipment == "Normogotero")
+        {
+            setResult(formData.weight + (formData.dehydration + formData.loses) * 2);
+        }
+        
+        if (formData.equipment == "Microgotero")
+        {
+            setResult(formData.weight + (formData.dehydration - formData.loses) * 3)
+        }
+    }
     return (
         <>
             <section className="flex flex-col dark:bg-black h-25 sticky top-27">
@@ -12,7 +63,7 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
 
                     <div className="grow" />
 
-                    <span className="text-[40px] dark:text-white">0</span>
+                    <span className="text-[40px] dark:text-white">{result}</span>
 
                     <span className="text-[24px] font-light dark:text-white">ml</span>
 
@@ -30,7 +81,14 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
 
                     <div className="bg-[#101010] m-2 p-1.25 rounded-md">
 
-                        <input placeholder="0" type="number" className="w-32" />
+                        <input
+                            name="weight" 
+                            type="number" 
+                            className="w-32"
+                            min="0"
+                            onChange={handleChange}
+                            value={formData.weight}
+                        />
 
                         <span className="font-light italic">kgs</span>
 
@@ -46,7 +104,14 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
 
                     <div className="bg-[#101010] m-2 p-1.25 rounded-md">
 
-                        <input placeholder="000" type="number" className="w-32" />
+                        <input
+                            name="dehydration"
+                            type="number"
+                            className="w-32"
+                            min="0"
+                            onChange={handleChange}
+                            value={formData.dehydration}
+                        />
 
                         <span className="font-light italic">???</span>
 
@@ -62,7 +127,14 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
 
                     <div className="bg-[#101010] m-2 p-1.25 rounded-md">
 
-                        <input placeholder="000" type="number" className="w-32" />
+                        <input
+                            name="loses" 
+                            type="number" 
+                            className="w-32"
+                            min="0"
+                            onChange={handleChange}
+                            value={formData.loses}
+                        />
 
                         <span className="font-light italic">ml</span>
 
@@ -76,11 +148,16 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
 
                     <div className="grow" />
 
-                    <select className="bg-[#101010] m-2 p-1.25 rounded-md">
+                    <select
+                        name="equipment"
+                        value={formData.equipment}
+                        onChange={handleChange}
+                        className="bg-[#101010] m-2 p-1.25 rounded-md"
+                    >
 
-                        <option value="deficit" selected>Microgotero</option>
+                        <option value="Normogotero">Normogotero</option>
 
-                        <option value="mantenimiento">Mantenimiento</option>
+                        <option value="Microgotero">Microgotero</option>
 
                     </select>
 
@@ -95,21 +172,9 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
                     <span className="font-bold">AVISO:</span> Las recomendaciones de fluidos son una herramienta de apoyo basada en algoritmos estándar. La elección final del fluido y el volumen es responsabilidad exclusiva del criterio clínico del médico veterinario tratante.
                 </p>
 
-                <div className="flex-1" />
-
-                <section className="flex items-center justify-around bg-[#202020] h-18 border-t sticky bottom-0">
-
-                    <button className="dark:bg-[#3B3B3B] dark:hover:bg-[#303030] dark:active:bg-[#404040] text-[24px] text-white w-18.75 h-12.5 rounded-lg">
-                        C
-                    </button>
-
-                    <button className="bg-[#339FFF] hover:bg-blue-500 active:bg-blue-400 text-[32px] text-white w-18.75 h-12.5 rounded-lg">
-                        =
-                    </button>
-
-                </section>
-
             </form>
+
+            <CalculatorFooter onReset={handleReset} onSubmit={handleSubmit}/>
         </>
     )
 }

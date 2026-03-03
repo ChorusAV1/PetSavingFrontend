@@ -26,7 +26,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
     
     const [formData, setFormData] = useState<POSTPetRequestDTO>(
     {
-        clientId: "16636e02-e226-4cb5-bea8-dccbf99582a8",
+        clientId: "00000000-0000-0000-0000-000000000002",
         name: "",
         species: "",
         breed: "",

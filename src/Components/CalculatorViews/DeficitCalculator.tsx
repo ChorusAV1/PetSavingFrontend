@@ -1,7 +1,41 @@
-import React, { type JSX } from 'react'
+import React, { useState, type JSX } from 'react'
+import CalculatorFooter from '../CalculatorFooter';
+
+interface DeficitForm
+{
+    weight: number;
+    dehydration: number;
+}
 
 const DeficitCalculator: React.FC = (): JSX.Element =>
 {
+    const [result, setResult] = useState<number>(0);
+
+    const [formData, setFormData] = useState<DeficitForm>(
+    {
+        weight: 0,
+        dehydration: 0
+    })
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
+    {
+        const { name, value } = e.target;
+        
+        setFormData((prev) => ({...prev, [name]: value, }));
+    };
+
+    const handleReset = (): void =>
+    {
+        setResult(0);
+
+        setFormData((prev) => ({ ...prev, weight: 0, dehydration: 0 }));
+    }
+
+    const handleSubmit = (): void =>
+    {
+        setResult(formData.weight * formData.dehydration);
+    }
+
     return (
         <>
             <section className="flex flex-col dark:bg-black h-25 sticky top-27">
@@ -12,7 +46,7 @@ const DeficitCalculator: React.FC = (): JSX.Element =>
 
                     <div className="grow" />
 
-                    <span className="text-[40px] dark:text-white">0</span>
+                    <span className="text-[40px] dark:text-white">{result}</span>
 
                     <span className="text-[24px] font-light dark:text-white">ml</span>
 
@@ -20,9 +54,9 @@ const DeficitCalculator: React.FC = (): JSX.Element =>
 
             </section>
 
-            <form className="flex flex-col flex-1">
+            <form className="flex flex-col flex-1 p-2.5">
 
-                <div className="flex m-2.5 h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
+                <div className="flex h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
 
                     <span className="m-3.25 text-[16px]">Peso</span>
 
@@ -30,7 +64,14 @@ const DeficitCalculator: React.FC = (): JSX.Element =>
 
                     <div className="bg-[#101010] m-2 p-1.25 rounded-md">
 
-                        <input placeholder="0" type="number" className="w-32" />
+                        <input
+                            name="weight"
+                            type="number"
+                            className="w-32"
+                            min="0"
+                            value={formData.weight}
+                            onChange={handleChange}
+                        />
 
                         <span className="font-light italic">kgs</span>
 
@@ -38,7 +79,9 @@ const DeficitCalculator: React.FC = (): JSX.Element =>
 
                 </div>
 
-                <div className="flex m-2.5 h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
+                <div className="h-2.5"/>
+
+                <div className="flex h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
 
                     <span className="m-3.25 text-[16px]">% Deshidratación</span>
 
@@ -46,15 +89,24 @@ const DeficitCalculator: React.FC = (): JSX.Element =>
 
                     <div className="bg-[#101010] m-2 p-1.25 rounded-md">
 
-                        <input placeholder="0" type="number" className="w-32" />
+                        <input
+                            name="dehydration"
+                            type="number" 
+                            className="w-32"
+                            min="0"
+                            value={formData.dehydration}
+                            onChange={handleChange}
+                        />
 
-                        <span className="font-light italic">???</span>
+                        <span className="font-light italic">%</span>
 
                     </div>
 
                 </div>
 
-                <p className="dark:text-white text-[12px] mx-6 font-light italic">
+                <div className="h-2.5"/>
+
+                <p className="dark:text-white text-[12px] mx-2 font-light italic">
                     Basado en guías de DiBartola, S. P. (Ed.). Fluid, electrolyte, and acid-base disorders in small animal practice.
 
                     <br />
@@ -65,19 +117,10 @@ const DeficitCalculator: React.FC = (): JSX.Element =>
 
                 <div className="flex-1" />
 
-                <section className="flex items-center justify-around bg-[#202020] h-18 border-t sticky bottom-0">
-
-                    <button className="dark:bg-[#3B3B3B] dark:hover:bg-[#303030] dark:active:bg-[#404040] text-[24px] text-white w-18.75 h-12.5 rounded-lg">
-                        C
-                    </button>
-
-                    <button className="bg-[#339FFF] hover:bg-blue-500 active:bg-blue-400 text-[32px] text-white w-18.75 h-12.5 rounded-lg">
-                        =
-                    </button>
-
-                </section>
-
             </form>
+
+            <CalculatorFooter onReset={handleReset} onSubmit={handleSubmit}/>
+
         </>
     )
 }

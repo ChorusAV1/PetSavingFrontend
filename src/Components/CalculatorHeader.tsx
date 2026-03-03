@@ -1,6 +1,7 @@
 import React, { type JSX } from 'react'
 import Placeholder24x24 from '../assets/Placeholder24x24'
 import { useNavigate } from 'react-router-dom';
+import CalcSVG from '../assets/CalcSVG';
 
 interface CalculatorHeaderProps 
 {
@@ -23,7 +24,7 @@ const CalculatorHeader: React.FC<CalculatorHeaderProps> = ({label}: CalculatorHe
                            dark:bg-[#202020] dark:text-white">
 
             <div className="m-3.5 h-8 w-8 flex items-center justify-center rounded-md bg-[#AFAFAF]">
-                <Placeholder24x24/>
+                <CalcSVG/>
             </div>
 
             <span className="text-[12px] select-none"><strong>{label}</strong></span>
