@@ -56,14 +56,6 @@ const Register: React.FC = () => {
           </button>
         </p>
         <h2 className="text-2xl text-white font-bold mb-4 text-center">Registrarse</h2>
-          {/* Shows the errors */}
-          {errors.length > 0 && (
-            <ul className="text-red-500 text-sm mb-2">
-              {errors.map((err, i) => (
-                <li key={i}>• {err}</li>
-              ))}
-            </ul>
-          )}
         <input
           type="text"
           placeholder="Usuario"
@@ -78,6 +70,14 @@ const Register: React.FC = () => {
           onChange={handlePasswordChange}
           className="w-full h-8 p-2 mb-3 border border-black rounded focus:outline-none focus:ring-2 focus:ring-white dark:bg-[#101010] text-white"
         />
+        {/* Shows the errors */}
+          {errors.length > 0 && (
+            <ul className="text-red-500 text-sm mb-2">
+              {errors.map((err, i) => (
+                <li key={i}>• {err}</li>
+              ))}
+            </ul>
+          )}
         <button
           type="submit"
           className="w-full bg-[#05DF72] text-white py-2 rounded hover:bg-[#5ae9a2] transition"

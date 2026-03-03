@@ -3,7 +3,7 @@ import Header from "./Components/Header"
 import Navbar from "./Components/Navbar"
 import NavbarButton from "./Components/NavbarButton"
 import ViewControl from "./Components/ViewControl";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Appointments from "./Components/MainViews/Appointments";
 import Clients from "./Components/MainViews/Clients";
 import Calculator from "./Components/MainViews/Calculator";
@@ -46,8 +46,9 @@ function App()
 				)}
       			<ViewControl>
         			<Routes>
-						<Route path="/login" element={<Login/>}/>
+						<Route path="/" element={<Login/>}/>
 						<Route path="/register" element={<Register/>}/>
+						<Route path="*" element={<ProtectedRoute> <Navigate to="/" /> </ProtectedRoute>}/>
 						<Route path="/appointments" element={<ProtectedRoute> <Appointments/> </ProtectedRoute>}/>
 						<Route path="/clients" element={<ProtectedRoute> <Clients/> </ProtectedRoute>}>
 							<Route path="lista" element = {<ListClients/>}/>
