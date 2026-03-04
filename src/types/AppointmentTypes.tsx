@@ -2,7 +2,7 @@ export interface POSTAppointmentRequestDTO
 {
     petId: string;
     clientId: string;
-    vetId: string;
+    vetId: string | null;
     diagnosis: string;
     treatment: string;
     notes: string;
@@ -24,17 +24,20 @@ export interface GETAppointmentRequestDTO
 
 interface PetSummaryDTO
 {
+    id: string;
     name: string;
     species: string;
 }
 
 interface ClientSummaryDTO
 {
+    id: string;
     firstName: string;
     lastName: string;
 }
 interface VetSummaryDTO
 {
+    id: string;
     userName: string;
     specialization: string;
 }

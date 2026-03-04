@@ -3,7 +3,7 @@ import Header from "./Components/Header"
 import Navbar from "./Components/Navbar"
 import NavbarButton from "./Components/NavbarButton"
 import ViewControl from "./Components/ViewControl";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Appointments from "./Components/MainViews/Appointments";
 import Clients from "./Components/MainViews/Clients";
 import Calculator from "./Components/MainViews/Calculator";
@@ -12,6 +12,10 @@ import MantenimientoCalculator from "./Components/CalculatorViews/MantenimientoC
 import GoteoCalculator from "./Components/CalculatorViews/GoteoCalculator";
 import NuevoCliente from "./Components/ClientViews/NuevoCliente";
 import ListClients from "./Components/ClientViews/ListClients";
+import Login from "./auth/Login";
+import Register from "./auth/Register";
+import ProtectedRoute from "./Components/ProtectedRoute";
+import { ToastContainer } from "react-toastify";
 import DetailClients from "./Components/ClientViews/DetailClients";
 import PatchClient from "./Components/ClientViews/PatchClient";
 import Pet from "./Components/MainViews/Pet";
@@ -24,7 +28,6 @@ import PostAppointment from "./Components/AppointmentViews/PostAppointment";
 import ApptsSVG from "./assets/ApptsSVG";
 import CustSVG from "./assets/CustSVG";
 import PetsSVG from "./assets/PetsSVG";
-import Placeholder20x20 from "./assets/Placeholder20x20";
 import CalcSVG from "./assets/CalcSVG";
 import StaffSVG from "./assets/StaffSVG";
 import GetOneAppointment from "./Components/AppointmentViews/GetOneAppointment";
@@ -37,6 +40,9 @@ import GetAllStaff from "./Components/StaffViews/GetAllStaff";
 function App()
 {
     const [isNavbarOpen, setIsNavbarOpen] = useState<boolean>(false)
+	const location = useLocation();
+	const isAuthPage = location.pathname === "/login" || location.pathname === "/register";
+
 
  	const toggleSidebar = () =>
   	{
@@ -65,26 +71,31 @@ function App()
 	}
   
   	return (
-		<BrowserRouter>
 			<div className="flex flex-col h-screen
                     dark:bg-[#191919]">
-        		<Header handleSandwichOnClick={toggleSidebar}/>
-      			<Navbar isOpen={isNavbarOpen}>
-        			<NavbarButton label="Consultas" path="/appointments" icon={<ApptsSVG/>}/>
-        			<NavbarButton label="Clientes" path="/clients" icon={<CustSVG/>}/>
-        			<NavbarButton label="Mascotas" path="/pets" icon={<PetsSVG/>}/>
-        			<NavbarButton label="Inventario" path="/inventory" icon={<StockSVG/>}/>
-        			<NavbarButton label="Calculadora" path="/calculator" icon={<CalcSVG/>}/>
+				{/*Hides Navbar in Login and Register*/}
+        		{!isAuthPage && <Header handleSandwichOnClick={toggleSidebar} />}
+      			{!isAuthPage && (
+					<Navbar isOpen={isNavbarOpen}>
+						<NavbarButton label="Consultas" path="/appointments" icon={<ApptsSVG/>}/>
+						<NavbarButton label="Clientes" path="/clients" icon={<CustSVG/>}/>
+						<NavbarButton label="Mascotas" path="/pets" icon={<PetsSVG/>}/>
+						<NavbarButton label="Inventario" path="/inventory" icon={<StockSVG/>}/>
+						<NavbarButton label="Calculadora" path="/calculator" icon={<CalcSVG/>}/>
 					<NavbarButton label="Personal" path="/staff" icon={<StaffSVG/>}/>
-      			</Navbar>
+					</Navbar>
+				)}
       			<ViewControl>
         			<Routes>
-						<Route path="/appointments" element = {<Appointments/>}>
-							<Route path="list" element = {<GetAllAppointments handleAppointmentClick={goToAppointment}/>}/>
+						<Route path="/" element={<Login/>}/>
+						<Route path="/register" element={<Register/>}/>
+						<Route path="*" element={<ProtectedRoute> <Navigate to="/" /> </ProtectedRoute>}/>
+						<Route path="/appointments" element = {<ProtectedRoute> <Appointments/> </ProtectedRoute>}>
+							<Route path="list" element = {<ProtectedRoute> <GetAllAppointments handleAppointmentClick={goToAppointment}/> </ProtectedRoute>}/>
 							<Route path="nuevaconsulta" element = {<PostAppointment/>}/>
 							<Route path="detalleconsulta" element = {<GetOneAppointment id={appointmentToShow}/>}/>
 						</Route>
-						<Route path="/clients" element = {<Clients/>}>
+						<Route path="/clients" element = {<ProtectedRoute> <Clients/> </ProtectedRoute>}>
 							<Route path="lista" element = {<ListClients handleClientClick={goToClient}/>}/>
 							<Route path="nuevocliente" element = {<NuevoCliente/>}/>
 							<Route path="detallecliente" element = {<DetailClients id={clientToShow}/>}/>
@@ -108,9 +119,9 @@ function App()
 							<Route path="list" element={<GetAllStaff/>}/>
 						</Route>
 					</Routes>
+					<ToastContainer position="top-center" autoClose={2000} theme="dark"/>
      	 		</ViewControl>
   	  		</div>
-		</BrowserRouter>
 	)
 }
 

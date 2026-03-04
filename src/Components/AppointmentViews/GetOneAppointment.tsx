@@ -40,14 +40,17 @@ const GetOneAppointment: React.FC<GetOneAppointmentProps> = ({ id }: GetOneAppoi
     {
         id: "",
         pet: {
+            id: "",
             name: "",
             species: "",
         },
         client: {
+            id: "",
             firstName: "",
             lastName: "",
         },
         vet: {
+            id: "",
             userName: "",
             specialization: "",
         },
@@ -84,7 +87,7 @@ const GetOneAppointment: React.FC<GetOneAppointmentProps> = ({ id }: GetOneAppoi
         <>
             <ViewHeader
                 onBackClick={handleBack}
-                label=""
+                label={appointment.pet.name}
                 icon={<ApptsSVG/>}
                 onDeleteClick={() => setOpen(true)}
             />
@@ -97,7 +100,7 @@ const GetOneAppointment: React.FC<GetOneAppointmentProps> = ({ id }: GetOneAppoi
                 <span className="mb-2">{appointment.client.firstName + " " + appointment.client.lastName}</span>
 
                 <label className="font-light">Atendido por:</label>
-                <span>{appointment.vet.specialization}</span>
+                <span>{appointment.vet.userName}</span>
 
             </GenericContainer>
 
