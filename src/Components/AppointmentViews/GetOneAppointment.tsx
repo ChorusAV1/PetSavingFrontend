@@ -1,11 +1,11 @@
 import React, { useEffect, useState, type JSX } from 'react'
-import ViewHeader from '../ViewHeader';
+import ViewHeader from '../View/ViewHeader';
 import { useNavigate } from 'react-router-dom';
 import ApptsSVG from '../../assets/ApptsSVG';
 import type { GETAppointmentRequestDTO } from '../../types/AppointmentTypes';
 import axios from 'axios';
-import GenericContainer from '../GenericContainer';
-import GenericModal from '../GenericModal';
+import GenericContainer from '../Generic/GenericContainer';
+import GenericModal from '../Generic/GenericModal';
 import DeleteModal from '../Modals/DeleteModal';
 
 interface GetOneAppointmentProps

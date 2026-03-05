@@ -1,9 +1,9 @@
 import React, { useState, type JSX } from 'react'
-import ViewHeader from '../ViewHeader'
+import ViewHeader from '../View/ViewHeader'
 import { useNavigate } from 'react-router-dom'
-import GenericContainer from '../GenericContainer';
-import GenericButton from '../GenericButton';
-import GenericModal from '../GenericModal';
+import GenericContainer from '../Generic/GenericContainer';
+import GenericButton from '../Generic/GenericButton';
+import GenericModal from '../Generic/GenericModal';
 import ApptsSVG from '../../assets/ApptsSVG';
 import SearchSVG from '../../assets/SearchSVG';
 import type { POSTAppointmentRequestDTO } from '../../types/AppointmentTypes';

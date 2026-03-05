@@ -1,11 +1,11 @@
 import React, { useEffect, useState, type JSX } from 'react'
-import ViewHeader from '../ViewHeader';
+import ViewHeader from '../View/ViewHeader';
 import { useNavigate } from 'react-router-dom';
-import GenericModal from '../GenericModal';
+import GenericModal from '../Generic/GenericModal';
 import DeleteModal from '../Modals/DeleteModal';
 import type { GETPetRequestDTO } from '../../types/PetTypes';
 import axios from 'axios';
-import GenericContainer from '../GenericContainer';
+import GenericContainer from '../Generic/GenericContainer';
 import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
 import PlaceholderCircle32x32 from '../../assets/PlaceholderCircle32x32';
 import PetsSVG from '../../assets/PetsSVG';
@@ -115,7 +115,7 @@ const DetailPet:React.FC<DetailPetProps> = ({ id }: DetailPetProps): JSX.Element
             <GenericContainer>
 
                 <div>
-                    <label>Calificación:</label>
+                    <label>Calificación: </label>
                     <span>{pet?.rating}</span>
                 </div>
 

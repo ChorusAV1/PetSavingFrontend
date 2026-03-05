@@ -1,38 +1,12 @@
 import React, { useEffect, useState, type JSX } from 'react'
-import Placeholder24x24 from '../../assets/Placeholder24x24';
 import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import ViewHeader from '../ViewHeader';
+import ViewHeader from '../View/ViewHeader';
 import ApptsSVG from '../../assets/ApptsSVG';
-import GenericButton from '../GenericButton';
+import GenericButton from '../Generic/GenericButton';
 import AddImgSVG from '../../assets/AddImgSVG';
-
-interface CreateUserRequest
-{
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    address: string;
-    birthDate: string; // ISO string
-    emergencyContactName: string;
-    emergencyContactPhone: string;
-}
-
-interface GetUserRequest
-{
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    address: string;
-    birthDate: string;
-    registrationDate: string;
-    emergencyContactName: string;
-    emergencyContactPhone: string;
-}
+import type { UpdateClientDTO, GETClientRequestDTO } from '../../types/ClientTypes';
 
 interface PatchClientProps
 {
@@ -48,34 +22,8 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
         navigate("../detallecliente")
     }
 
-    const [formData, setFormData] = useState<GetUserRequest>(
-    {
-        id: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        phoneNumber: "",
-        address: "",
-        birthDate: "",
-        registrationDate: "",
-        emergencyContactName: "",
-        emergencyContactPhone: "",
-    });
-
-    useEffect(() =>
-    {
-        try
-        {
-            axios.get<GetUserRequest>(`http://localhost:5126/api/client/${id}`).then((res) =>
-            {
-                setFormData(res.data);
-            });
-        }
-        catch (e)
-        {
-            console.error("Ocurrió un error al traer la información del cliente: ", e);
-        }
-    }, []);
+    const [formData, setFormData] = useState<UpdateClientDTO>({});
+    const [originalData, setOriginalData] = useState<UpdateClientDTO>({});
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     {
@@ -84,17 +32,67 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
         setFormData((prev) => ({...prev, [name]: value, }));
     };
 
-    const handleSubmit = async () =>
+    const GETClient = async () =>
     {
         try
         {
-            const payload: CreateUserRequest =
+            const res = await axios.get<GETClientRequestDTO>(`http://localhost:5126/api/client/${id}`);
+
+            const mappedData: UpdateClientDTO =
             {
-                ...formData,
-                birthDate: new Date(formData.birthDate).toISOString(),
-            };
-    
-            const response = await axios.patch(`http://localhost:5126/api/client/${id}`, payload);
+                firstName: res.data.firstName,
+                lastName: res.data.lastName,
+                email: res.data.email,
+                phoneNumber: res.data.phoneNumber,
+                address: res.data.address,
+                birthDate: res.data.birthDate,
+                registrationDate: res.data.registrationDate,
+                emergencyContactName: res.data.emergencyContactName,
+                emergencyContactPhone: res.data.emergencyContactPhone
+            }
+
+            setFormData(mappedData);
+            setOriginalData(mappedData);
+        }
+        catch (e)
+        {
+            console.error("Ocurrió un error al traer la información del cliente: ", e);
+        }
+    }
+
+    useEffect(() =>
+    {
+        GETClient();
+    }, []);
+
+    const handleSubmit = async () =>
+    {
+        if (!originalData) return;
+
+        /* eslint-disable @typescript-eslint/no-explicit-any */
+        const patchData: any = {};
+
+        Object.keys(formData).forEach((key) =>
+        {
+            const newValue = (formData as any)[key];
+            const oldValue = (originalData as any)[key];
+
+            if (newValue !== oldValue)
+            {
+                if ((key === "birthDate") && !newValue)
+                {
+                    return;
+                }
+
+                patchData[key] = newValue;
+            }
+        });
+
+        console.log(patchData);
+
+        try
+        {
+            const response = await axios.patch(`http://localhost:5126/api/client/${id}`, patchData);
 
             console.log("User edited:", response.data);
 

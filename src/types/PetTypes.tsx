@@ -27,6 +27,20 @@ export interface GETPetRequestDTO
 
 interface clientSummaryDTO
 {
+    id: string;
     firstName: string;
     lastName: string;
+}
+
+export interface UpdatePetDTO
+{
+    clientId?: string
+    name?: string
+    species?: string
+    breed?: string
+    gender?: string
+    birthDate?: string
+    weight?: number
+    adoptedDate?: string
+    rating?: number
 }

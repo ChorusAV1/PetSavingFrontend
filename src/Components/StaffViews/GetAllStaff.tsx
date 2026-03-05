@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { type JSX } from 'react'
 
 interface GetAllStaffProps
 {
-    id: string;
+	handleStaffClick?: (id: string) => void;
 }
 
-const GetAllStaff = ({ id }: GetAllStaffProps) =>
+const GetAllStaff: React.FC<GetAllStaffProps> = ({ handleStaffClick }: GetAllStaffProps): JSX.Element =>
 {
-  return (
-    <div>GetAllStaff {id}</div>
-  )
+	return (
+		<div>GetAllStaff</div>
+	)
 }
 
 export default GetAllStaff

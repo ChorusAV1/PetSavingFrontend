@@ -1,12 +1,12 @@
 import React, { type JSX, type ReactNode, } from 'react'
-import Placeholder20x20 from '../assets/Placeholder20x20';
+import Placeholder20x20 from '../../assets/Placeholder20x20';
 import { useNavigate } from 'react-router-dom';
-import GenericButton from './GenericButton';
-import DeleteSVG from '../assets/DeleteSVG';
-import EditSVG from '../assets/EditSVG';
-import SaveSVG from '../assets/SaveSVG';
-import AddSVG from '../assets/AddSVG';
-import ArrowSVG from '../assets/ArrowSVG';
+import GenericButton from '../Generic/GenericButton';
+import DeleteSVG from '../../assets/DeleteSVG';
+import EditSVG from '../../assets/EditSVG';
+import SaveSVG from '../../assets/SaveSVG';
+import AddSVG from '../../assets/AddSVG';
+import ArrowSVG from '../../assets/ArrowSVG';
 
 interface ViewHeaderProps 
 {

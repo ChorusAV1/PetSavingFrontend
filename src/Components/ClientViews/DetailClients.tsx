@@ -2,9 +2,9 @@ import React, { useEffect, useState, type JSX } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
-import GenericModal from '../GenericModal';
+import GenericModal from '../Generic/GenericModal';
 import DeleteModal from '../Modals/DeleteModal';
-import ViewHeader from '../ViewHeader';
+import ViewHeader from '../View/ViewHeader';
 import ApptsSVG from '../../assets/ApptsSVG';
 import MailSVG from '../../assets/MailSVG';
 import PhoneSVG from '../../assets/PhoneSVG';

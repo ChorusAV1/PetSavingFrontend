@@ -1,14 +1,14 @@
 import React, { useState, type JSX } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import GenericContainer from '../GenericContainer';
+import GenericContainer from '../Generic/GenericContainer';
 import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
-import GenericModal from '../GenericModal';
+import GenericModal from '../Generic/GenericModal';
 import SearchClientModal from '../Modals/SearchClientModal';
 import type { POSTPetRequestDTO } from '../../types/PetTypes';
-import ViewHeader from '../ViewHeader';
+import ViewHeader from '../View/ViewHeader';
 import PetsSVG from '../../assets/PetsSVG';
-import GenericButton from '../GenericButton';
+import GenericButton from '../Generic/GenericButton';
 import AddImgSVG from '../../assets/AddImgSVG';
 import SearchSVG from '../../assets/SearchSVG';
 

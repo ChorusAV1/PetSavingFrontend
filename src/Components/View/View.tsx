@@ -6,12 +6,12 @@ interface ViewProps
     name: string;
 }
 
-const View: React.FC<ViewProps> = ({children}: ViewProps): JSX.Element =>
+const View: React.FC<ViewProps> = ({ children }: ViewProps): JSX.Element =>
 {
     return (
-      <>
-          {children}
-      </>
+        <>
+            {children}
+        </>
     )
 }
 

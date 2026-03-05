@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import ViewHeader from '../ViewHeader';
+import ViewHeader from '../View/ViewHeader';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import type { GETAppointmentRequestDTO } from '../../types/AppointmentTypes';

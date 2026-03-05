@@ -2,10 +2,10 @@ import React, { useState, type JSX } from 'react'
 import { useNavigate } from 'react-router-dom';
 import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
 import axios from 'axios';
-import ViewHeader from '../ViewHeader';
+import ViewHeader from '../View/ViewHeader';
 import ApptsSVG from '../../assets/ApptsSVG';
 import AddImgSVG from '../../assets/AddImgSVG';
-import GenericButton from '../GenericButton';
+import GenericButton from '../Generic/GenericButton';
 
 interface CreateUserRequest
 {

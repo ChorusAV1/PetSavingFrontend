@@ -1,13 +1,13 @@
 import React, { useEffect, useState, type JSX } from 'react'
-import ViewHeader from '../ViewHeader';
+import ViewHeader from '../View/ViewHeader';
 import { useNavigate } from 'react-router-dom';
-import GenericContainer from '../GenericContainer';
+import GenericContainer from '../Generic/GenericContainer';
 import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
-import type { GETPetRequestDTO } from '../../types/PetTypes';
-import GenericModal from '../GenericModal';
+import type { GETPetRequestDTO, UpdatePetDTO } from '../../types/PetTypes';
+import GenericModal from '../Generic/GenericModal';
 import SearchClientModal from '../Modals/SearchClientModal';
 import axios from 'axios';
-import GenericButton from '../GenericButton';
+import GenericButton from '../Generic/GenericButton';
 import AddImgSVG from '../../assets/AddImgSVG';
 import ApptsSVG from '../../assets/ApptsSVG';
 import SearchSVG from '../../assets/SearchSVG';
@@ -28,22 +28,8 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
 
     const [open, setOpen] = useState<boolean>(false);
 
-    const [formData, setFormData] = useState<GETPetRequestDTO>(
-    {
-        id: "",
-        client: {
-            firstName: "",
-            lastName: ""
-        },
-        name: "",
-        species: "",
-        breed: "",
-        gender: "",
-        birthDate: "",
-        weight: 0,
-        adoptedDate: "",
-        rating: 0,
-    });
+    const [formData, setFormData] = useState<UpdatePetDTO>({});
+    const [originalData, setOriginalData] = useState<UpdatePetDTO>({});
 
     const [ownerName, setOwnerName] = useState<string>("Sin cliente");
     
@@ -54,18 +40,33 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
         setFormData((prev) => ({...prev, [name]: name === "weight" ? Number(value): value, }));
     };
 
-    const GETPet = () =>
+    const GETPet = async () =>
     {
         try
         {
-            axios.get<GETPetRequestDTO>(`http://localhost:5126/api/pet/${id}`).then((res) =>
+            const res = await axios.get<GETPetRequestDTO>(`http://localhost:5126/api/pet/${id}`);
+            
+            const mappedData: UpdatePetDTO =
             {
-                setFormData(res.data);
-            });
+                clientId: res.data.client?.id,
+                name: res.data.name,
+                species: res.data.species,
+                breed: res.data.breed,
+                gender: res.data.gender,
+                birthDate: res.data.birthDate,
+                weight: res.data.weight,
+                adoptedDate: res.data.adoptedDate,
+                rating: res.data.rating
+            };
+
+            setFormData(mappedData);
+            setOriginalData(mappedData);
+            
+            setOwnerName(`${res.data.client.firstName} ${res.data.client.lastName}`);
         }
         catch (e)
         {
-            console.error("Ocurrió un error al traer la información del cliente: ", e);
+            console.error("Ocurrió un error al traer la información de la mascota: ", e);
         }
     };
     
@@ -74,14 +75,47 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
         GETPet();
     }, [])
     
-    const handleSubmit = () =>
+    const handleSubmit = async () =>
     {
-        console.log("Submit is being clicked!")
+        if (!originalData) return;
+
+        /* eslint-disable @typescript-eslint/no-explicit-any */
+        const patchData: any = {};
+
+        Object.keys(formData).forEach((key) =>
+        {
+            const newValue = (formData as any)[key];
+            const oldValue = (originalData as any)[key];
+
+            if (newValue !== oldValue)
+            {
+                // evitar enviar fechas vacías
+                if ((key === "birthDate" || key === "adoptedDate") && !newValue)
+                    return;
+
+                patchData[key] = newValue;
+            }
+        });
+
+        console.log(patchData);
+        
+        try
+        {
+            const response = await axios.patch(`http://localhost:5126/api/pet/${id}`, patchData);
+
+            console.log("Pet edited:", response.data);
+
+            navigate("../detallemascota");
+        }
+        catch (e)
+        {
+            console.error("Error updating pet:", e);
+        }
     }
 
     const clientModalSubmit = (fullName: string, id: string): void =>
     {
-        setFormData((prev) => ({...prev, ["clientId"]: id}))
+        setFormData((prev) => ({...prev, clientId: id}))
 
         setOwnerName(fullName);
     }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, type JSX } from 'react'
-import ViewHeader from '../ViewHeader';
+import ViewHeader from '../View/ViewHeader';
 import PlaceholderCircle32x32 from '../../assets/PlaceholderCircle32x32';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';

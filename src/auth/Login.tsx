@@ -28,9 +28,11 @@ const Login: React.FC = () => {
       toast.success("Inicio de sesión exitoso!");
       navigate("/appointments");
     }
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     catch (err: any)
     {
       setError("Datos inválidos");
+      console.error(err);
     }
   };
 
