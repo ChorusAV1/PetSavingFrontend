@@ -9,7 +9,7 @@ import SearchSVG from '../../assets/SearchSVG';
 import type { POSTAppointmentRequestDTO } from '../../types/AppointmentTypes';
 import axios from 'axios';
 import type { GETClientRequestDTO } from '../../types/ClientTypes';
-import type { GETPetRequestDTO } from '../../types/PetTypes';
+import type { GETPetRequestDTO, POSTJustInTimePet } from '../../types/PetTypes';
 import SearchClientModal from '../Modals/SearchClientModal';
 import SearchPetModal from '../Modals/SearchPetModal';
 
@@ -26,12 +26,6 @@ interface CreateAppointmentForm
 interface POSTJustInTimeClient
 {
     firstName: string;
-}
-
-interface POSTJustInTimePet
-{
-    clientId: string;
-    name: string;
 }
 
 // TODO: Clean try catch hell

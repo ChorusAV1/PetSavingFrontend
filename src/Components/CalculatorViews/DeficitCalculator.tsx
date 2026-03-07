@@ -33,7 +33,7 @@ const DeficitCalculator: React.FC = (): JSX.Element =>
 
     const handleSubmit = (): void =>
     {
-        setResult(formData.weight * formData.dehydration);
+        setResult((formData.weight * formData.dehydration) * 10);
     }
 
     return (

@@ -16,11 +16,13 @@ interface ViewHeaderProps
     onBackClick?: () => void;
     onSortClick?: () => void;
     onEditClick?: () => void;
+    onAddStatusClick?: () => void;
     onDeleteClick?: () => void;
+    onDischargeClick?: () => void;
     submitCreateButton?: () => void;
 }
 
-const ViewHeader: React.FC<ViewHeaderProps> = ({ label, icon, createNavigate, onSortClick, onEditClick, onBackClick, onDeleteClick, submitCreateButton }: ViewHeaderProps): JSX.Element =>
+const ViewHeader: React.FC<ViewHeaderProps> = ({ label, icon, createNavigate, onSortClick, onEditClick, onBackClick, onDeleteClick, submitCreateButton, onDischargeClick, onAddStatusClick }: ViewHeaderProps): JSX.Element =>
 {
     const navigate = useNavigate();
 
@@ -75,6 +77,20 @@ const ViewHeader: React.FC<ViewHeaderProps> = ({ label, icon, createNavigate, on
                 </button>
             )}
 
+            {onAddStatusClick && (
+                <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none
+                                dark:hover:bg-[#303030] dark:active:bg-[#101010]"
+                        onClick={() => onAddStatusClick()}>
+
+                    <div className="mb-0.5">
+                        <AddSVG/>
+                    </div>
+
+                    <span className="text-[10px]">Agregar<br/>estado</span>
+
+                </button>
+            )}
+
             {onEditClick && (
                 <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none
                                 dark:hover:bg-[#303030] dark:active:bg-[#101010]"
@@ -85,6 +101,20 @@ const ViewHeader: React.FC<ViewHeaderProps> = ({ label, icon, createNavigate, on
                     </div>
 
                     <span className="text-[10px]">Editar</span>
+
+                </button>
+            )}
+
+            {onDischargeClick && (
+                <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none
+                                dark:hover:bg-[#303030] dark:active:bg-[#101010]"
+                        onClick={() => onDischargeClick()}>
+
+                    <div className="m-1.25">
+                        <Placeholder20x20/>
+                    </div>
+
+                    <span className="text-[10px]">Alta</span>
 
                 </button>
             )}

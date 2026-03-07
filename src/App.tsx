@@ -40,6 +40,13 @@ import PostStock from "./Components/StockViews/PostStock";
 import GetOneStock from "./Components/StockViews/GetOneStock";
 import PatchStock from "./Components/StockViews/PatchStock";
 import PetTracker from "./Components/PetTracker/PetTracker";
+import Placeholder20x20 from "./assets/Placeholder20x20";
+import Admission from "./Components/MainViews/Admission";
+import GetAllAdmissions from "./Components/AdmissionViews/GetAllAdmissions";
+import PostAdmission from "./Components/AdmissionViews/PostAdmission";
+import GetOneAdmission from "./Components/AdmissionViews/GetOneAdmission";
+import PostStatus from "./Components/AdmissionViews/PostStatus";
+import PatchAdmission from "./Components/AdmissionViews/PatchAdmission";
 
 function App()
 {
@@ -79,6 +86,13 @@ function App()
 	{
 		setStockToShow(id);
 	}
+
+	const [admissionToShow, setAdmissionToShow] = useState<string>("")
+
+	const goToAdmission = (id: string): void =>
+	{
+		setAdmissionToShow(id);
+	}
   
   	return (
 		<div className="flex flex-col h-screen dark:bg-[#191919]">
@@ -90,6 +104,7 @@ function App()
 					<NavbarButton label="Consultas" path="/appointments" icon={<ApptsSVG/>}/>
 					<NavbarButton label="Clientes" path="/clients" icon={<CustSVG/>}/>
 					<NavbarButton label="Mascotas" path="/pets" icon={<PetsSVG/>}/>
+					<NavbarButton label="Ingresos" path="/admissions" icon={<Placeholder20x20/>}/>
 					<NavbarButton label="Inventario" path="/inventory" icon={<StockSVG/>}/>
 					<NavbarButton label="Calculadora" path="/calculator" icon={<CalcSVG/>}/>
 					<NavbarButton label="Personal" path="/staff" icon={<StaffSVG/>}/>
@@ -127,6 +142,16 @@ function App()
 						<Route path="nuevamascota" element = {<PostPet/>}/>
 						<Route path="detallemascota" element = {<DetailPet id={petToShow}/>}/>
 						<Route path="editarmascota" element = {<PatchPet id={petToShow}/>}/>
+
+					</Route>
+
+					<Route path="/admissions" element={<ProtectedRoute> <Admission/> </ProtectedRoute>}>
+
+						<Route path="list" element = {<GetAllAdmissions handleAdmissionClick={goToAdmission}/>}/>
+						<Route path="nuevaalta" element = {<PostAdmission/>}/>
+						<Route path="detalleingreso" element = {<GetOneAdmission id={admissionToShow}/>}/>
+						<Route path="editaringreso" element = {<PatchAdmission id={admissionToShow}/>}/>
+						<Route path="nuevoestado" element = {<PostStatus id={admissionToShow}/>}/>
 
 					</Route>
 

@@ -45,7 +45,7 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
                 email: res.data.email,
                 phoneNumber: res.data.phoneNumber,
                 address: res.data.address,
-                birthDate: res.data.birthDate,
+                birthDate: res.data.birthDate.substring(0, 10),
                 registrationDate: res.data.registrationDate,
                 emergencyContactName: res.data.emergencyContactName,
                 emergencyContactPhone: res.data.emergencyContactPhone

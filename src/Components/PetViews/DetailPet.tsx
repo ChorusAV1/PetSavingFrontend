@@ -45,13 +45,50 @@ const DetailPet:React.FC<DetailPetProps> = ({ id }: DetailPetProps): JSX.Element
 
     const [pet, setPet] = useState<GETPetRequestDTO>();
 
-    const GETPet = () =>
+    const GETPet = async (): Promise<void> =>
     {
-        axios.get<GETPetRequestDTO>(import.meta.env.VITE_API_URL + `/pet/${id}`).then((res) =>
+        try
         {
-            setPet(res.data);
-        })
-        .catch((e) => console.error("Error de consulta de api en Pet:", e));
+            const res = await axios.get<GETPetRequestDTO>(import.meta.env.VITE_API_URL + `/pet/${id}`);
+
+            let mappedData: GETPetRequestDTO =
+            {
+                id: res.data.id,
+                client: res.data.client,
+                name: res.data.name,
+                species: res.data.species,
+                breed: res.data.breed,
+                gender: res.data.gender,
+                birthDate: res.data.birthDate,
+                weight: res.data.weight,
+                adoptedDate: res.data.adoptedDate,
+                rating: res.data.rating,
+            }
+
+            if (res.data.birthDate == null)
+            {
+                mappedData.birthDate = "Sin fecha de nacimiento";
+            }
+            else
+            {
+                mappedData.birthDate = mappedData.birthDate.substring(0, 10);
+            }
+
+            if (res.data.adoptedDate == null)
+            {
+                mappedData.adoptedDate = "Sin fecha de adopción";
+            }
+            else
+            {
+                mappedData.adoptedDate = mappedData.adoptedDate.substring(0, 10);
+            }
+
+            setPet(mappedData);
+        }
+        catch(e)
+        {
+            console.error("Error de consulta de api en Pet:", e);
+        }
     }
 
     useEffect(() =>

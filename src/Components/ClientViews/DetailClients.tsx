@@ -107,11 +107,11 @@ const DetailClients: React.FC<DetailClientsProps> = ({id}: DetailClientsProps): 
                     </span>
                     <span className="flex items-center mt-2.5">
                         <CalendarSVG/>
-                        <label className="ml-2.5">{getClient?.birthDate}</label>
+                        <label className="ml-2.5">{getClient?.birthDate.substring(0, 10)}</label>
                     </span>
                     <span className="flex items-center mt-2.5">
                         <CalendarSVG/>
-                        <label className="ml-2.5">{getClient?.registrationDate}</label>
+                        <label className="ml-2.5">{getClient?.registrationDate.substring(0, 10) + " " + getClient?.registrationDate.substring(11, 16)}</label>
                     </span>
                 </div>
                 

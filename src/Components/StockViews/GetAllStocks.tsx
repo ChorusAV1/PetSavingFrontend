@@ -24,9 +24,9 @@ const GetAllStocks: React.FC<GetAllStocksProps> = ({ handleStockClick }: GetAllS
 	
 	const [stocks, setStocks] = useState<ReadInventoryDTO[]>([]);
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
-    const GETstock = async () =>
+    const GETstock = async (): Promise<void> =>
     {
         try
         {
@@ -38,7 +38,7 @@ const GetAllStocks: React.FC<GetAllStocksProps> = ({ handleStockClick }: GetAllS
         }
         catch(e)
         {
-            console.error("Error de consulta de api en Inventory:", e)
+            console.error("Error de consulta de api en Inventory:", e);
         }
         finally
         {
@@ -67,7 +67,8 @@ const GetAllStocks: React.FC<GetAllStocksProps> = ({ handleStockClick }: GetAllS
     }
 
 	// Verificar si la lista de stocks está vacía
-    if (stocks.length === 0) {
+    if (stocks.length === 0)
+    {
         return (
             <>
                 <ViewHeader

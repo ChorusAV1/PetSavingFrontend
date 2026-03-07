@@ -95,7 +95,9 @@ const GetAllAppointments: React.FC<GetAllAppointmentsProps> = ({ handleAppointme
 
                         <div className="grow"/>
 
-                        <span className="text-[12px] mr-4"><strong>{appointment.appointmentDate}</strong></span>
+                        <span className="text-[12px] mr-2"><strong>{appointment.appointmentDate.substring(0, 10)}</strong></span>
+
+                        <span className='text-[12px] mr-4'>{appointment.appointmentDate.substring(11, 16)}</span>
 
                     </div>
                 ))}

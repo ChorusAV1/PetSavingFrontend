@@ -44,3 +44,9 @@ export interface UpdatePetDTO
     adoptedDate?: string
     rating?: number
 }
+
+export interface POSTJustInTimePet
+{
+    clientId: string;
+    name: string;
+}

@@ -53,7 +53,7 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
                 species: res.data.species,
                 breed: res.data.breed,
                 gender: res.data.gender,
-                birthDate: res.data.birthDate,
+                birthDate: res.data.birthDate.substring(0, 10),
                 weight: res.data.weight,
                 adoptedDate: res.data.adoptedDate,
                 rating: res.data.rating
