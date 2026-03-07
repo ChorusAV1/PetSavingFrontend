@@ -39,7 +39,7 @@ const ListClients: React.FC<ListClientsProps> = ({handleClientClick}: ListClient
 
     useEffect(() =>
     {
-        axios.get<ClientResponse[]>("http://localhost:5126/api/client").then((res) =>
+        axios.get<ClientResponse[]>(import.meta.env.VITE_API_URL + "/client").then((res) =>
         {
             setClients(res.data);
         })

@@ -57,7 +57,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                 adoptedDate: new Date(formData.adoptedDate).toISOString(),
             };
     
-            const response = await axios.post("http://localhost:5126/api/pet", payload);
+            const response = await axios.post(import.meta.env.VITE_API_URL + "/pet", payload);
 
             console.log("Pet created:", response.data);
 

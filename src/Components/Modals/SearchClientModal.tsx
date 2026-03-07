@@ -42,7 +42,7 @@ const SearchClientModal: React.FC<SearchClientModalProps> = ({ onClose, selectCl
         {
             setLoading(true);
 
-            const res = await axios.get<GETClientRequestDTO[]>("http://localhost:5126/api/client");
+            const res = await axios.get<GETClientRequestDTO[]>(import.meta.env.VITE_API_URL + "/client");
 
             setClients(res.data);
         }

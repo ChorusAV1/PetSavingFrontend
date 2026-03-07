@@ -32,7 +32,7 @@ const GetAllAppointments: React.FC<GetAllAppointmentsProps> = ({ handleAppointme
         {
             setLoading(true);
 
-            const res = await axios.get<GETAppointmentRequestDTO[]>("http://localhost:5126/api/appointment");
+            const res = await axios.get<GETAppointmentRequestDTO[]>(import.meta.env.VITE_API_URL + "/appointment");
             
             setAppointments(res.data);
         }

@@ -60,7 +60,7 @@ const GetOneStock: React.FC<GetOneStockProps> = ({ id }: GetOneStockProps): JSX.
         {
             setLoading(true);
 
-            const res = await axios.get<ReadInventoryDTO>(`http://localhost:5126/api/inventory/${id}`);
+            const res = await axios.get<ReadInventoryDTO>(import.meta.env.VITE_API_URL + `/inventory/${id}`);
 
             setStock(res.data);
         }

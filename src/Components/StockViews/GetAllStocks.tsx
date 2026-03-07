@@ -32,7 +32,7 @@ const GetAllStocks: React.FC<GetAllStocksProps> = ({ handleStockClick }: GetAllS
         {
             setLoading(true);
 
-            const res = await axios.get<ReadInventoryDTO[]>("http://localhost:5126/api/inventory");
+            const res = await axios.get<ReadInventoryDTO[]>(import.meta.env.VITE_API_URL + "/inventory");
             
             setStocks(res.data);
         }

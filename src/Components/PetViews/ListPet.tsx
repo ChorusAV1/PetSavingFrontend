@@ -26,7 +26,7 @@ const ListPet: React.FC<ListPetProps> = ({handlePetClick}: ListPetProps): JSX.El
 
     useEffect(() =>
     {
-        axios.get<GETPetRequestDTO[]>("http://localhost:5126/api/pet").then((res) =>
+        axios.get<GETPetRequestDTO[]>(import.meta.env.VITE_API_URL + "/pet").then((res) =>
         {
             setPet(res.data);
         })

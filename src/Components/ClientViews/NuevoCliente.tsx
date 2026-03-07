@@ -57,7 +57,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                 birthDate: new Date(formData.birthDate).toISOString(),
             };
     
-            const response = await axios.post("http://localhost:5126/api/client", payload);
+            const response = await axios.post(import.meta.env.VITE_API_URL + "/client", payload);
 
             console.log("User created:", response.data);
 

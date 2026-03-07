@@ -1,5 +1,4 @@
 import type { JSX } from 'react'
-import Placeholder20x20 from '../assets/Placeholder20x20'
 import MenuSVG from '../assets/MenuSVG';
 
 interface HeaderProps

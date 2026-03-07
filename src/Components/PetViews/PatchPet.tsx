@@ -44,7 +44,7 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
     {
         try
         {
-            const res = await axios.get<GETPetRequestDTO>(`http://localhost:5126/api/pet/${id}`);
+            const res = await axios.get<GETPetRequestDTO>(import.meta.env.VITE_API_URL + `/pet/${id}`);
             
             const mappedData: UpdatePetDTO =
             {
@@ -101,7 +101,7 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
         
         try
         {
-            const response = await axios.patch(`http://localhost:5126/api/pet/${id}`, patchData);
+            const response = await axios.patch(import.meta.env.VITE_API_URL + `/pet/${id}`, patchData);
 
             console.log("Pet edited:", response.data);
 

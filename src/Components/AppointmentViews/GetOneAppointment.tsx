@@ -26,7 +26,7 @@ const GetOneAppointment: React.FC<GetOneAppointmentProps> = ({ id }: GetOneAppoi
     {
         try
         {
-            axios.delete(`http://localhost:5126/api/appointment/${id}`);
+            axios.delete(import.meta.env.VITE_API_URL + `/appointment/${id}`);
 
             handleBack();
         }
@@ -65,7 +65,7 @@ const GetOneAppointment: React.FC<GetOneAppointmentProps> = ({ id }: GetOneAppoi
     {
         try
         {
-            const res = await axios.get<GETAppointmentRequestDTO>(`http://localhost:5126/api/appointment/${id}`);
+            const res = await axios.get<GETAppointmentRequestDTO>(import.meta.env.VITE_API_URL + `/appointment/${id}`);
 
             setAppointment(res.data);
         }

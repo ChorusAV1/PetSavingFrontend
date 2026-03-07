@@ -49,7 +49,7 @@ const DetailClients: React.FC<DetailClientsProps> = ({id}: DetailClientsProps): 
 
     useEffect(() =>
     {
-        axios.get<ClientResponse>(`http://localhost:5126/api/client/${id}`).then((res) =>
+        axios.get<ClientResponse>(import.meta.env.VITE_API_URL + `/client/${id}`).then((res) =>
         {
             setClient(res.data);
         })
@@ -60,7 +60,7 @@ const DetailClients: React.FC<DetailClientsProps> = ({id}: DetailClientsProps): 
     {
         try
         {
-            axios.delete(`http://localhost:5126/api/client/${id}`);
+            axios.delete(import.meta.env.VITE_API_URL + `/client/${id}`);
 
             handleBack();
         }

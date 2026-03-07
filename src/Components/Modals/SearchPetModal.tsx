@@ -29,7 +29,7 @@ const SearchPetModal: React.FC<SearchPetModalProps> = ({ onClose, selectPet}: Se
         {
             setLoading(true);
 
-            const res = await axios.get<GETPetRequestDTO[]>("http://localhost:5126/api/pet");
+            const res = await axios.get<GETPetRequestDTO[]>(import.meta.env.VITE_API_URL + "/pet");
 
             setPets(res.data);
         }

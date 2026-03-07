@@ -87,7 +87,7 @@ const PostAppointment: React.FC = (): JSX.Element =>
                         firstName: formData.clientName
                     }
 
-                    const clientResponse = await axios.post<GETClientRequestDTO>("http://localhost:5126/api/client", clientPayload);
+                    const clientResponse = await axios.post<GETClientRequestDTO>(import.meta.env.VITE_API_URL + "/client", clientPayload);
 
                     newClientId = clientResponse.data.id;
                 }
@@ -109,7 +109,7 @@ const PostAppointment: React.FC = (): JSX.Element =>
                         name: formData.petName
                     }
             
-                    const petResponse = await axios.post<GETPetRequestDTO>("http://localhost:5126/api/pet", petPayload);
+                    const petResponse = await axios.post<GETPetRequestDTO>(import.meta.env.VITE_API_URL + "/pet", petPayload);
 
                     newPetId = petResponse.data.id;
                 }
@@ -130,7 +130,7 @@ const PostAppointment: React.FC = (): JSX.Element =>
                 followUpDate: formData.followUpDate
             };
     
-            const response = await axios.post("http://localhost:5126/api/appointment", postPayloadData);
+            const response = await axios.post(import.meta.env.VITE_API_URL + "/appointment", postPayloadData);
 
             console.log("Pet created:", response.data);
 

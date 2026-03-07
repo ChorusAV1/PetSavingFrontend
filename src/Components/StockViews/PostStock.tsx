@@ -40,7 +40,7 @@ const PostStock: React.FC = (): JSX.Element =>
                 ...formData,
             };
     
-            const response = await axios.post("http://localhost:5126/api/inventory", payload);
+            const response = await axios.post(import.meta.env.VITE_API_URL + "/inventory", payload);
 
             console.log("Stock created:", response.data);
 

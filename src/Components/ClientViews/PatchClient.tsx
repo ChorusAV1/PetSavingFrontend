@@ -36,7 +36,7 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
     {
         try
         {
-            const res = await axios.get<GETClientRequestDTO>(`http://localhost:5126/api/client/${id}`);
+            const res = await axios.get<GETClientRequestDTO>(import.meta.env.VITE_API_URL + `/client/${id}`);
 
             const mappedData: UpdateClientDTO =
             {
@@ -92,7 +92,7 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
 
         try
         {
-            const response = await axios.patch(`http://localhost:5126/api/client/${id}`, patchData);
+            const response = await axios.patch(import.meta.env.VITE_API_URL + `/client/${id}`, patchData);
 
             console.log("User edited:", response.data);
 

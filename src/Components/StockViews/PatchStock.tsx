@@ -38,7 +38,7 @@ const PatchStock: React.FC<PatchStockProps> = ({ id }: PatchStockProps): JSX.Ele
         {
             setLoading(true);
 
-            axios.get<ReadInventoryDTO>(`http://localhost:5126/api/inventory/${id}`).then((res) =>
+            axios.get<ReadInventoryDTO>(import.meta.env.VITE_API_URL + `/inventory/${id}`).then((res) =>
             {
                 setFormData(res.data);
             });
@@ -74,7 +74,7 @@ const PatchStock: React.FC<PatchStockProps> = ({ id }: PatchStockProps): JSX.Ele
                 ...formData,
             };
     
-            const response = await axios.patch(`http://localhost:5126/api/inventory/${id}`, payload);
+            const response = await axios.patch(import.meta.env.VITE_API_URL + `/inventory/${id}`, payload);
 
             console.log("Stock edited:", response.data);
 

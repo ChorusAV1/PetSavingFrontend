@@ -28,7 +28,7 @@ const DetailPet:React.FC<DetailPetProps> = ({ id }: DetailPetProps): JSX.Element
     {
         try
         {
-            axios.delete(`http://localhost:5126/api/pet/${id}`);
+            axios.delete(import.meta.env.VITE_API_URL + `/pet/${id}`);
 
             handleBack();
         }
@@ -47,7 +47,7 @@ const DetailPet:React.FC<DetailPetProps> = ({ id }: DetailPetProps): JSX.Element
 
     const GETPet = () =>
     {
-        axios.get<GETPetRequestDTO>(`http://localhost:5126/api/pet/${id}`).then((res) =>
+        axios.get<GETPetRequestDTO>(import.meta.env.VITE_API_URL + `/pet/${id}`).then((res) =>
         {
             setPet(res.data);
         })
