@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
 
+//manages login state, token and protected routes globally
 interface AuthContextType {
   token: string | null;
   login: (token: string) => void;

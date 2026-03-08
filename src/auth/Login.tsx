@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     try
     {
-      const response = await axios.post<LoginResponseDTO>("http://localhost:5126/api/Account/login", {
+      const response = await axios.post<LoginResponseDTO>(import.meta.env.VITE_API_URL + "/Account/login", {
       email,
       password,
       });
