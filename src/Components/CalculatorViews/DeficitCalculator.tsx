@@ -1,5 +1,6 @@
 import React, { useState, type JSX } from 'react'
 import CalculatorFooter from '../CalculatorFooter';
+import Spacer from '../Spacer';
 
 interface DeficitForm
 {
@@ -56,13 +57,13 @@ const DeficitCalculator: React.FC = (): JSX.Element =>
 
             <form className="flex flex-col flex-1 p-2.5">
 
-                <div className="flex h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
+                <div className="flex h-12.5 shadow dark:shadow-none border border-[#DADCDB] dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
 
                     <span className="m-3.25 text-[16px]">Peso</span>
 
                     <div className="grow" />
 
-                    <div className="bg-[#101010] m-2 p-1.25 rounded-md">
+                    <div className="bg-[#f5f5f5] shadow dark:shadow-none dark:bg-[#101010] m-2 p-1.25 rounded-md">
 
                         <input
                             name="weight"
@@ -79,15 +80,15 @@ const DeficitCalculator: React.FC = (): JSX.Element =>
 
                 </div>
 
-                <div className="h-2.5"/>
+                <Spacer/>
 
-                <div className="flex h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
+                <div className="flex h-12.5 shadow dark:shadow-none border border-[#DADCDB] dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
 
                     <span className="m-3.25 text-[16px]">% Deshidratación</span>
 
                     <div className="grow" />
 
-                    <div className="bg-[#101010] m-2 p-1.25 rounded-md">
+                    <div className="bg-[#f5f5f5] shadow dark:shadow-none dark:bg-[#101010] m-2 p-1.25 rounded-md">
 
                         <input
                             name="dehydration"
@@ -104,7 +105,7 @@ const DeficitCalculator: React.FC = (): JSX.Element =>
 
                 </div>
 
-                <div className="h-2.5"/>
+                <Spacer/>
 
                 <p className="dark:text-white text-[12px] mx-2 font-light italic">
                     Basado en guías de DiBartola, S. P. (Ed.). Fluid, electrolyte, and acid-base disorders in small animal practice.

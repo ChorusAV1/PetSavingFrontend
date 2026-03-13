@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState, type JSX } from 'react'
-import PlaceholderCircle32x32 from '../../assets/PlaceholderCircle32x32';
-import Placeholder20x20 from '../../assets/Placeholder20x20';
+import CrossSVG from '../../assets/CrossSVG';
+import Avatar from '../Avatar';
 
 interface SearchClientModalProps
 {
@@ -78,7 +78,7 @@ const SearchClientModal: React.FC<SearchClientModalProps> = ({ onClose, selectCl
                 <div className="grow"/>
 
                 <button onClick={onClose}>
-                    <Placeholder20x20/>
+                    <CrossSVG/>
                 </button>
                 
             </header>
@@ -92,7 +92,7 @@ const SearchClientModal: React.FC<SearchClientModalProps> = ({ onClose, selectCl
                      onClick={() => sendInfo(client.firstName + " " + client.lastName, client.id)}>
 
                     <div className="flex items-center w-70">
-                        <PlaceholderCircle32x32/>
+                        <Avatar guid={client.id} name={client.firstName}/>
 
                         <li key={client.id}
                             className="ml-2.5">

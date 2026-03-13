@@ -3,8 +3,8 @@ import ViewHeader from '../View/ViewHeader';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import type { GETAppointmentRequestDTO } from '../../types/AppointmentTypes';
-import PlaceholderCircle32x32 from '../../assets/PlaceholderCircle32x32';
 import ApptsSVG from '../../assets/ApptsSVG';
+import Avatar from '../Avatar';
 
 interface GetAllAppointmentsProps 
 {
@@ -79,12 +79,12 @@ const GetAllAppointments: React.FC<GetAllAppointmentsProps> = ({ handleAppointme
                 (
                     <div
                         key={appointment.id}
-                        className="flex items-center m-2.5 border dark:border-black rounded dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010]"
+                        className="flex items-center m-2.5 border border-[#DADCDB] shadow dark:shadow-none hover:bg-[#ececec] active:bg-[#dbdbdb] dark:border-black rounded dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010]"
                         onClick={() => handleClick(appointment.id)}
                     >
 
                         <div className="m-2">
-                            <PlaceholderCircle32x32/>
+                            <Avatar guid={appointment.pet.id} name={appointment.pet.name} />
                         </div>
 
                         <div className="flex flex-col text-[12px] justify-center ml-0.5">

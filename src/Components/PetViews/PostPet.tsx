@@ -2,17 +2,16 @@ import React, { useState, type JSX } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import GenericContainer from '../Generic/GenericContainer';
-import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
 import GenericModal from '../Generic/GenericModal';
 import SearchClientModal from '../Modals/SearchClientModal';
-import type { POSTPetRequestDTO } from '../../types/PetTypes';
+import type { GETPetRequestDTO, POSTPetRequestDTO } from '../../types/PetTypes';
 import ViewHeader from '../View/ViewHeader';
 import PetsSVG from '../../assets/PetsSVG';
 import GenericButton from '../Generic/GenericButton';
-import AddImgSVG from '../../assets/AddImgSVG';
 import SearchSVG from '../../assets/SearchSVG';
+import placeholderImg from "../../assets/AddImg.png";
 
-const NuevoCliente: React.FC = (): JSX.Element =>
+const PostPet: React.FC = (): JSX.Element =>
 {
     const navigate = useNavigate();
 
@@ -21,7 +20,11 @@ const NuevoCliente: React.FC = (): JSX.Element =>
         navigate("../list")
     }
 
-    {/* GenericModal isOpen*/}
+    {/*Image handling*/}
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+    {/*GenericModal isOpen*/}
     const [open, setOpen] = useState<boolean>(false);
     
     const [formData, setFormData] = useState<POSTPetRequestDTO>(
@@ -57,15 +60,43 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                 adoptedDate: new Date(formData.adoptedDate).toISOString(),
             };
     
-            const response = await axios.post(import.meta.env.VITE_API_URL + "/pet", payload);
+            const response = await axios.post<GETPetRequestDTO>(import.meta.env.VITE_API_URL + "/pet", payload);
 
             console.log("Pet created:", response.data);
+
+            const petId = response.data.id;
+
+            // Upload image if selected
+            if (selectedImage)
+            {
+                const formDataToSend = new FormData();
+
+                formDataToSend.append("file", selectedImage);
+
+                await axios.post(`${import.meta.env.VITE_API_URL}/image/${petId}`, formDataToSend,
+                {
+                    headers: { "Content-Type": "multipart/form-data" }
+                });
+            }
 
             navigate("../list");
         }
         catch (error)
         {
-            console.error("Error creating user:", error);
+            console.error("Error creating pet:", error);
+        }
+    };
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    {
+        if (e.target.files && e.target.files[0])
+        {
+            const file = e.target.files[0];
+            setSelectedImage(file);
+
+            // Create a preview URL
+            const url = URL.createObjectURL(file);
+            setPreviewUrl(url);
         }
     };
 
@@ -90,14 +121,23 @@ const NuevoCliente: React.FC = (): JSX.Element =>
             <GenericContainer textSize={16}>
 
                 <div className="flex items-center p-3">
-                    
-                    <PlaceholderCircle64x64/>
 
-                    <GenericButton
-                        color="blue"
-                        icon={<AddImgSVG/>}
-                        customClasses="ml-5"
-                    />
+                    <label className="cursor-pointer">
+
+                        <img
+                            src={previewUrl || placeholderImg}
+                            alt="Pet"
+                            className="w-16 h-16 rounded-full border border-gray-300 object-cover bg-gray-400"
+                        />
+
+                        <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={handleImageChange}
+                        />
+
+                    </label>
                     
                 </div>
 
@@ -107,7 +147,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                            name="name"
                            value={formData.name}
                            onChange={handleChange}
-                           className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                           className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
 
@@ -117,7 +157,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                            name="species"
                            value={formData.species}
                            onChange={handleChange}
-                           className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                           className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
 
@@ -127,7 +167,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                            name="breed"
                            value={formData.breed}
                            onChange={handleChange}
-                           className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                           className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
 
@@ -135,7 +175,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                     <label className="font-light">Genero</label>
                     <select name="gender"
                             onChange={handleChange}
-                            className="bg-[#101010] p-1.25 rounded-md">
+                            className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none p-1.25 rounded-md">
                         <option value="Macho">Macho</option>
                         <option value="Hembra">Hembra</option>
                     </select>
@@ -149,7 +189,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                            name="weight"
                            value={formData.weight}
                            onChange={handleChange}
-                           className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                           className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
 
@@ -159,7 +199,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                            name="birthDate"
                            value={formData.birthDate}
                            onChange={handleChange}
-                           className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                           className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
 
@@ -169,7 +209,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                            name="adoptedDate"
                            value={formData.adoptedDate}
                            onChange={handleChange}
-                           className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                           className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
 
@@ -181,7 +221,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                            max="10"
                            value={formData.rating}
                            onChange={handleChange}
-                           className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                           className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
                 
@@ -204,7 +244,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                            name="clientId"
                            value={ownerName}
                            onChange={handleChange}
-                           className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                           className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                            disabled
                     />
 
@@ -226,4 +266,4 @@ const NuevoCliente: React.FC = (): JSX.Element =>
     )
 }
 
-export default NuevoCliente
+export default PostPet

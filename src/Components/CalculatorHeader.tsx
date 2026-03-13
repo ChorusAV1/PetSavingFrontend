@@ -1,5 +1,4 @@
 import React, { type JSX } from 'react'
-import Placeholder24x24 from '../assets/Placeholder24x24'
 import { useNavigate } from 'react-router-dom';
 import CalcSVG from '../assets/CalcSVG';
 
@@ -20,10 +19,10 @@ const CalculatorHeader: React.FC<CalculatorHeaderProps> = ({label}: CalculatorHe
     }
 
     return (
-        <header className="flex items-center h-15 sticky top-12
+        <header className="flex items-center h-15 sticky top-12 bg-[#F5F6F7]
                            dark:bg-[#202020] dark:text-white">
 
-            <div className="m-3.5 h-8 w-8 flex items-center justify-center rounded-md bg-[#AFAFAF]">
+            <div className="m-3.5 h-8 w-8 flex items-center justify-center rounded-md bg-white dark:bg-[#AFAFAF] shadow dark:shadow-none">
                 <CalcSVG/>
             </div>
 
@@ -31,7 +30,7 @@ const CalculatorHeader: React.FC<CalculatorHeaderProps> = ({label}: CalculatorHe
 
             <div className="grow"/>
 
-            <select onChange={handleChange} className="dark:bg-[#303030] border dark:border-black mr-3.5 h-8 rounded-md">
+            <select onChange={handleChange} className="bg-[#e6e6e6] dark:bg-[#303030] dark:border dark:border-black mr-3.5 h-8 rounded-md">
                 <option value="deficit" selected>Déficit</option>
                 <option value="mantenimiento">Mantenimiento</option>
                 <option value="goteo">Cálculo de goteo</option>

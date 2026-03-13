@@ -111,7 +111,7 @@ const PatchStock: React.FC<PatchStockProps> = ({ id }: PatchStockProps): JSX.Ele
                 <input
                     type='text'
                     name='name'
-                    className='dark:bg-[#101010] h-8 p-2 rounded-md'
+                    className='bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md'
                     onChange={handleChange}
                     value={formData.name}
                 />
@@ -122,7 +122,7 @@ const PatchStock: React.FC<PatchStockProps> = ({ id }: PatchStockProps): JSX.Ele
                 <input
                     type='text'
                     name='description'
-                    className='dark:bg-[#101010] h-8 p-2 rounded-md'
+                    className='bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md'
                     onChange={handleChange}
                     value={formData.description}
                 />
@@ -133,7 +133,7 @@ const PatchStock: React.FC<PatchStockProps> = ({ id }: PatchStockProps): JSX.Ele
                 <input
                     type='number'
                     name='unitValue'
-                    className='dark:bg-[#101010] h-8 p-2 rounded-md'
+                    className='bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md'
                     onChange={handleChange}
                     value={formData.unitValue}
                 />
@@ -144,7 +144,7 @@ const PatchStock: React.FC<PatchStockProps> = ({ id }: PatchStockProps): JSX.Ele
                 <input
                     type='number'
                     name='stock'
-                    className='dark:bg-[#101010] h-8 p-2 rounded-md'
+                    className='bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md'
                     onChange={handleChange}
                     value={formData.stock}
                 />
@@ -155,7 +155,7 @@ const PatchStock: React.FC<PatchStockProps> = ({ id }: PatchStockProps): JSX.Ele
                 <input
                     type='text'
                     name='supplerName'
-                    className='dark:bg-[#101010] h-8 p-2 rounded-md'
+                    className='bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md'
                     onChange={handleChange}
                     value={formData.supplerName}
                 />

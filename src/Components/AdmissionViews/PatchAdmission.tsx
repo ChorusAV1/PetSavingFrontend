@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import type { CreateAdmissionForm, GETAdmissionDTO, GetOneAdmissionDTO, PATCHAdmissionDTO } from '../../types/AdmissionTypes';
 import axios from 'axios';
 import ViewHeader from '../View/ViewHeader';
-import Placeholder20x20 from '../../assets/Placeholder20x20';
 import Spacer from '../Spacer';
 import GenericContainer from '../Generic/GenericContainer';
 import GenericButton from '../Generic/GenericButton';
 import SearchSVG from '../../assets/SearchSVG';
 import GenericModal from '../Generic/GenericModal';
 import SearchPetModal from '../Modals/SearchPetModal';
+import AdmissionsSVG from '../../assets/AdmissionsSVG';
 
 interface PatchAdmissionProps
 {
@@ -22,7 +22,7 @@ const PatchAdmission: React.FC<PatchAdmissionProps> = ({ id }: PatchAdmissionPro
 
     const handleBack = (): void =>
     {
-        navigate("../detalleingreso");
+        navigate("../detallepaciente");
     }
 
     const [loading, setLoading] = useState<boolean>(false)
@@ -70,13 +70,13 @@ const PatchAdmission: React.FC<PatchAdmissionProps> = ({ id }: PatchAdmissionPro
 
             const res = await axios.patch<GETAdmissionDTO>(import.meta.env.VITE_API_URL + `/admission/${id}`, postPayloadData);
 
-            console.log("Ingreso editado:", res.data);
+            console.log("paciente editado:", res.data);
 
             navigate("../list");
         }
         catch(e)
         {
-            console.error("Error al editar el ingreso:", e);
+            console.error("Error al editar el paciente:", e);
         }
     }
 
@@ -101,7 +101,7 @@ const PatchAdmission: React.FC<PatchAdmissionProps> = ({ id }: PatchAdmissionPro
         }
         catch(e)
         {
-            console.error("Ocurrióun error al cargar la información del ingreso: ", e);
+            console.error("Ocurrióun error al cargar la información del paciente: ", e);
         }
         finally
         {
@@ -129,8 +129,8 @@ const PatchAdmission: React.FC<PatchAdmissionProps> = ({ id }: PatchAdmissionPro
         return (
             <>
                 <ViewHeader
-                    icon={<Placeholder20x20/>}
-                    label='Editar ingreso'
+                    icon={<AdmissionsSVG/>}
+                    label='Editar paciente'
                     onBackClick={handleBack}
                     submitCreateButton={handleSubmit}
                 />
@@ -143,8 +143,8 @@ const PatchAdmission: React.FC<PatchAdmissionProps> = ({ id }: PatchAdmissionPro
     return (
         <>
             <ViewHeader
-                icon={<Placeholder20x20/>}
-                label='Editar ingreso'
+                icon={<AdmissionsSVG/>}
+                label='Editar paciente'
                 onBackClick={handleBack}
                 submitCreateButton={handleSubmit}
             />
@@ -160,7 +160,7 @@ const PatchAdmission: React.FC<PatchAdmissionProps> = ({ id }: PatchAdmissionPro
                     <div className="grow"/>
 
                     <input
-                        className="dark:bg-[#101010] h-8 p-2 rounded-md w-50"
+                        className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md w-50"
                         name="petName"
                         type="text"
                         onChange={handleChange}
@@ -184,13 +184,13 @@ const PatchAdmission: React.FC<PatchAdmissionProps> = ({ id }: PatchAdmissionPro
             <GenericContainer>
 
                 <div className="flex items-center justify-between my-1.25">
-                    <label className="font-light">Razón de ingreso</label>
+                    <label className="font-light">Razón de paciente</label>
                     <input
                         type="text"
                         name="admissionReason"
                         value={formData.admissionReason}
                         onChange={handleChange}
-                        className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                        className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
 
@@ -201,7 +201,7 @@ const PatchAdmission: React.FC<PatchAdmissionProps> = ({ id }: PatchAdmissionPro
                         name="dischargeDate"
                         value={formData.dischargeDate}
                         onChange={handleChange}
-                        className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                        className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
 
@@ -214,7 +214,7 @@ const PatchAdmission: React.FC<PatchAdmissionProps> = ({ id }: PatchAdmissionPro
                         name="cageNumber"
                         value={formData.cageNumber}
                         onChange={handleChange}
-                        className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                        className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
                 

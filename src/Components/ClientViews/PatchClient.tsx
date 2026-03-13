@@ -1,12 +1,10 @@
 import React, { useEffect, useState, type JSX } from 'react'
-import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ViewHeader from '../View/ViewHeader';
 import ApptsSVG from '../../assets/ApptsSVG';
-import GenericButton from '../Generic/GenericButton';
-import AddImgSVG from '../../assets/AddImgSVG';
 import type { UpdateClientDTO, GETClientRequestDTO } from '../../types/ClientTypes';
+import placeholderImg from "../../assets/AddImg.png";
 
 interface PatchClientProps
 {
@@ -21,6 +19,10 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
     {
         navigate("../detallecliente")
     }
+
+    {/*Image handling*/}
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
     const [formData, setFormData] = useState<UpdateClientDTO>({});
     const [originalData, setOriginalData] = useState<UpdateClientDTO>({});
@@ -45,7 +47,7 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
                 email: res.data.email,
                 phoneNumber: res.data.phoneNumber,
                 address: res.data.address,
-                birthDate: res.data.birthDate.substring(0, 10),
+                birthDate: res.data.birthDate == null ? undefined : res.data.birthDate.substring(0, 10),
                 registrationDate: res.data.registrationDate,
                 emergencyContactName: res.data.emergencyContactName,
                 emergencyContactPhone: res.data.emergencyContactPhone
@@ -62,6 +64,7 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
 
     useEffect(() =>
     {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         GETClient();
     }, []);
 
@@ -92,15 +95,41 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
 
         try
         {
-            const response = await axios.patch(import.meta.env.VITE_API_URL + `/client/${id}`, patchData);
+            const response = await axios.patch<GETClientRequestDTO>(import.meta.env.VITE_API_URL + `/client/${id}`, patchData);
 
             console.log("User edited:", response.data);
+
+            // Upload image if selected
+            if (selectedImage)
+            {
+                const formDataToSend = new FormData();
+
+                formDataToSend.append("file", selectedImage);
+
+                await axios.put(import.meta.env.VITE_API_URL + `/image/${response.data.id}`, formDataToSend,
+                {
+                    headers: { "Content-Type": "multipart/form-data" }
+                });
+            }
 
             navigate("../detallecliente");
         }
         catch (e)
         {
             console.error("Error updating user:", e);
+        }
+    };
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    {
+        if (e.target.files && e.target.files[0])
+        {
+            const file = e.target.files[0];
+            setSelectedImage(file);
+
+            // Create a preview URL
+            const url = URL.createObjectURL(file);
+            setPreviewUrl(url);
         }
     };
 
@@ -117,13 +146,22 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
 
                 <div className="flex items-center mb-3 mt-0.5 ml-0.5">
 
-                    <PlaceholderCircle64x64/>
+                    <label className="cursor-pointer">
 
-                    <GenericButton
-                        color="blue"
-                        icon={<AddImgSVG/>}
-                        customClasses="ml-6"
-                    />
+                        <img
+                            src={previewUrl || placeholderImg}
+                            alt="Pet"
+                            className="w-16 h-16 rounded-full border border-gray-300 object-cover bg-gray-400"
+                        />
+
+                        <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={handleImageChange}
+                        />
+
+                    </label>
                     
                 </div>
 
@@ -134,7 +172,7 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
                             <input name="firstName"
                                    value={formData.firstName}
                                    onChange={handleChange}
-                                   className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                                   className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                                    type='text'
                             />
                         </div>
@@ -144,7 +182,7 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
                             <input name="lastName"
                                    value={formData.lastName}
                                    onChange={handleChange}
-                                   className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                                   className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                                    type='text'
                             />
                         </div>
@@ -156,7 +194,7 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
                             <input name="phoneNumber"
                                    value={formData.phoneNumber}
                                    onChange={handleChange}
-                                   className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                                   className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                                    type="tel"
                             />
                         </div>
@@ -166,7 +204,7 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
                             <input name="birthDate"
                                    value={formData.birthDate}
                                    onChange={handleChange}
-                                   className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                                   className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                                    type="date"
                             />
                         </div>
@@ -180,7 +218,7 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                            className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                             type="email"
                         />
                     </div>
@@ -191,7 +229,7 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
                             name="address"
                             value={formData.address}
                             onChange={handleChange}
-                            className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                            className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                             type="text"
                         />
                     </div>
@@ -206,7 +244,7 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
                     name="emergencyContactName"
                     value={formData.emergencyContactName}
                     onChange={handleChange}
-                    className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                    className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                 />
 
                 <label className="font-light mt-1.5 mb-1">Telefono de contacto de emergencia</label>
@@ -214,7 +252,7 @@ const PatchClient: React.FC<PatchClientProps> = ({id}: PatchClientProps): JSX.El
                     name="emergencyContactPhone"
                     value={formData.emergencyContactPhone}
                     onChange={handleChange}
-                    className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                    className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                 />
             </div>
         </>

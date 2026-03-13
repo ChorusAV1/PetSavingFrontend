@@ -7,6 +7,7 @@ import EditSVG from '../../assets/EditSVG';
 import SaveSVG from '../../assets/SaveSVG';
 import AddSVG from '../../assets/AddSVG';
 import ArrowSVG from '../../assets/ArrowSVG';
+import CheckmarkSVG from '../../assets/CheckmarkSVG';
 
 interface ViewHeaderProps 
 {
@@ -42,7 +43,7 @@ const ViewHeader: React.FC<ViewHeaderProps> = ({ label, icon, createNavigate, on
                 </button>
             )}
 
-            <div className="m-3.5 h-8 w-8 flex items-center justify-center rounded-md bg-[#f5f5f5] dark:bg-[#AFAFAF]">
+            <div className="m-3.5 h-8 w-8 flex items-center justify-center rounded-md bg-white dark:bg-[#AFAFAF] shadow dark:shadow-none">
                {icon}
             </div>
 
@@ -51,7 +52,7 @@ const ViewHeader: React.FC<ViewHeaderProps> = ({ label, icon, createNavigate, on
             <div className="grow"/>
             
             {onSortClick && (
-                <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none
+                <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none hover:bg-[#ececec] active:bg-[#dadada]
                                 dark:hover:bg-[#303030] dark:active:bg-[#101010]">
 
                 <div className="m-1.25">
@@ -64,7 +65,7 @@ const ViewHeader: React.FC<ViewHeaderProps> = ({ label, icon, createNavigate, on
             )}
 
             {createNavigate && (
-                <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none
+                <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none hover:bg-[#ececec] active:bg-[#dadada]
                                 dark:hover:bg-[#303030] dark:active:bg-[#101010]"
                     onClick={handleNuevo}>
 
@@ -78,7 +79,7 @@ const ViewHeader: React.FC<ViewHeaderProps> = ({ label, icon, createNavigate, on
             )}
 
             {onAddStatusClick && (
-                <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none
+                <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none hover:bg-[#ececec] active:bg-[#dadada]
                                 dark:hover:bg-[#303030] dark:active:bg-[#101010]"
                         onClick={() => onAddStatusClick()}>
 
@@ -92,7 +93,7 @@ const ViewHeader: React.FC<ViewHeaderProps> = ({ label, icon, createNavigate, on
             )}
 
             {onEditClick && (
-                <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none
+                <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none hover:bg-[#ececec] active:bg-[#dadada]
                                 dark:hover:bg-[#303030] dark:active:bg-[#101010]"
                         onClick={() => onEditClick()}>
 
@@ -106,12 +107,12 @@ const ViewHeader: React.FC<ViewHeaderProps> = ({ label, icon, createNavigate, on
             )}
 
             {onDischargeClick && (
-                <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none
+                <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none hover:bg-[#ececec] active:bg-[#dadada]
                                 dark:hover:bg-[#303030] dark:active:bg-[#101010]"
                         onClick={() => onDischargeClick()}>
 
                     <div className="m-1.25">
-                        <Placeholder20x20/>
+                        <CheckmarkSVG/>
                     </div>
 
                     <span className="text-[10px]">Alta</span>
@@ -120,7 +121,7 @@ const ViewHeader: React.FC<ViewHeaderProps> = ({ label, icon, createNavigate, on
             )}
 
             {onDeleteClick && (
-                <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none
+                <button className="flex flex-col items-center p-0.75 mx-1.25 rounded-sm select-none hover:bg-[#ececec] active:bg-[#dadada]
                                 dark:hover:bg-[#303030] dark:active:bg-[#101010]"
                         onClick={() => onDeleteClick()}>
 

@@ -7,6 +7,7 @@ export interface GETAdmissionDTO
     dischargeDate: string;
     admissionReason: string;
     cageNumber: number;
+    discharged: boolean;
 }
 
 export interface GetOneAdmissionDTO
@@ -18,6 +19,7 @@ export interface GetOneAdmissionDTO
     dischargeDate: string;
     admissionReason: string;
     cageNumber: number;
+    discharged: boolean;
     statuses: GetOneStatusSummaryDTO[];
 }
 

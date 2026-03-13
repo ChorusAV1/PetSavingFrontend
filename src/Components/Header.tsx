@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { AuthContext } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
 import MenuSVG from '../assets/MenuSVG';
-import Placeholder24x24 from '../assets/Placeholder24x24';
+import LogoutSVG from '../assets/LogoutSVG';
 
 interface HeaderProps
 {
@@ -27,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({handleSandwichOnClick}: HeaderProps): JS
         <header className="flex h-12 sticky top-0 bg-[#F5F6F7] border-b border-[#DADBDC]
                         dark:bg-black dark:border-[#242424]">
             {/*Navbar toggle*/}
-            <button onClick={handleSandwichOnClick} className="flex items-center justify-center w-17 dark:hover:bg-[#242424] dark:active:bg-[#303030] dark:text-white">
+            <button onClick={handleSandwichOnClick} className="flex items-center justify-center w-17 hover:bg-[#fcfcfc] active:bg-white dark:hover:bg-[#242424] dark:active:bg-[#303030] dark:text-white">
                     <MenuSVG/>
             </button>
             
@@ -37,8 +37,8 @@ const Header: React.FC<HeaderProps> = ({handleSandwichOnClick}: HeaderProps): JS
             {/*Logout button*/}
             <button 
                 onClick={handleLogout}
-                className='flex items-center justify-center w-17 dark:hover:bg-[#242424] dark:active:bg-[#303030]dark:text-white'>
-                <Placeholder24x24/>
+                className='flex items-center justify-center w-17 dark:hover:bg-[#242424] hover:bg-[#fcfcfc] active:bg-white dark:active:bg-[#303030] dark:text-white'>
+                <LogoutSVG/>
             </button>
         </header>
     )

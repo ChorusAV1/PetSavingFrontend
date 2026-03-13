@@ -95,7 +95,7 @@ const GetAllStocks: React.FC<GetAllStocksProps> = ({ handleStockClick }: GetAllS
                 (
                     <div
                         key={stock.id}
-                        className="flex items-center border-b dark:border-black dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010] p-3"
+                        className="flex items-center border-b border-[#DADCDB] dark:border-black dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010] p-3"
                         onClick={() => handleClick(stock.id)}
                     >
 

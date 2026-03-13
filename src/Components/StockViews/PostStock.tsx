@@ -70,7 +70,7 @@ const PostStock: React.FC = (): JSX.Element =>
                 <input
                     type='text'
                     name='name'
-                    className='dark:bg-[#101010] h-8 p-2 rounded-md'
+                    className='bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md'
                     onChange={handleChange}
                 />
                 
@@ -80,7 +80,7 @@ const PostStock: React.FC = (): JSX.Element =>
                 <input
                     type='text'
                     name='description'
-                    className='dark:bg-[#101010] h-8 p-2 rounded-md'
+                    className='bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md'
                     onChange={handleChange}
                 />
 
@@ -90,7 +90,7 @@ const PostStock: React.FC = (): JSX.Element =>
                 <input
                     type='number'
                     name='unitValue'
-                    className='dark:bg-[#101010] h-8 p-2 rounded-md'
+                    className='bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md'
                     onChange={handleChange}
                 />
 
@@ -100,7 +100,7 @@ const PostStock: React.FC = (): JSX.Element =>
                 <input
                     type='number'
                     name='stock'
-                    className='dark:bg-[#101010] h-8 p-2 rounded-md'
+                    className='bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md'
                     onChange={handleChange}
                 />
 
@@ -110,7 +110,7 @@ const PostStock: React.FC = (): JSX.Element =>
                 <input
                     type='text'
                     name='supplerName'
-                    className='dark:bg-[#101010] h-8 p-2 rounded-md'
+                    className='bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md'
                     onChange={handleChange}
                 />
 

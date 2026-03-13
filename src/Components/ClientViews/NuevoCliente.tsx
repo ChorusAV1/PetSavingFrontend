@@ -1,11 +1,9 @@
 import React, { useState, type JSX } from 'react'
 import { useNavigate } from 'react-router-dom';
-import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
 import axios from 'axios';
 import ViewHeader from '../View/ViewHeader';
 import ApptsSVG from '../../assets/ApptsSVG';
-import AddImgSVG from '../../assets/AddImgSVG';
-import GenericButton from '../Generic/GenericButton';
+import placeholderImg from "../../assets/AddImg.png";
 
 interface CreateUserRequest
 {
@@ -27,6 +25,10 @@ const NuevoCliente: React.FC = (): JSX.Element =>
     {
         navigate("../lista")
     }
+
+    {/*Image handling*/}
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
     const [formData, setFormData] = useState<CreateUserRequest>(
     {
@@ -61,11 +63,39 @@ const NuevoCliente: React.FC = (): JSX.Element =>
 
             console.log("User created:", response.data);
 
+            const clientId = response.data.id;
+
+            // Upload image if selected
+            if (selectedImage)
+            {
+                const formDataToSend = new FormData();
+
+                formDataToSend.append("file", selectedImage);
+
+                await axios.post(`${import.meta.env.VITE_API_URL}/image/${clientId}`, formDataToSend,
+                {
+                    headers: { "Content-Type": "multipart/form-data" }
+                });
+            }
+
             navigate("../lista");
         }
         catch (error)
         {
             console.error("Error creating user:", error);
+        }
+    };
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    {
+        if (e.target.files && e.target.files[0])
+        {
+            const file = e.target.files[0];
+            setSelectedImage(file);
+
+            // Create a preview URL
+            const url = URL.createObjectURL(file);
+            setPreviewUrl(url);
         }
     };
 
@@ -81,11 +111,22 @@ const NuevoCliente: React.FC = (): JSX.Element =>
             <div className="flex flex-col justify-center dark:bg-[#202020] border border-[#DADCDB] dark:border-black m-2.5 p-2.5 dark:text-white text-[12px] rounded shadow dark:shadow-none">
 
                 <div className="flex items-center mb-3 mt-0.5 ml-0.5">
-                    <PlaceholderCircle64x64/>
-                    <GenericButton
-                        color="blue"
-                        icon={<AddImgSVG/>}
-                        customClasses="ml-5"/>
+                    <label className="cursor-pointer">
+
+                        <img
+                            src={previewUrl || placeholderImg}
+                            alt="Pet"
+                            className="w-16 h-16 rounded-full border border-gray-300 object-cover bg-gray-400"
+                        />
+
+                        <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={handleImageChange}
+                        />
+
+                    </label>
                 </div>
 
                 
@@ -95,7 +136,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                             <input name="firstName"
                                    value={formData.firstName}
                                    onChange={handleChange}
-                                   className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                                   className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                                    type='text'
                             />
                         </div>
@@ -105,7 +146,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                             <input name="lastName"
                                    value={formData.lastName}
                                    onChange={handleChange}
-                                   className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                                   className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                                    type='text'
                             />
                         </div>
@@ -117,7 +158,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                             <input name="phoneNumber"
                                    value={formData.phoneNumber}
                                    onChange={handleChange}
-                                   className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                                   className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                                    type="tel"
                             />
                         </div>
@@ -127,7 +168,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                             <input name="birthDate"
                                    value={formData.birthDate}
                                    onChange={handleChange}
-                                   className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                                   className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                                    type="date"
                             />
                         </div>
@@ -141,7 +182,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                            className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                             type="email"
                         />
                     </div>
@@ -152,7 +193,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                             name="address"
                             value={formData.address}
                             onChange={handleChange}
-                            className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                            className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                             type="text"
                         />
                     </div>
@@ -167,7 +208,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                     name="emergencyContactName"
                     value={formData.emergencyContactName}
                     onChange={handleChange}
-                    className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                    className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                 />
 
                 <label className="font-light mt-1.5 mb-1">Telefono de contacto de emergencia</label>
@@ -175,7 +216,7 @@ const NuevoCliente: React.FC = (): JSX.Element =>
                     name="emergencyContactPhone"
                     value={formData.emergencyContactPhone}
                     onChange={handleChange}
-                    className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                    className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                 />
             </div>
         </>

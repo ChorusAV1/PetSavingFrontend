@@ -6,13 +6,13 @@ import DeleteModal from '../Modals/DeleteModal';
 import type { GETPetRequestDTO } from '../../types/PetTypes';
 import axios from 'axios';
 import GenericContainer from '../Generic/GenericContainer';
-import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
-import PlaceholderCircle32x32 from '../../assets/PlaceholderCircle32x32';
 import PetsSVG from '../../assets/PetsSVG';
+import Avatar from '../Avatar';
+import Spacer from '../Spacer';
 
 interface DetailPetProps
 {
-    id: string;
+    id: "";
 }
 
 const DetailPet:React.FC<DetailPetProps> = ({ id }: DetailPetProps): JSX.Element =>
@@ -43,7 +43,23 @@ const DetailPet:React.FC<DetailPetProps> = ({ id }: DetailPetProps): JSX.Element
         navigate("../editarmascota")
     }
 
-    const [pet, setPet] = useState<GETPetRequestDTO>();
+    const [pet, setPet] = useState<GETPetRequestDTO>
+    ({
+        id: "",
+        client: {
+            id: "",
+            firstName: "",
+            lastName: "",
+        },
+        name: "",
+        species: "",
+        breed: "",
+        gender: "",
+        birthDate: "",
+        weight: 0,
+        adoptedDate: "",
+        rating: 0,
+    });
 
     const GETPet = async (): Promise<void> =>
     {
@@ -51,6 +67,7 @@ const DetailPet:React.FC<DetailPetProps> = ({ id }: DetailPetProps): JSX.Element
         {
             const res = await axios.get<GETPetRequestDTO>(import.meta.env.VITE_API_URL + `/pet/${id}`);
 
+            // eslint-disable-next-line prefer-const
             let mappedData: GETPetRequestDTO =
             {
                 id: res.data.id,
@@ -93,6 +110,7 @@ const DetailPet:React.FC<DetailPetProps> = ({ id }: DetailPetProps): JSX.Element
 
     useEffect(() =>
     {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         GETPet();
     }, []);
 
@@ -107,13 +125,13 @@ const DetailPet:React.FC<DetailPetProps> = ({ id }: DetailPetProps): JSX.Element
                 onDeleteClick={() => setOpen(true)}
             />
 
-            <div className="h-2.5"/>
+            <Spacer/>
 
             <GenericContainer>
             
                 <div className="flex items-center">
 
-                    <PlaceholderCircle64x64/>
+                    <Avatar guid={pet?.id} name={pet.name} size={64}/>
 
                     <div className="flex flex-col m-2.5 text-[16px]">
                         <span><strong>{pet?.name}</strong></span>
@@ -147,7 +165,7 @@ const DetailPet:React.FC<DetailPetProps> = ({ id }: DetailPetProps): JSX.Element
 
             </GenericContainer>
 
-            <div className="h-2.5"/>
+            <Spacer/>
 
             <GenericContainer>
 
@@ -170,7 +188,7 @@ const DetailPet:React.FC<DetailPetProps> = ({ id }: DetailPetProps): JSX.Element
 
                 <div className="flex items-center">
 
-                    <PlaceholderCircle32x32/>
+                    <Avatar guid={pet.client.id} name={pet.client.firstName}/>
 
                     <div className="flex flex-col text-[12px]">
                         <label className="ml-2.5"><strong>{pet?.client.firstName + " " + pet?.client.lastName}</strong></label>

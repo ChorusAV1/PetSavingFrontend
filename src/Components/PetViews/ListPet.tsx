@@ -1,10 +1,10 @@
 import React, { useEffect, useState, type JSX } from 'react'
 import ViewHeader from '../View/ViewHeader';
-import PlaceholderCircle32x32 from '../../assets/PlaceholderCircle32x32';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import type { GETPetRequestDTO } from '../../types/PetTypes';
 import PetsSVG from '../../assets/PetsSVG';
+import Avatar from '../Avatar';
 
 interface ListPetProps
 {
@@ -51,7 +51,7 @@ const ListPet: React.FC<ListPetProps> = ({handlePetClick}: ListPetProps): JSX.El
 
                         {/* Render appointment details */}
                         <div className="m-2">
-                            <PlaceholderCircle32x32/>
+                            <Avatar guid={pet.id} name={pet.name} />
                         </div>
 
                         <div className="flex flex-col text-[12px] justify-center ml-0.5">

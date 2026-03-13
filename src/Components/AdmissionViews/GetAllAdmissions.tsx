@@ -4,7 +4,8 @@ import type { GETAdmissionDTO } from '../../types/AdmissionTypes';
 import axios from 'axios';
 import ViewMessage from '../View/ViewMessage';
 import ViewHeader from '../View/ViewHeader';
-import Placeholder20x20 from '../../assets/Placeholder20x20';
+import AdmissionsSVG from '../../assets/AdmissionsSVG';
+import Avatar from '../Avatar';
 
 interface GetAllAdmissionsProps
 {
@@ -19,7 +20,7 @@ const GetAllAdmissions: React.FC<GetAllAdmissionsProps> = ({ handleAdmissionClic
     {
         handleAdmissionClick(id);
 
-        navigate("../detalleingreso");
+        navigate("../detallepaciente");
     }
 
     const [admissions, setAdmissions] = useState<GETAdmissionDTO[]>([]);
@@ -56,9 +57,9 @@ const GetAllAdmissions: React.FC<GetAllAdmissionsProps> = ({ handleAdmissionClic
         return(
             <>
                 <ViewHeader
-                    label='Ingresos'
-                    icon={<Placeholder20x20/>}
-                    createNavigate='nuevaalta'
+                    label='Pacientes'
+                    icon={<AdmissionsSVG/>}
+                    createNavigate='nuevopaciente'
                 />
 
                 <ViewMessage message='Cargando...'/>
@@ -71,9 +72,9 @@ const GetAllAdmissions: React.FC<GetAllAdmissionsProps> = ({ handleAdmissionClic
         return(
             <>
                 <ViewHeader
-                    label='Ingresos'
-                    icon={<Placeholder20x20/>}
-                    createNavigate='nuevaalta'
+                    label='Pacientes'
+                    icon={<AdmissionsSVG/>}
+                    createNavigate='nuevopaciente'
                 />
 
                 <ViewMessage message='No hay altas para mostrar.'/>
@@ -84,9 +85,9 @@ const GetAllAdmissions: React.FC<GetAllAdmissionsProps> = ({ handleAdmissionClic
     return (
         <>
             <ViewHeader
-                label='Ingresos'
-                icon={<Placeholder20x20/>}
-                createNavigate='nuevaalta'
+                label='Pacientes'
+                icon={<AdmissionsSVG/>}
+                createNavigate='nuevopaciente'
             />
 
             <div className='dark:text-white'>
@@ -94,11 +95,12 @@ const GetAllAdmissions: React.FC<GetAllAdmissionsProps> = ({ handleAdmissionClic
                 (
                     <div
                         key={admission.id}
-                        className='flex items-center border-b dark:border-black dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010] p-3'
+                        className='flex items-center border-b border-[#DADCDB] dark:border-black dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010] p-3'
                         onClick={() => handleClick(admission.id)}
                     >
+                        <Avatar guid={admission.pet.id} name={admission.pet.name}/>
 
-                        <div className="flex flex-col text-[12px] justify-center">
+                        <div className="flex flex-col text-[12px] justify-center ml-3">
                             <span className='font-bold'>{admission.pet.name}</span>
 
                             <span>{admission.admissionReason}</span>

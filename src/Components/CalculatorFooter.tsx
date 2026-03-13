@@ -9,10 +9,10 @@ interface CalculatorFooterProps
 const CalculatorFooter: React.FC<CalculatorFooterProps> = ({ onReset, onSubmit }: CalculatorFooterProps): JSX.Element =>
 {
     return (
-        <section className="flex items-center justify-around bg-[#202020] h-18 border-t sticky bottom-0">
+        <section className="flex items-center justify-around bg-[#F5F6F7] dark:bg-[#202020] h-18 border-t border-[#DADCDB] dark:border-black sticky bottom-0">
 
             <button
-                className="dark:bg-[#3B3B3B] dark:hover:bg-[#303030] dark:active:bg-[#404040] text-[24px] text-white w-18.75 h-12.5 rounded-lg"
+                className="bg-[#8b8b8b] dark:bg-[#3B3B3B] dark:hover:bg-[#303030] dark:active:bg-[#404040] text-[24px] text-white w-18.75 h-12.5 rounded-lg"
                 onClick={onReset}
             >
                 C

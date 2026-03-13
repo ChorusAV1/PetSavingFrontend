@@ -1,9 +1,9 @@
 import React, { useEffect, useState, type JSX } from 'react'
 import ViewHeader from '../View/ViewHeader';
-import PlaceholderCircle32x32 from '../../assets/PlaceholderCircle32x32';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ApptsSVG from '../../assets/ApptsSVG';
+import Avatar from '../Avatar';
 
 interface ListClientsProps
 {
@@ -59,12 +59,12 @@ const ListClients: React.FC<ListClientsProps> = ({handleClientClick}: ListClient
                 (
                     <li
                         key={client.id}
-                        className="flex m-2.5 border border-[#DADCDB] shadow dark:shadow-none dark:border-black rounded dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010]"
+                        className="flex m-2.5 border border-[#DADCDB] shadow dark:shadow-none hover:bg-[#ececec] active:bg-[#dbdbdb] dark:border-black rounded dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010]"
                         onClick={() => handleClick(client.id)}>
 
                         {/* Render appointment details */}
                         <div className="m-2">
-                            <PlaceholderCircle32x32/>
+                            <Avatar guid={client.id} name={client.firstName}/>
                         </div>
 
                         <div className="flex flex-col text-[12px] justify-center ml-0.5">

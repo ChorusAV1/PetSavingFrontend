@@ -3,15 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import type { GetOneAdmissionDTO } from '../../types/AdmissionTypes';
 import axios from 'axios';
 import ViewHeader from '../View/ViewHeader';
-import Placeholder20x20 from '../../assets/Placeholder20x20';
 import ViewMessage from '../View/ViewMessage';
 import Spacer from '../Spacer';
 import GenericContainer from '../Generic/GenericContainer';
-import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
+import AdmissionsSVG from '../../assets/AdmissionsSVG';
+import GenericModal from '../Generic/GenericModal';
+import DeleteModal from '../Modals/DeleteModal';
+import Avatar from '../Avatar';
 
 interface GetOneAdmissionProps
 {
     id: string;
+}
+
+interface PostDischarge
+{
+    discharged: boolean;
 }
 
 const GetOneAdmission: React.FC<GetOneAdmissionProps> = ({ id }: GetOneAdmissionProps): JSX.Element =>
@@ -30,17 +37,48 @@ const GetOneAdmission: React.FC<GetOneAdmissionProps> = ({ id }: GetOneAdmission
 
     const handleEdit = (): void =>
     {
-        navigate("../editaringreso");
+        navigate("../editarpaciente");
     }
 
-    const handleDischarge = (): void =>
+    const handleDischarge = async (): Promise<void> =>
     {
-        console.log("Discharge is being clicked!!");
+        try
+        {
+            setLoading(true);
+
+            const postPayloadData: PostDischarge =
+            {
+                discharged: true
+            };
+
+            console.log(postPayloadData);
+
+            const res = await axios.patch<GetOneAdmissionDTO>(import.meta.env.VITE_API_URL + `/admission/${id}`, postPayloadData);
+
+            setAdmission(res.data);
+        }
+        catch(e)
+        {
+            console.error("Error de consulta de api en GETAdmission:", e);
+        }
+        finally
+        {
+            setLoading(false);
+        }
     }
 
     const handleDelete = (): void =>
     {
-        console.log("Delete is being clicked!!!");
+        try
+        {
+            axios.delete(`http://localhost:5126/api/admission/${id}`);
+
+            handleBack();
+        }
+        catch (e)
+        {
+            console.error("Ocurrió un error al tratar de borrar el producto: ", e)
+        }
     }
 
     const [loading, setLoading] = useState(false);
@@ -64,6 +102,7 @@ const GetOneAdmission: React.FC<GetOneAdmissionProps> = ({ id }: GetOneAdmission
         dischargeDate: "",
         admissionReason: "",
         cageNumber: 0,
+        discharged: false,
         statuses: [],
     })
 
@@ -92,20 +131,20 @@ const GetOneAdmission: React.FC<GetOneAdmissionProps> = ({ id }: GetOneAdmission
         GETAdmission();
     }, []);
 
-    // const [open, setOpen] = useState<boolean>(false);
+    const [open, setOpen] = useState<boolean>(false);
 
     if (loading)
     {
         return(
             <>
                 <ViewHeader
-                    label='Ingreso'
-                    icon={<Placeholder20x20/>}
+                    label='Paciente'
+                    icon={<AdmissionsSVG/>}
                     onBackClick={handleBack}
                     onEditClick={handleEdit}
                     onAddStatusClick={handleNewStatus}
                     onDischargeClick={handleDischarge}
-                    onDeleteClick={handleDelete}
+                    onDeleteClick={() => setOpen(true)}
                 />
 
                 <ViewMessage message='Cargando...'/>
@@ -116,13 +155,13 @@ const GetOneAdmission: React.FC<GetOneAdmissionProps> = ({ id }: GetOneAdmission
     return (
         <>
             <ViewHeader
-                label='Ingreso'
-                icon={<Placeholder20x20/>}
+                label='Paciente'
+                icon={<AdmissionsSVG/>}
                 onBackClick={handleBack}
                 onEditClick={handleEdit}
                 onAddStatusClick={handleNewStatus}
                 onDischargeClick={handleDischarge}
-                onDeleteClick={handleDelete}
+                onDeleteClick={() => setOpen(true)}
             />
 
             <Spacer/>
@@ -131,7 +170,7 @@ const GetOneAdmission: React.FC<GetOneAdmissionProps> = ({ id }: GetOneAdmission
 
                 <div className="flex items-center">
 
-                    <PlaceholderCircle64x64/>
+                    <Avatar guid={admission.pet.id} name={admission.pet.name} size={64}/>
 
                     <div className="flex flex-col m-2.5 text-[16px]">
                         <span><strong>{admission.pet.name}</strong></span>
@@ -142,16 +181,29 @@ const GetOneAdmission: React.FC<GetOneAdmissionProps> = ({ id }: GetOneAdmission
 
                 <div className="text-[14px] space-y-3.5 mt-2">
                     <div className="flex">
-                        <label className="mr-2">Fecha de ingreso:</label>
+                        <label className="mr-2">Fecha de Paciente:</label>
                         <span>{admission.admissionDate.substring(0, 10)}</span>
                     </div>
                     <div className="flex">
-                        <label className="mr-2">Razón de ingreso:</label>
+                        <label className="mr-2">Razón de Paciente:</label>
                         <span>{admission.admissionReason}</span>
                     </div>
                     <div className="flex">
                         <label className="mr-2">Jaula:</label>
                         <span>{admission.cageNumber}</span>
+                    </div>
+                    <div className='flex'>
+                        <label className='mr-2'>
+                            {admission.discharged === false ?
+                                (
+                                    <span className='text-amber-400 font-bold'>Actualemte alojado</span>
+                                )
+                                :
+                                (
+                                    <span className='text-green-600 font-bold'>Dado de alta</span>
+                                )
+                            }
+                        </label>
                     </div>
                 </div>
 
@@ -181,7 +233,7 @@ const GetOneAdmission: React.FC<GetOneAdmissionProps> = ({ id }: GetOneAdmission
                         (
                             <div
                                 key={status.id}
-                                className="flex items-center m-2.5 p-2 border dark:border-black rounded dark:bg-[#202020] hover:dark:bg-[#303030] active:dark:bg-[#101010]"
+                                className="flex items-center m-2.5 p-2 border-[#DADCDB] shadow dark:shadow-none border dark:border-black rounded dark:bg-[#202020]"
                             >
                                 <div className="flex flex-col text-[12px] justify-center ml-0.5">
                                     <span><strong>{status.currentStatus}</strong></span>
@@ -198,6 +250,12 @@ const GetOneAdmission: React.FC<GetOneAdmissionProps> = ({ id }: GetOneAdmission
                     )
                 }
             </div>
+
+            <GenericModal open={open} onClose={() => setOpen(false)}>
+
+                <DeleteModal message="Estás seguro de que deseas eliminar este paciente? Esto borrará todos sus estados y su numero de seguimiento por lo que se recomienda dar de alta." onClickDelete={handleDelete} onClickClose={() => setOpen(false)}/>
+
+            </GenericModal>
         </>
     )
 }

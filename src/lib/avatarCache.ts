@@ -1,0 +1,1 @@
+export const avatarCache = new Map<string, string>()

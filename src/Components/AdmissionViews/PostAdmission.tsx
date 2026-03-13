@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import type { CreateAdmissionForm, GETAdmissionDTO, POSTAdmissionDTO } from '../../types/AdmissionTypes';
 import axios from 'axios';
 import ViewHeader from '../View/ViewHeader';
-import Placeholder20x20 from '../../assets/Placeholder20x20';
 import Spacer from '../Spacer';
 import GenericContainer from '../Generic/GenericContainer';
 import GenericButton from '../Generic/GenericButton';
@@ -11,6 +10,7 @@ import SearchSVG from '../../assets/SearchSVG';
 import type { GETPetRequestDTO, POSTJustInTimePet } from '../../types/PetTypes';
 import GenericModal from '../Generic/GenericModal';
 import SearchPetModal from '../Modals/SearchPetModal';
+import AdmissionsSVG from '../../assets/AdmissionsSVG';
 
 const PostAdmission: React.FC = (): JSX.Element =>
 {
@@ -98,8 +98,8 @@ const PostAdmission: React.FC = (): JSX.Element =>
     return (
         <>
             <ViewHeader
-                icon={<Placeholder20x20/>}
-                label='Nuevo ingreso'
+                icon={<AdmissionsSVG/>}
+                label='Nuevo paciente'
                 onBackClick={handleBack}
                 submitCreateButton={handleSubmit}
             />
@@ -115,7 +115,7 @@ const PostAdmission: React.FC = (): JSX.Element =>
                     <div className="grow"/>
 
                     <input
-                        className="dark:bg-[#101010] h-8 p-2 rounded-md w-50"
+                        className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md w-50"
                         name="petName"
                         type="text"
                         onChange={handleChange}
@@ -144,7 +144,7 @@ const PostAdmission: React.FC = (): JSX.Element =>
                         name="admissionReason"
                         value={formData.admissionReason}
                         onChange={handleChange}
-                        className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                        className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
 
@@ -155,7 +155,7 @@ const PostAdmission: React.FC = (): JSX.Element =>
                         name="dischargeDate"
                         value={formData.dischargeDate}
                         onChange={handleChange}
-                        className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                        className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
 
@@ -168,7 +168,7 @@ const PostAdmission: React.FC = (): JSX.Element =>
                         name="cageNumber"
                         value={formData.cageNumber}
                         onChange={handleChange}
-                        className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                        className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
                 

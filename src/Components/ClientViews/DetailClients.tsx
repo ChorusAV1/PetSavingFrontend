@@ -1,7 +1,6 @@
 import React, { useEffect, useState, type JSX } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
 import GenericModal from '../Generic/GenericModal';
 import DeleteModal from '../Modals/DeleteModal';
 import ViewHeader from '../View/ViewHeader';
@@ -11,6 +10,7 @@ import PhoneSVG from '../../assets/PhoneSVG';
 import AddressSVG from '../../assets/AddressSVG';
 import CalendarSVG from '../../assets/CalendarSVG';
 import ProfileSVG from '../../assets/ProfileSVG';
+import Avatar from '../Avatar';
 
 interface DetailClientsProps
 {
@@ -23,12 +23,12 @@ interface ClientResponse
     firstName: string;
     lastName: string;
     email: string;
-    phoneNumber: number;
+    phoneNumber: string;
     address: string;
     birthDate: string;
     registrationDate: string;
     emergencyContactName: string;
-    emergencyContactPhone: number;
+    emergencyContactPhone: string;
 }
 
 const DetailClients: React.FC<DetailClientsProps> = ({id}: DetailClientsProps): JSX.Element =>
@@ -83,9 +83,9 @@ const DetailClients: React.FC<DetailClientsProps> = ({id}: DetailClientsProps): 
                 onDeleteClick={() => setOpen(true)}
             />
 
-            <div className="flex flex-col justify-center dark:bg-[#202020] border border-[#DADCDB] dark:border-black m-2.5 p-2.25 dark:text-white text-[12px] rounded shadow dark:shadow-none">
+            <div className="flex flex-col justify-center dark:bg-[#202020] border border-[#DADCDB] dark:border-black m-2.5 p-2.25 dark:text-white rounded shadow dark:shadow-none">
                 <div className="flex items-center">
-                    <PlaceholderCircle64x64/>
+                    <Avatar guid={getClient?.id} name={getClient?.firstName == null ? "Sin Cliente" : getClient.firstName} size={64}/>
                     <div className="flex flex-col m-2.5 text-[16px]">
                         <span><strong>{getClient?.firstName}</strong></span>
                         <span>{getClient?.lastName}</span>
@@ -95,19 +95,19 @@ const DetailClients: React.FC<DetailClientsProps> = ({id}: DetailClientsProps): 
                 <div className="text-[14px]">
                     <span className="flex items-center mt-2.5">
                         <MailSVG/>
-                        <label className="ml-2.5">{getClient?.email}</label>
+                        <label className="ml-2.5">{getClient?.email == "" ? "Sin correo electrónico" : getClient?.email}</label>
                     </span>
                     <span className="flex items-center mt-2.5">
                         <PhoneSVG/>
-                        <label className="ml-2.5">{getClient?.phoneNumber}</label>
+                        <label className="ml-2.5">{getClient?.phoneNumber == "" ? "Sin número de teléfono" : getClient?.phoneNumber}</label>
                     </span>
                     <span className="flex items-center mt-2.5">
                         <AddressSVG/>
-                        <label className="ml-2.5">{getClient?.address}</label>
+                        <label className="ml-2.5">{getClient?.address == "" ? "Sin domicilio" : getClient?.address}</label>
                     </span>
                     <span className="flex items-center mt-2.5">
                         <CalendarSVG/>
-                        <label className="ml-2.5">{getClient?.birthDate.substring(0, 10)}</label>
+                        <label className="ml-2.5">{getClient?.birthDate == null ? "Sin fecha de nacimiento" :  getClient.birthDate.substring(0, 10)}</label>
                     </span>
                     <span className="flex items-center mt-2.5">
                         <CalendarSVG/>
@@ -121,11 +121,11 @@ const DetailClients: React.FC<DetailClientsProps> = ({id}: DetailClientsProps): 
                 <label className="font-light text-[12px]">Contacto de emergencia</label>
                 <span className="flex items-center mt-1">
                     <ProfileSVG/>
-                    <label className="ml-2.5">{getClient?.emergencyContactName}</label>
+                    <label className="ml-2.5">{getClient?.emergencyContactName == "" ? "Sin contacto de emergencia" : getClient?.emergencyContactName}</label>
                 </span>
                 <span className="flex items-center mt-2.5">
                     <PhoneSVG/>
-                    <label className="ml-2.5">{getClient?.emergencyContactPhone}</label>
+                    <label className="ml-2.5">{getClient?.emergencyContactPhone == "" ? "Sin teléfono de emergencia" : getClient?.phoneNumber}</label>
                 </span>
             </div>
 

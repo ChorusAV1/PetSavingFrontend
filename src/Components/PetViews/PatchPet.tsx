@@ -2,15 +2,14 @@ import React, { useEffect, useState, type JSX } from 'react'
 import ViewHeader from '../View/ViewHeader';
 import { useNavigate } from 'react-router-dom';
 import GenericContainer from '../Generic/GenericContainer';
-import PlaceholderCircle64x64 from '../../assets/PlaceholderCircle64x64';
 import type { GETPetRequestDTO, UpdatePetDTO } from '../../types/PetTypes';
 import GenericModal from '../Generic/GenericModal';
 import SearchClientModal from '../Modals/SearchClientModal';
 import axios from 'axios';
 import GenericButton from '../Generic/GenericButton';
-import AddImgSVG from '../../assets/AddImgSVG';
 import ApptsSVG from '../../assets/ApptsSVG';
 import SearchSVG from '../../assets/SearchSVG';
+import placeholderImg from "../../assets/AddImg.png";
 
 interface PatchPetProps
 {
@@ -25,6 +24,10 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
     {
         navigate("../detallemascota")
     }
+
+    {/*Image handling*/}
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
     const [open, setOpen] = useState<boolean>(false);
 
@@ -72,6 +75,7 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
     
     useEffect(() =>
     {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         GETPet();
     }, [])
     
@@ -101,9 +105,22 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
         
         try
         {
-            const response = await axios.patch(import.meta.env.VITE_API_URL + `/pet/${id}`, patchData);
+            const response = await axios.patch<GETPetRequestDTO>(import.meta.env.VITE_API_URL + `/pet/${id}`, patchData);
 
             console.log("Pet edited:", response.data);
+
+            // Upload image if selected
+            if (selectedImage)
+            {
+                const formDataToSend = new FormData();
+
+                formDataToSend.append("file", selectedImage);
+
+                await axios.put(import.meta.env.VITE_API_URL + `/image/${response.data.id}`, formDataToSend,
+                {
+                    headers: { "Content-Type": "multipart/form-data" }
+                });
+            }
 
             navigate("../detallemascota");
         }
@@ -112,6 +129,19 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
             console.error("Error updating pet:", e);
         }
     }
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    {
+        if (e.target.files && e.target.files[0])
+        {
+            const file = e.target.files[0];
+            setSelectedImage(file);
+    
+            // Create a preview URL
+            const url = URL.createObjectURL(file);
+            setPreviewUrl(url);
+        }
+    };
 
     const clientModalSubmit = (fullName: string, id: string): void =>
     {
@@ -135,13 +165,22 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
 
                 <div className="flex items-center p-3">
 
-                    <PlaceholderCircle64x64/>
+                    <label className="cursor-pointer">
 
-                    <GenericButton
-                        color="blue"
-                        icon={<AddImgSVG/>}
-                        customClasses="ml-5"
-                    />
+                        <img
+                            src={previewUrl || placeholderImg}
+                            alt="Pet"
+                            className="w-16 h-16 rounded-full border border-gray-300 object-cover bg-gray-400"
+                        />
+
+                        <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={handleImageChange}
+                        />
+
+                    </label>
 
                 </div>
 
@@ -151,7 +190,7 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
                            name="name"
                            value={formData.name}
                            onChange={handleChange}
-                           className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                           className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
 
@@ -161,7 +200,7 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
                            name="species"
                            value={formData.species}
                            onChange={handleChange}
-                           className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                           className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
 
@@ -171,7 +210,7 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
                            name="breed"
                            value={formData.breed}
                            onChange={handleChange}
-                           className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                           className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
 
@@ -179,7 +218,7 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
                     <label className="font-light">Genero</label>
                     <select name="gender"
                             onChange={handleChange}
-                            className="bg-[#101010] p-1.25 rounded-md">
+                            className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none p-1.25 rounded-md">
                         <option value="Macho">Macho</option>
                         <option value="Hembra">Hembra</option>
                     </select>
@@ -193,7 +232,7 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
                            name="weight"
                            value={formData.weight}
                            onChange={handleChange}
-                           className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                           className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
 
@@ -203,7 +242,7 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
                            name="birthDate"
                            value={formData.birthDate}
                            onChange={handleChange}
-                           className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                           className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
 
@@ -213,7 +252,7 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
                            name="adoptedDate"
                            value={formData.adoptedDate}
                            onChange={handleChange}
-                           className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                           className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
 
@@ -225,7 +264,7 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
                            max="10"
                            value={formData.rating}
                            onChange={handleChange}
-                           className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                           className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                     />
                 </div>
                 
@@ -250,7 +289,7 @@ const PatchPet: React.FC<PatchPetProps> = ({ id }: PatchPetProps): JSX.Element =
                         name="clientId"
                         value={ownerName}
                         onChange={handleChange}
-                        className="dark:bg-[#101010] h-8 p-2 rounded-md"
+                        className="bg-[#f5f5f5] shadow dark:bg-[#101010] dark:shadow-none h-8 p-2 rounded-md"
                         disabled
                     />
 

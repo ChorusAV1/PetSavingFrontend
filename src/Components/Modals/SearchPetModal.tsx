@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState, type JSX } from 'react'
-import PlaceholderCircle32x32 from '../../assets/PlaceholderCircle32x32';
-import Placeholder20x20 from '../../assets/Placeholder20x20';
 import type { GETPetRequestDTO } from '../../types/PetTypes';
+import CrossSVG from '../../assets/CrossSVG';
+import Avatar from '../Avatar';
 
 interface SearchPetModalProps
 {
@@ -65,7 +65,7 @@ const SearchPetModal: React.FC<SearchPetModalProps> = ({ onClose, selectPet}: Se
                 <div className="grow"/>
 
                 <button onClick={onClose}>
-                    <Placeholder20x20/>
+                    <CrossSVG/>
                 </button>
                 
             </header>
@@ -79,7 +79,7 @@ const SearchPetModal: React.FC<SearchPetModalProps> = ({ onClose, selectPet}: Se
                      onClick={() => sendInfo(Pet.name, Pet.id)}>
 
                     <div className="flex items-center w-70">
-                        <PlaceholderCircle32x32/>
+                        <Avatar guid={Pet.id} name={Pet.name}/>
 
                         <li key={Pet.id}
                             className="ml-2.5">

@@ -1,11 +1,11 @@
 import React, { useState, type JSX } from 'react'
 import { useNavigate } from 'react-router-dom';
 import ViewHeader from '../View/ViewHeader';
-import Placeholder20x20 from '../../assets/Placeholder20x20';
 import Spacer from '../Spacer';
 import type { POSTStatusDTO } from '../../types/StatusTypes';
 import GenericContainer from '../Generic/GenericContainer';
 import axios from 'axios';
+import AdmissionsSVG from '../../assets/AdmissionsSVG';
 
 interface PostStatusProps
 {
@@ -18,7 +18,7 @@ const PostStatus: React.FC<PostStatusProps> = ({ id }: PostStatusProps): JSX.Ele
 
     const handleBack = (): void =>
     {
-        navigate("../detalleingreso")
+        navigate("../detallepaciente")
     }
 
     const [formData, setFormData] = useState<POSTStatusDTO>
@@ -43,7 +43,7 @@ const PostStatus: React.FC<PostStatusProps> = ({ id }: PostStatusProps): JSX.Ele
 
             console.log("Status created:", res.data);
 
-            navigate("../detalleingreso");
+            navigate("../detallepaciente");
         }
         catch (error)
         {
@@ -55,7 +55,7 @@ const PostStatus: React.FC<PostStatusProps> = ({ id }: PostStatusProps): JSX.Ele
         <>
             <ViewHeader
                 label='Nuevo estado'
-                icon={<Placeholder20x20/>}
+                icon={<AdmissionsSVG/>}
                 onBackClick={handleBack}
                 submitCreateButton={handleSubmit}
             />

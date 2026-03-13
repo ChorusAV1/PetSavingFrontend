@@ -1,5 +1,6 @@
 import React, { useState, type JSX } from 'react'
 import CalculatorFooter from '../CalculatorFooter';
+import Spacer from '../Spacer';
 
 interface MaintenanceForm
 {
@@ -31,7 +32,7 @@ const MantenimientoCalculator: React.FC = (): JSX.Element =>
 
     const handleSubmit = (): void =>
     {
-        setResult(formData.weight);
+        setResult(Number((70 * (formData.weight ** 0.75)).toFixed(2)));
     }
     
     return (
@@ -54,18 +55,21 @@ const MantenimientoCalculator: React.FC = (): JSX.Element =>
 
             <form className="flex flex-col flex-1 overflow-y-auto">
 
-                <div className="flex m-2.5 h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
+                <Spacer/>
+
+                <div className="flex h-12.5 mx-2.5 shadow dark:shadow-none border border-[#DADCDB] dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
 
                     <span className="m-3.25 text-[16px]">Peso</span>
 
                     <div className="grow" />
 
-                    <div className="bg-[#101010] m-2 p-1.25 rounded-md">
+                    <div className="bg-[#f5f5f5] shadow dark:shadow-none dark:bg-[#101010] m-2 p-1.25 rounded-md">
 
                         <input
                             name="weight"
                             type="number" 
                             className="w-32" 
+                            min="0"
                             onChange={handleChange}
                             value={formData.weight}
                         />
@@ -75,6 +79,8 @@ const MantenimientoCalculator: React.FC = (): JSX.Element =>
                     </div>
 
                 </div>
+
+                <Spacer/>
 
                 <p className="dark:text-white text-[12px] mx-6 font-light italic">
                     Basado en guías de DiBartola, S. P. (Ed.). Fluid, electrolyte, and acid-base disorders in small animal practice.

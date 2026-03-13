@@ -1,5 +1,6 @@
 import React, { useState, type JSX } from 'react'
 import CalculatorFooter from '../CalculatorFooter';
+import Spacer from '../Spacer';
 
 interface DropForm
 {
@@ -45,12 +46,12 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
     {
         if (formData.equipment == "Normogotero")
         {
-            setResult(formData.weight + (formData.dehydration + formData.loses) * 2);
+            setResult(Number(((((formData.weight * formData.dehydration) * 10) + (70 * (formData.weight ** 0.75)) + formData.loses) * 20 / (24 * 60)).toFixed(2)));
         }
         
         if (formData.equipment == "Microgotero")
         {
-            setResult(formData.weight + (formData.dehydration - formData.loses) * 3)
+            setResult(Number(((((formData.weight * formData.dehydration) * 10) + (70 * (formData.weight ** 0.75)) + formData.loses) * 60 / (24 * 60)).toFixed(2)));
         }
     }
     return (
@@ -73,13 +74,13 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
 
             <form className="flex flex-col flex-1">
 
-                <div className="flex mx-2.5 mt-2.5 h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
+                <div className="flex mx-2.5 mt-2.5 h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030] shadow dark:shadow-none border-[#DADCDB]">
 
                     <span className="m-3.25 text-[16px]">Peso</span>
 
                     <div className="grow" />
 
-                    <div className="bg-[#101010] m-2 p-1.25 rounded-md">
+                    <div className="bg-[#f5f5f5] shadow dark:shadow-none dark:bg-[#101010] m-2 p-1.25 rounded-md">
 
                         <input
                             name="weight" 
@@ -96,13 +97,13 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
 
                 </div>
 
-                <div className="flex mx-2.5 mt-2.5 h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
+                <div className="flex mx-2.5 mt-2.5 h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030] shadow dark:shadow-none border-[#DADCDB]">
 
                     <span className="m-3.25 text-[16px]">% Deshidratación</span>
 
                     <div className="grow" />
 
-                    <div className="bg-[#101010] m-2 p-1.25 rounded-md">
+                    <div className="bg-[#f5f5f5] shadow dark:shadow-none dark:bg-[#101010] m-2 p-1.25 rounded-md">
 
                         <input
                             name="dehydration"
@@ -113,19 +114,19 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
                             value={formData.dehydration}
                         />
 
-                        <span className="font-light italic">???</span>
+                        <span className="font-light italic">%</span>
 
                     </div>
 
                 </div>
 
-                <div className="flex mx-2.5 mt-2.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
+                <div className="flex mx-2.5 mt-2.5 h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030] shadow dark:shadow-none border-[#DADCDB]">
 
                     <span className="m-3.25 text-[16px]">Pérdidas</span>
 
                     <div className="grow" />
 
-                    <div className="bg-[#101010] m-2 p-1.25 rounded-md">
+                    <div className="bg-[#f5f5f5] shadow dark:shadow-none dark:bg-[#101010] m-2 p-1.25 rounded-md">
 
                         <input
                             name="loses" 
@@ -142,7 +143,7 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
 
                 </div>
 
-                <div className="flex m-2.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030]">
+                <div className="flex mx-2.5 mt-2.5 h-12.5 border dark:text-white dark:border-black rounded-md dark:bg-[#303030] shadow dark:shadow-none border-[#DADCDB]">
 
                     <span className="m-3.25 text-[14px]">Factor goteo del equipo</span>
 
@@ -152,7 +153,7 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
                         name="equipment"
                         value={formData.equipment}
                         onChange={handleChange}
-                        className="bg-[#101010] m-2 p-1.25 rounded-md"
+                        className="bg-[#f5f5f5] shadow dark:shadow-none dark:bg-[#101010] m-2 p-1.25 rounded-md"
                     >
 
                         <option value="Normogotero">Normogotero</option>
@@ -162,6 +163,8 @@ const GoteoCalculator: React.FC = (): JSX.Element =>
                     </select>
 
                 </div>
+
+                <Spacer/>
 
                 <p className="dark:text-white text-[12px] mx-6 font-light italic">
                     Basado en guías de DiBartola, S. P. (Ed.). Fluid, electrolyte, and acid-base disorders in small animal practice.
